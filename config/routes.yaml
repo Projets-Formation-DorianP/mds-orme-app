@@ -1,5 +1,0 @@
-# config/routes.yaml
-
-index:
-    path:       /index
-    controller: App\Controller\BaseController::index
