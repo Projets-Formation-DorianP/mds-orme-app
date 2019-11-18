@@ -6,10 +6,10 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdvertController {
+class BaseController {
 
     public function index() {
-        $content = "Bienvenue sur notre page d'accueil !"
+        $content = "Bienvenue sur notre page d'accueil !";
         return new Response($content);
     }
 }
