@@ -17,12 +17,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Account {
 
-	/**
+    /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(name="id", type="bigint")
      */
-	private $id;
+    private $id;
 
     /**
      * @ORM\Column(name="id_customer", type="bigint")
@@ -32,12 +32,12 @@ class Account {
     /**
      * @ORM\Column(name="username", type="string", length=100)
      */
-	private $username;
+    private $username;
 
-	/**
+    /**
      * @ORM\Column(name="password", type="string", length=100)
      */
-	private $password;
+    private $password;
 
     /**
      * @ORM\Column(name="email", type="string", length=50, unique=true)
@@ -49,10 +49,10 @@ class Account {
      */
     private $type;
 
-	/**
+    /**
      * @ORM\Column(name="creation_date", type="date")
      */
-	private $creation_date;
+    private $creation_date;
 
     /**
      * @ORM\Column(name="update_date", type="date")

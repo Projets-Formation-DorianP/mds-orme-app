@@ -18,7 +18,7 @@ class Address {
      * @ORM\GeneratedValue()
      * @ORM\Column(name="id", type="bigint")
      */
-	private $id;
+    private $id;
 
     /**
      * @ORM\Column(name="city", type="string", length=50)
