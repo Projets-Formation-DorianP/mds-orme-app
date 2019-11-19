@@ -6,6 +6,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Address
+ *
+ * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\AddressRepository")
  */
 class Address {
@@ -13,27 +16,27 @@ class Address {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id", type="bigint")
      */
 	private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(name="city", type="string", length=50)
      */
     private $city;
 
     /**
-     * @ORM\Column(type="integer", length=5)
+     * @ORM\Column(name="zip_code", type="integer")
      */
     private $zip_code;
 
     /**
-     * @ORM\Column(type="integer", length=5)
+     * @ORM\Column(name="road_number", type="integer")
      */
     private $road_number;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(name="road_name", type="string", length=50)
      */
     private $road_name;
 

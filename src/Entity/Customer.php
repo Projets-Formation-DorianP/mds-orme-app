@@ -6,6 +6,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Customer
+ *
+ * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
  */
 class Customer {
@@ -13,42 +16,42 @@ class Customer {
 	/**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id", type="bigint")
      */
 	private $id;
 
 	/**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id_address", type="bigint")
      */
     private $id_address;
 
     /**
-     * @ORM\Column(type="integer", length=1)
+     * @ORM\Column(name="civility", type="integer")
      */
 	private $civility;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(name="first_name", type="string", length=50)
      */
 	private $first_name;
 
 	/**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(name="last_name", type="string", length=50)
      */
 	private $last_name;
 
 	/**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(name="landline_phone", type="string", length=10)
      */
 	private $landline_phone;
 
 	/**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(name="mobile_phone", type="string", length=10)
      */
 	private $mobile_phone;
 
 	/**
-     * @ORM\Column(type="date")
+     * @ORM\Column(name="birth_date", type="date")
      */
 	private $birth_date;
 

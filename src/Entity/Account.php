@@ -6,49 +6,56 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Account
+ *
+ * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
+ * @UniqueEntity(
+ * fields = {"email"},
+ * message = "Cette adresse email est déjà utilisée."
+ * )
  */
 class Account {
 
 	/**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id", type="bigint")
      */
 	private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id_customer", type="bigint")
      */
     private $id_customer;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(name="username", type="string", length=100)
      */
 	private $username;
 
 	/**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(name="password", type="string", length=100)
      */
 	private $password;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(name="email", type="string", length=50, unique=true)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="integer", length=1)
+     * @ORM\Column(name="type", type="integer")
      */
     private $type;
 
 	/**
-     * @ORM\Column(type="date")
+     * @ORM\Column(name="creation_date", type="date")
      */
 	private $creation_date;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(name="update_date", type="date")
      */
     private $update_date;
 
