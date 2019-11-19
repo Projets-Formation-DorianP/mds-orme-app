@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 19 nov. 2019 à 13:26
+-- Généré le :  mar. 19 nov. 2019 à 15:18
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
 
@@ -32,8 +32,8 @@ DROP TABLE IF EXISTS `account`;
 CREATE TABLE IF NOT EXISTS `account` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_customer` bigint(20) UNSIGNED NOT NULL,
-  `username` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
+  `username` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `type` tinyint(1) NOT NULL DEFAULT '0',
   `creation_date` date NOT NULL,
   `update_date` date NOT NULL,
@@ -50,10 +50,10 @@ CREATE TABLE IF NOT EXISTS `account` (
 DROP TABLE IF EXISTS `address`;
 CREATE TABLE IF NOT EXISTS `address` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `city` varchar(50) NOT NULL,
+  `city` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `zip_code` int(5) NOT NULL,
   `road_number` int(5) NOT NULL,
-  `road_name` varchar(50) NOT NULL,
+  `road_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -68,10 +68,10 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_address` bigint(20) UNSIGNED NOT NULL,
   `civility` tinyint(1) NOT NULL,
-  `first_name` varchar(50) NOT NULL,
-  `last_name` varchar(50) NOT NULL,
-  `landline_phone` varchar(10) NOT NULL,
-  `mobile_phone` varchar(10) NOT NULL,
+  `first_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `last_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `landline_phone` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `mobile_phone` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `birth_date` date NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_address` (`id_address`)
