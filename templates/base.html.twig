@@ -2,12 +2,20 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" href="{{ asset('build/css/main.css') }}">
+        <title>{% block title %} ORME | Mon journal digital {% endblock %}</title>
+        {{ encore_entry_link_tags('css/main') }}
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block header %}
+            <!-- Add secondary menu ? -->
+            {% include 'Blocks/primary-menu.html.twig' %}
+        {% endblock %}
+        {% block body %}
+        {% endblock %}
+        {% block footer %}
+            <!-- Add footer Blocks -->
+        {% endblock %}
         {{ encore_entry_script_tags('js/main') }}
         {% block javascripts %}{% endblock %}
     </body>
