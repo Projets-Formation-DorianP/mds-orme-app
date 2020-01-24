@@ -1,4 +1,6 @@
-# Introduction
+# OrganizeMe! (ORME!)
+
+## Introduction
 *ORME!* is a Bullet Journal web application realized at MyDigitalSchool.
 
 This repository contains the application part of the project.
