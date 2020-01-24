@@ -1,10 +1,14 @@
 # Introduction
-*ORME!* is a web based project realized at MyDigitalSchool.
+*ORME!* is a Bullet Journal web application realized at MyDigitalSchool.
+
+This repository contains the application part of the project.
+
+The website part can be accessed [here](https://github.com/Natsu235/mds-orme-wp).
 
 ## Getting started
 
 ### Prerequisites
-Following is a list of all required softwares to use with this project:
+List of all required softwares and dependencies to use with this project:
 * PHP 7.3.5
 * [Composer](https://getcomposer.org/) - Dependency Manager for PHP
 * [Symphony 4](https://symfony.com/) - PHP Framework
@@ -24,7 +28,4 @@ Composer
 ## Miscellaneous
 
 ### Trello
-*Trello* is a project management tool allowing us to schedule all of our tasks during the development.
-```
-http://trello.com/b/noJXXiYo/mdproject-dev
-```
+[*Trello*](http://trello.com/b/noJXXiYo/mdproject-dev) is a project management tool allowing us to schedule all of our tasks during the development.
