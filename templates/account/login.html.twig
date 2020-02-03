@@ -5,8 +5,12 @@
 {% block body %}
     <div class="container">
         <div class="row">
+            {% if hasError %}
+                <p>Erreur login ou mdp</p>
+            {% endif %}
+
             <form action="{{ path('account_login') }}" method="post">
-                <input type="text" name="_username" id="email" placeholder="Adresse email.." required>
+                <input type="text" name="_username" id="email" placeholder="Adresse email.." required value="{{ username }}">
                 <input type="password" name="_password" id="password" placeholder="Mot de passe.." required>
                 <button type="submit">Connexion !</button>
             </form>
