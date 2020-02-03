@@ -18,13 +18,21 @@ class AppFixtures extends Fixture
 
         //Nous gérons les utilisateurs
         $users = [];
+        $genres = ['male', 'female'];
 
         for ($i=0; $i < 10; $i++) { 
             $user = new User();
+            
+            $genre = $faker->randomElement($genres);
+            $picture = "https://randomuser.me/api/portraits/";
+            $picture_id = $faker->numberBetween(1, 99) . '.jpg';
+
+            $picture = $picture . ($genre == "male" ? 'men/' : 'women/') . $picture_id;
 
             $user->setFirstName($faker->firstname);
             $user->setLastName($faker->lastname);
             $user->setEmail($faker->email);
+            $user->setPicture($picture);
             $user->setHash('password');
 
             $manager->persist($user);
