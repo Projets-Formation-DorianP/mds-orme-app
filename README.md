@@ -41,4 +41,4 @@ Yarn
 <a href="https://trello.com/b/noJXXiYo/mdproject-dev" target="_blank"><img width="180" height="89" src="assets/mds-orme-thumb.png" /></a>
 
 ### Licence
-This project is licensed under the GPLv3 License. See the LICENSE.md file for details.
+This project is licensed under the GPLv3 License. See the [LICENSE.md](LICENSE.md) file for details.
