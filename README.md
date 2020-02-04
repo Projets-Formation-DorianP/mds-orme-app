@@ -5,7 +5,7 @@
 
 This repository contains the application part of the project.
 
-You can access the WordPress part of the project here : [mds-orme-wp](https://github.com/Natsu235/mds-orme-wp)
+To access the Website (WordPress) part ➤ [mds-orme-wp](https://github.com/Natsu235/mds-orme-wp)
 
 ## Getting started
 
