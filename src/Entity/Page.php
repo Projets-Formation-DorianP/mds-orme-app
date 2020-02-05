@@ -8,14 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Table;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PageRepository")
- * 
- * @ORM\Table(
- *    name="page", 
- *    uniqueConstraints={
- *        @ORM\UniqueConstraint(name="page_unique", columns={"page_number", "user_id"})
- *    }
- * )
  * @ORM\Entity
  */
 class Page
