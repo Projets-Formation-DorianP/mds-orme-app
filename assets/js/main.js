@@ -1,7 +1,10 @@
 var $ = require('jquery');
+var jqueryUI = require("jquery-ui");
 
 global.$ = global.jQuery = $;
 
 $(document).ready(function() {
-    $("#title").css('background-color', 'blue');
+    if (typeof jqueryUI != 'undefined') {
+        console.log("1");
+    }
 });
