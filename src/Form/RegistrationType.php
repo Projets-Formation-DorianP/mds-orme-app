@@ -33,12 +33,12 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName', TextType::class, $this->getConfiguration("Prenom", "Votre prénom..."))
-            ->add('lastName', TextType::class, $this->getConfiguration("Nom", "Votre nom de famille..."))
-            ->add('email', EmailType::class, $this->getConfiguration("Email", "Votre adresse email "))
-            ->add('picture', UrlType::class, $this->getConfiguration("Photo de profil", "Url de votre avatar..."))
-            ->add('hash', PasswordType::class, $this->getConfiguration("Mot de passe", 'Entrez votre super mot de passe !'))
-            ->add('passwordConfirm', PasswordType::class, $this->getConfiguration("Confirmation de mot de passe", 'Confirmez votre super mot de passe !'))
+            ->add('firstName', TextType::class, $this->getConfiguration("Prénom", "Ex: Emilien"))
+            ->add('lastName', TextType::class, $this->getConfiguration("Nom", "Ex : Gantois"))
+            ->add('email', EmailType::class, $this->getConfiguration("Adresse email", "Ex : exemple@mail.com"))
+            ->add('picture', UrlType::class, $this->getConfiguration("Photo de profil", "Ex : http://www.exemple.com/image.png"))
+            ->add('hash', PasswordType::class, $this->getConfiguration("Mot de passe", 'Votre mot de passe'))
+            ->add('passwordConfirm', PasswordType::class, $this->getConfiguration("Confirmation du mot de passe", 'Répétez votre mot de passe'))
         ;
     }
 

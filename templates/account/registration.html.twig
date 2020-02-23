@@ -1,17 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/log-reg.html.twig' %}
 
 {% block title %}Inscription à ORME - Organize Me{% endblock %}
 
 {% block body %}
     <div class="container">
-        <div class="row">
-            <p>Register</p>
 
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button type="submit">Confirmez l'inscription</button>
-            {{ form_end(form) }}
-
+        <div class="logo">
+            <img src="{{ asset('build/logo.png') }}" alt="">
         </div>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit">S'inscrire</button>
+        <div class="connexion">
+            <p>Vous avez déjà un compte ? <a href="/login">Cliquez ici</a></p>
+        </div>
+        {{ form_end(form) }}
+
     </div>
 {% endblock %}
