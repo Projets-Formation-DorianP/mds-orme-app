@@ -1,0 +1,78 @@
+body.register {
+    background-color: $light-grey;
+    margin: 0;
+    display: flex;
+    align-items: center;
+
+    & .container {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        padding: 3rem;
+        box-shadow: -1px -1px 20px #FFFFFF, 18px 18px 25px #D1D9E6;
+        border-radius: 30px;
+        width: 25rem;
+        height: 45rem;
+
+        & .logo {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 2rem;
+
+            & > img {
+                max-width: 200px;
+            }
+        }
+    }
+
+    & form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        & > button {
+            font-weight: 500;
+            margin-top: 2rem;
+            border-radius: 10px;
+            padding: 5px 30px 5px 30px;
+            background-color: $light-grey;
+            color: #263563;
+            font-size: 1.25rem;
+            border: none;
+            box-shadow: -1px -1px 20px $light-grey, 10px 5px 25px #D1D9E6;
+            cursor: pointer;
+        }
+    }
+
+    & #registration {
+        display: flex;
+        flex-direction: column;
+
+        & > div {
+            margin: 0.75rem 0 0.75rem 0;
+            display: flex;
+            flex-direction: column;
+
+            & > label {
+                margin-bottom: 0.25rem;
+                color: #A8A8A9;
+                font-size: 1.5rem;
+                font-weight: 500;
+            }
+
+            & > input {
+                margin-left: 0.5rem;
+                border-radius: 10px;
+                padding: 5px;
+                background-color: $light-grey;
+                color: #263563;
+                font-size: 1rem;
+                border: none;
+                box-shadow: -1px -1px 20px $light-grey, 10px 5px 25px #D1D9E6;
+                font-weight: 500;
+            }
+        }
+    }
+}

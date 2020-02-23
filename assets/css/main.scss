@@ -1,5 +1,17 @@
+/*
+ * Yarn dependencies
+ */
 @import "~flexboxgrid";
 
+/*
+ * Common
+ */
+@import "common/variables";
+@import "common/mixins";
 @import "common/global";
 @import "common/titles";
-@import "common/mixins";
+
+/*
+ * Page
+ */
+@import "page/log-reg";
