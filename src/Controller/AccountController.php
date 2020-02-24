@@ -75,7 +75,7 @@ class AccountController extends AbstractController
     /**
      * Affiche le profil de l'utilisateur
      * 
-     * @Route("account/profile", name="account_profile")
+     * @Route("/account/profile", name="account_profile")
      *
      * @return Response
      */
