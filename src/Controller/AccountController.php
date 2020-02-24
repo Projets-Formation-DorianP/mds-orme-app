@@ -3,21 +3,24 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\AccountType;
 use App\Entity\PasswordUpdate;
+use App\Form\AccountType;
+use App\Form\LoginType;
 use App\Form\RegistrationType;
 use App\Form\PasswordUpdateType;
-use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AccountController extends AbstractController
 {
     /**
+     * Affiche le formulaire de connexion
+     * 
      * @Route("/login", name="account_login")
      */
     public function login(AuthenticationUtils $utils) {
@@ -31,7 +34,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * Permet de se déconnecter
+     * Déconnecte la session de l'utilisateur
      * 
      * @Route("/logout", name="account_logout")
      *
@@ -42,7 +45,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * Permet d'afficher le formulaire d'inscription
+     * Affiche le formulaire d'inscription
      *
      * @Route("/register", name="account_register")
      * 
@@ -70,7 +73,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * Permet d'afficher et de traiter le formulaire de modification du profil
+     * Affiche le profil de l'utilisateur
      * 
      * @Route("account/profile", name="account_profile")
      *
@@ -93,7 +96,7 @@ class AccountController extends AbstractController
     }
 
     /**
-     * Permet de modifier le mot de passe
+     * Affiche le formulaire de modification de mot de passe
      * 
      * @Route("/account/update-password", name="account_password")
      *

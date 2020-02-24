@@ -1,19 +1,35 @@
 {% extends 'layouts/log-reg.html.twig' %}
 
-{% block title %}Se connecter à ORME - Organize Me{% endblock %}
+{% block title %}ORME - Se connecter{% endblock %}
 
 {% block body %}
     <div class="container">
-        <div class="row">
-            {% if hasError %}
-                <p>Erreur login ou mdp</p>
-            {% endif %}
 
-            <form action="{{ path('account_login') }}" method="post">
-                <input type="text" name="_username" id="email" placeholder="Adresse email.." required value="{{ username }}">
-                <input type="password" name="_password" id="password" placeholder="Mot de passe.." required>
-                <button type="submit">Connexion !</button>
-            </form>
+        <div class="logo">
+            <img src="{{ asset('build/logo.png') }}" alt="">
         </div>
+
+        {% if hasError %}
+        <div class="alert alert-danger">
+            <p>L'email ou le mot de passe est invalide.</p>
+        </div>
+        {% endif %}
+
+        <form name="login" action="{{ path('account_login') }}" method="post">
+            <div id="login">
+                <div>
+                    <label for="login_email" class="required">Adresse email</label>
+                    <input id="login_email" type="text" name="_username" id="email" placeholder="Adresse email.." required value="{{ username }}">
+                </div>
+                <div>
+                    <label for="login_hash" class="required">Mot de passe</label>
+                    <input id="login_hash" type="password" name="_password" id="password" placeholder="Mot de passe.." required>
+                </div>
+            </div>
+            <button type="submit">Connexion</button>
+            <div class="register-redirect">
+                <p>Vous n'avez pas encore de compte ? <a href="/register">Cliquez ici</a></p>
+            </div>
+        </form>
     </div>
 {% endblock %}

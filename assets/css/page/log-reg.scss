@@ -1,4 +1,4 @@
-body.register {
+body.log-reg {
     background-color: $light-grey;
     margin: 0;
     display: flex;
@@ -13,8 +13,8 @@ body.register {
         padding: 3rem;
         box-shadow: -1px -1px 20px #FFFFFF, 18px 18px 25px #D1D9E6;
         border-radius: 30px;
-        width: 25rem;
-        height: 45rem;
+        width: auto;
+        height: auto;
 
         & .logo {
             display: flex;
@@ -46,9 +46,62 @@ body.register {
         }
     }
 
+    & .alert {
+        display: flex;
+        flex-direction: column;
+        margin: 0.75rem 0 0.75rem 0;
+        padding: 0 0.75rem 0 0.75rem;
+        border-radius: 0.5rem;
+        width: 100%
+    }
+
+    & .alert-success {
+        color: #155724;
+        background-color: #d4edda;;
+        border-color: #c3e6cb;
+    }
+
+    & .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+
     & #registration {
         display: flex;
         flex-direction: column;
+        width: 100%;
+
+        & > div {
+            margin: 0.75rem 0 0.75rem 0;
+            display: flex;
+            flex-direction: column;
+
+            & > label {
+                margin-bottom: 0.25rem;
+                color: #A8A8A9;
+                font-size: 1.5rem;
+                font-weight: 500;
+            }
+
+            & > input {
+                margin-left: 0.5rem;
+                border-radius: 10px;
+                padding: 5px;
+                background-color: $light-grey;
+                color: #263563;
+                font-size: 1rem;
+                border: none;
+                box-shadow: -1px -1px 20px $light-grey, 10px 5px 25px #D1D9E6;
+                font-weight: 500;
+            }
+        }
+    }
+
+    & #login {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
 
         & > div {
             margin: 0.75rem 0 0.75rem 0;
