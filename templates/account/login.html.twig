@@ -1,33 +1,33 @@
-{% extends 'layouts/log-reg.html.twig' %}
+{% extends 'layouts/form.html.twig' %}
 
 {% block title %}ORME - Se connecter{% endblock %}
 
 {% block body %}
+    {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading">Erreur !</h4> L'email ou le mot de passe est invalide.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
     <div class="container">
-
         <div class="logo">
-            <img src="{{ asset('build/images/logo.png') }}" alt="">
+            <a href="/"><img src="{{ asset('build/logo.png') }}" width="200" alt=""></a>
         </div>
-
-        {% if hasError %}
-        <div class="alert alert-danger">
-            <p>L'email ou le mot de passe est invalide.</p>
-        </div>
-        {% endif %}
-
         <form name="login" action="{{ path('account_login') }}" method="post">
             <div id="login">
                 <div>
                     <label for="login_email" class="required">Adresse email</label>
-                    <input id="login_email" type="text" name="_username" id="email" placeholder="Adresse email.." required value="{{ username }}">
+                    <input id="login_email" type="email" name="_username" id="email" placeholder="" required value="{{ username }}">
                 </div>
                 <div>
                     <label for="login_hash" class="required">Mot de passe</label>
-                    <input id="login_hash" type="password" name="_password" id="password" placeholder="Mot de passe.." required>
+                    <input id="login_hash" type="password" name="_password" id="password" placeholder="" required>
                 </div>
             </div>
             <button type="submit">Connexion</button>
-            <div class="register-redirect">
+            <div class="redirect">
                 <p>Vous n'avez pas encore de compte ? <a href="/register">Cliquez ici</a></p>
             </div>
         </form>

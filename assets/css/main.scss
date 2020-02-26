@@ -2,16 +2,21 @@
  * Yarn dependencies
  */
 @import "~flexboxgrid";
+@import "~bootstrap/scss/bootstrap";
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
 
 /*
  * Common
  */
-@import "common/variables";
-@import "common/mixins";
-@import "common/global";
-@import "common/titles";
+ @import "common/variables";
+ @import "common/mixins";
+ @import "common/global";
+ @import "common/titles";
 
 /*
- * Page
+ * Pages
  */
-@import "page/log-reg";
+@import "page/form";

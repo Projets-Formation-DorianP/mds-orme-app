@@ -38,7 +38,7 @@ Yarn
 ### Trello
 [Trello](https://trello.com/) is a project management tool allowing us to schedule all of our tasks during the development.
 
-<a href="https://trello.com/b/noJXXiYo/mdproject-dev" target="_blank"><img width="180" height="89" src="assets/mds-orme-thumb.png" /></a>
+<a href="https://trello.com/b/noJXXiYo/mdproject-dev" target="_blank"><img width="180" height="89" src="assets/images/trello-thumb.png" /></a>
 
 ### Licence
 This project is licensed under the GPLv3 License. See the [LICENSE.md](LICENSE.md) file for details.

@@ -25,25 +25,25 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="ous devez renseigner votre prénom")
+     * @Assert\NotBlank(message="Veuillez renseigner votre prénom.")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="ous devez renseigner votre nom de famille")
+     * @Assert\NotBlank(message="Veuillez renseigner votre nom de famille.")
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Email(message="Veuillez renseigner un email valide !")
+     * @Assert\Email(message="Veuillez renseigner un email valide.")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url(message="Veuillez donnez une URL valide pour votre avatar !")
+     * @Assert\Url(message="Veuillez renseigner une URL valide pour votre avatar.")
      */
     private $picture;
 
@@ -51,9 +51,9 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $hash;
-    
+
     /**
-     * @Assert\EqualTo(propertyPath="hash", message="Merci de mettre le même mot de passe")
+     * @Assert\EqualTo(propertyPath="hash", message="Merci de saisir le même mot de passe.")
      */
     public $passwordConfirm;
 
@@ -85,7 +85,7 @@ class User implements UserInterface
 
     public function setFirstName(string $firstName): self
     {
-        $this->firstName = $firstName;
+        $this->firstName = ucfirst(strtolower($firstName));
 
         return $this;
     }
@@ -97,7 +97,7 @@ class User implements UserInterface
 
     public function setLastName(string $lastName): self
     {
-        $this->lastName = $lastName;
+        $this->lastName = strtoupper($lastName);
 
         return $this;
     }

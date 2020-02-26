@@ -28,8 +28,8 @@ class AccountController extends AbstractController
         $username = $utils->getLastUsername();
 
         return $this->render('account/login.html.twig', [
-            'hasError' => $error !== null,
-            'username' => $username
+            'username' => $username,
+            'error' => $error
         ]);
     }
 
@@ -41,7 +41,7 @@ class AccountController extends AbstractController
      * @return void
      */
     public function logout() {
-        //Silence is golden...
+        // Silence is golden...
     }
 
     /**
@@ -53,7 +53,7 @@ class AccountController extends AbstractController
      */
     public function register(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder) {
         $user = new User();
-        
+
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
@@ -67,7 +67,7 @@ class AccountController extends AbstractController
             return $this->redirectToRoute("account_login");
         }
 
-        return $this->render('account/registration.html.twig', [
+        return $this->render('account/register.html.twig', [
            'form' => $form->createView() 
         ]);
     }
@@ -109,10 +109,11 @@ class AccountController extends AbstractController
         $form = $this->createForm(PasswordUpdateType::class, $passwordUpdate);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
-            if(!password_verify($passwordUpdate->getOldPassword(), $user->getHash())) {
-                $form->get('oldPassword')->addError(new FormError("Le mot de passe que vous avez tapé n'ets as votre mot de passe actuel !"));
-            } else {
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (!password_verify($passwordUpdate->getOldPassword(), $user->getHash())) {
+                $form->get('oldPassword')->addError(new FormError("Le mot de passe saisie est différent de votre mot de passe actuel !"));
+            }
+            else {
                 $newPassword = $passwordUpdate->getNewPassword();
                 $hash = $encoder->encodePassword($user, $newPassword);
 
@@ -124,7 +125,7 @@ class AccountController extends AbstractController
 
             return $this->redirectToRoute('homepage');
         }
-        
+
         return $this->render('account/password.html.twig', [
             'form' => $form->createView()
         ]);

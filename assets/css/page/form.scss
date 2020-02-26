@@ -1,0 +1,102 @@
+body.form {
+    background-color: $light-grey;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    & .alert {
+        align-self: flex-start;
+        top: 20px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        position: absolute;
+        width: 50%;
+    }
+
+    & .container {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        padding: 3rem;
+        box-shadow: -1px -1px 20px #FFFFFF, 18px 18px 25px #D1D9E6;
+        border-radius: 30px;
+        width: auto;
+        height: auto;
+
+        & .logo {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 2rem;
+        }
+    }
+
+    & form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        & > button {
+            font-weight: 500;
+            margin: 2rem 0 1rem 0;
+            border-radius: 10px;
+            padding: 5px 30px 5px 30px;
+            background-color: $light-grey;
+            color: $dark-blue;
+            font-size: 1.25rem;
+            border: none;
+            box-shadow: -1px -1px 20px $light-grey, 10px 5px 25px #D1D9E6;
+            cursor: pointer;
+            transition-duration: 0.4s;
+        }
+
+        & > button:hover {
+            color: white;
+            background-color: $dark-blue;
+            box-shadow: 0px 0px 12px #E7E9EC;
+        }
+
+        & div {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            width: 100%;
+    
+            & > div {
+                margin: 0.75rem 0 0.75rem 0;
+                display: flex;
+                flex-direction: column;
+    
+                & > label {
+                    margin-bottom: 0.25rem;
+                    color: #A8A8A9;
+                    font-size: 1.5rem;
+                    font-weight: 500;
+                    text-align: left;
+                }
+    
+                & > input {
+                    margin-left: 0.5rem;
+                    border-radius: 10px;
+                    padding: 5px;
+                    background-color: $light-grey;
+                    color: $dark-blue;
+                    font-size: 1rem;
+                    border: none;
+                    box-shadow: -1px -1px 20px $light-grey, 10px 5px 25px #D1D9E6;
+                    font-weight: 500;
+                    transition-duration: 0.4s;
+                }
+
+                & > input:hover {
+                    box-shadow: 0px 0px 12px #E7E9EC;
+                }
+            }
+        }
+    }
+}

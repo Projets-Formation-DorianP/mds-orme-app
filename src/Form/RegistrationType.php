@@ -18,27 +18,29 @@ class RegistrationType extends AbstractType
      *
      * @param [type] $label
      * @param [type] $placeholder
+     * @param [type] $required
      * @param array $options
      * @return void
      */
-    public function getConfiguration($label, $placeholder, $options = []) {
+    public function getConfiguration($label, $placeholder, $required, $options = []) {
         return array_merge([
             'label' => $label,
             'attr' => [
                 'placeholder' => $placeholder
-            ]
+            ],
+            'required' => $required
         ], $options);
     }
-    
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName', TextType::class, $this->getConfiguration("Prénom", "Ex: Emilien"))
-            ->add('lastName', TextType::class, $this->getConfiguration("Nom", "Ex : Gantois"))
-            ->add('email', EmailType::class, $this->getConfiguration("Adresse email", "Ex : exemple@mail.com"))
-            //->add('picture', UrlType::class, $this->getConfiguration("Photo de profil", "Ex : http://www.exemple.com/image.png"))
-            ->add('hash', PasswordType::class, $this->getConfiguration("Mot de passe", 'Votre mot de passe'))
-            ->add('passwordConfirm', PasswordType::class, $this->getConfiguration("Confirmation du mot de passe", 'Répétez votre mot de passe'))
+            ->add('firstName', TextType::class, $this->getConfiguration("Prénom", "Ex: Emilien", true))
+            ->add('lastName', TextType::class, $this->getConfiguration("Nom", "Ex : GANTOIS", true))
+            ->add('email', EmailType::class, $this->getConfiguration("Adresse email", "Ex : exemple@mail.com", true))
+            ->add('picture', UrlType::class, $this->getConfiguration("Photo de profil", "Ex : http://www.exemple.com/image.png", false))
+            ->add('hash', PasswordType::class, $this->getConfiguration("Mot de passe", 'Votre mot de passe', true))
+            ->add('passwordConfirm', PasswordType::class, $this->getConfiguration("Confirmation du mot de passe", 'Répétez votre mot de passe', true))
         ;
     }
 
