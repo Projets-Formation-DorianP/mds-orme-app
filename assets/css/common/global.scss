@@ -7,6 +7,45 @@ body {
     font-family: 'Montserrat', Arial, Helvetica, sans-serif;
 }
 
+.container, 
+.container-fluid {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.navbar {
+
+    .logo {
+        height: 46px;
+    }
+
+    .avatar {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+    }
+
+    .nav-item > * {
+        vertical-align: middle;
+    }
+
+    .dropdown-menu.fade {
+        display: block;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .show > .dropdown-menu.fade {
+        pointer-events: auto;
+        opacity: 1;
+    }
+
+    .navbar-toggler {
+        border: none;
+        outline: 0;
+    }
+}
+
 .text-primary {
     color: $dark-blue !important;
 }
@@ -59,23 +98,6 @@ body {
     background-color: transparent;
     background-image: none;
     border-color: $light-grey;
-}
-
-.navbar {
-
-    .logo {
-        height: 46px;
-    }
-
-    .avatar {
-        height: 40px;
-        width: 40px;
-        border-radius: 50%;
-    }
-
-    .nav-item > * {
-        vertical-align: middle;
-    }
 }
 
 .fa {

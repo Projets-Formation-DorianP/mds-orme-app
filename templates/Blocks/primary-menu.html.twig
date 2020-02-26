@@ -4,7 +4,7 @@
         <img class="logo" src="{{ asset('build/logo.png') }}" alt="">
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPrimary" aria-controls="navbarPrimary" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span><i class="toggler fa fa-chevron-down"></i></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarPrimary">
         <!-- Desktop -->
@@ -33,7 +33,7 @@
                             {% endif %}
                         alt="">
                     {{ app.user.firstname }} {{ app.user.lastname }}</a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownProfile">
+                    <div class="dropdown-menu dropdown-menu-right fade" aria-labelledby="dropdownProfile">
                         <a class="dropdown-item" href="/account/mailbox"><i class="fa fa-envelope"></i> Mes messages</a>
                         <a class="dropdown-item" href="/account/profile"><i class="fa fa-user-circle"></i> Mon compte</a>
                         <a class="dropdown-item text-danger" href="/logout"><i class="fa fa-sign-out-alt"></i> Se déconnecter</a>

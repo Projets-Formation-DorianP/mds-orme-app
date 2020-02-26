@@ -21,3 +21,15 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('.alert').delay(14000).fadeOut(800);
 });
+
+// Navbar Toggler Icon
+$(document).ready(function() {
+
+    $('.collapse').on('shown.bs.collapse', function(e) {
+        $('.navbar-toggler').find('.toggler').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+    });
+
+    $('.collapse').on('hidden.bs.collapse', function(e) {
+        $('.navbar-toggler').find('.toggler').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+    });
+});

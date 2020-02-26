@@ -32,6 +32,8 @@ Composer
 * ```composer require <dependency>``` - Install a new dependency
 
 Yarn
+* ```yarn install``` - Install dependencies of the project
+* ```yarn upgrade``` - Upgrades packages to their latest version
 * ```yarn build``` - Build all files
 * ```yarn watch``` - Refresh instantly all modifications
 
