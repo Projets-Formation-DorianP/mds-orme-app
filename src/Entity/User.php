@@ -85,7 +85,7 @@ class User implements UserInterface
 
     public function setFirstName(string $firstName): self
     {
-        $this->firstName = ucfirst(strtolower($firstName));
+        $this->firstName = ucfirst($firstName);
 
         return $this;
     }

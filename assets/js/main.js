@@ -17,7 +17,7 @@ $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 });
 
-// Alert Fade-Out
+// Alert Box Fade-Out
 $(document).ready(function() {
     $('.alert').delay(14000).fadeOut(800);
 });

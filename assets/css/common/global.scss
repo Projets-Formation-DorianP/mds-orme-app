@@ -1,5 +1,6 @@
 body {
     min-height: 100vh;
+    background-color:#f8f9fa;
 }
 
 * {
@@ -61,10 +62,19 @@ body {
 }
 
 .navbar {
+    height: 64px;
 
     .avatar {
         height: 40px;
-        height: 40px;
+        width: 40px;
         border-radius: 50%;
     }
+
+    .nav-item > * {
+        vertical-align: middle;
+    }
+}
+
+.fa {
+    margin-right: 0.25rem;
 }

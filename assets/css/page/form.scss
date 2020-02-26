@@ -1,5 +1,4 @@
 body.form {
-    background-color: $light-grey;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -26,6 +25,7 @@ body.form {
         padding: 3rem;
         box-shadow: -1px -1px 20px #FFFFFF, 18px 18px 25px #D1D9E6;
         border-radius: 30px;
+        background-color: $light-grey;
         width: auto;
         height: auto;
 
