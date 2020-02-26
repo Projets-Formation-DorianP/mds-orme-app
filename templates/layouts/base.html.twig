@@ -6,7 +6,7 @@
         {{ encore_entry_link_tags('css/main') }}
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
+    <body class="{% block body_class %}default{% endblock %}">
         {% block header %}
             <!-- Add secondary menu ? -->
             {% include 'blocks/primary-menu.html.twig' %}

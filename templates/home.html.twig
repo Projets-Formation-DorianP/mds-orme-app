@@ -1,9 +1,10 @@
 {% extends 'layouts/base.html.twig' %}
 
+{% block body_class %}home{% endblock %}
 {% block body %}
     <div class="container">
-        <div class="logo my-5">
-            <img src="{{ asset('build/logo.png') }}" height="120" alt="">
+        <div class="my-5">
+            <img class="logo" src="{{ asset('build/logo.png') }}" height="120" alt="">
         </div>
         <main>
             <h1>Bienvenue sur ORME - Organize Me!</h1>
@@ -11,6 +12,8 @@
             <br>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum congue euismod hendrerit. Nullam id libero eleifend, dapibus leo ut, facilisis turpis. Morbi posuere, nisi eget consequat malesuada, diam elit tempor sem, ut aliquam massa odio ac odio. Ut eu purus vitae nunc dictum aliquet vel a felis. Pellentesque venenatis maximus erat, et sollicitudin lectus vehicula interdum. Phasellus mattis nunc eget ante vulputate porta nec eu tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vulputate, enim scelerisque facilisis pulvinar, ex dolor aliquam libero, at viverra lorem leo non nisi. Donec eu euismod elit. Maecenas eu augue enim. Nam non libero sed velit ultrices fringilla.</p>
             <p>Vestibulum pulvinar ac felis sed pellentesque. Cras interdum lacinia tellus in tincidunt. Sed sit amet nibh non ante eleifend accumsan sit amet tempor massa. Praesent et eros tortor. Vivamus ut elementum nisi, vitae dapibus ex. Vestibulum egestas faucibus eros quis dapibus. Vivamus ac congue neque. Ut eleifend mattis dolor, in tristique est. Nunc et semper eros, quis eleifend lectus. Nam maximus orci vel turpis condimentum imperdiet. Vestibulum pharetra nisi ipsum, nec ornare velit aliquet ac. Donec mollis sed libero placerat blandit. Suspendisse ac elit a eros tempor tincidunt. Etiam vestibulum ullamcorper sem quis dictum.</p>
+            <br>
+            <a href="#">En savoir plus <i class="fa fa-chevron-right"></i></a>
         </main>
     </div>
 {% endblock %}
