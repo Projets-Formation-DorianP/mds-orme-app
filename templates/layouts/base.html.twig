@@ -8,13 +8,13 @@
     </head>
     <body class="{% block body_class %}default{% endblock %}">
         {% block header %}
-            <!-- Add secondary menu ? -->
-            {% include 'blocks/primary-menu.html.twig' %}
+            <!-- Add secondary navbar ? -->
+            {% include 'blocks/primary-navbar.html.twig' %}
         {% endblock %}
         {% block body %}
         {% endblock %}
         {% block footer %}
-            <!-- Add footer Blocks -->
+            <!-- Add footer blocks -->
         {% endblock %}
         {{ encore_entry_script_tags('js/main') }}
         {% block javascripts %}{% endblock %}

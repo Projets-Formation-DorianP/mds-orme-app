@@ -1,3 +1,6 @@
+<!-- Random Message Count (Debug Purpose Only!) -->
+{% set msg = random(0, 18) %}
+
 <!-- Primary Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-secondary shadow-sm">
     <div class="navbar-brand">
@@ -35,7 +38,7 @@
                     {{ app.user.firstname|length > 14 ? app.user.firstname|slice(0, 14) ~ '...' : app.user.firstname  }} 
                     {{ app.user.lastname|length > 14 ? app.user.lastname|slice(0, 14) ~ '...' : app.user.lastname  }}</a>
                     <div class="dropdown-menu dropdown-menu-right fade" aria-labelledby="dropdownProfile">
-                        <a class="dropdown-item" href="/account/mailbox"><i class="fa fa-envelope fa-fw"></i> Mes messages</a>
+                        <a class="dropdown-item" href="/account/mailbox"><i class="fa fa-envelope fa-fw"></i> Mes messages ({{ msg }})</a>
                         <a class="dropdown-item" href="/account/profile"><i class="fa fa-user fa-fw"></i> Mon compte</a>
                         <a class="dropdown-item text-danger" href="/logout"><i class="fa fa-sign-out-alt fa-fw"></i> Se déconnecter</a>
                     </div>
@@ -60,7 +63,7 @@
                     <a class="nav-link" href="/book"><i class="fa fa-book fa-fw"></i> Mon journal</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/account/mailbox"><i class="fa fa-envelope fa-fw"></i> Mes messages</a>
+                    <a class="nav-link" href="/account/mailbox"><i class="fa fa-envelope fa-fw"></i> Mes messages ({{ msg }})</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/account/profile"><i class="fa fa-user fa-fw"></i> Mon compte</a>

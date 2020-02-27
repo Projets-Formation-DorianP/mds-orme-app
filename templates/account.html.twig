@@ -6,13 +6,13 @@
         <h3><i class="fa fa-chevron-right"></i> Mon compte</h3>
         <div class="d-flex flex-row">
             <div class="list-group pr-5">
-                {% include 'blocks/account-links.html.twig' %}
+                {% include 'blocks/account-sidebar.html.twig' %}
             </div>
             <div class="flex-fill">
                 {% if (app.request.pathInfo) == '/account/profile' %}
-                    {% include 'blocks/edit-profile.html.twig' %}
+                    {% include 'blocks/edit-profile-form.html.twig' %}
                 {% elseif (app.request.pathInfo) == '/account/password' %}
-                    {% include 'blocks/update-password.html.twig' %}
+                    {% include 'blocks/update-password-form.html.twig' %}
                 {% endif %}
             </div>
         </div>
