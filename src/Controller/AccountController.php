@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\PasswordUpdate;
-use App\Form\AccountType;
 use App\Form\LoginType;
-use App\Form\RegistrationType;
 use App\Form\PasswordUpdateType;
+use App\Form\ProfileType;
+use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -57,7 +57,7 @@ class AccountController extends AbstractController
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $hash = $encoder->encodePassword($user, $user->getHash());
             $user->setHash($hash);
 
@@ -68,7 +68,7 @@ class AccountController extends AbstractController
         }
 
         return $this->render('account/register.html.twig', [
-           'form' => $form->createView() 
+            'form' => $form->createView() 
         ]);
     }
 
@@ -82,15 +82,15 @@ class AccountController extends AbstractController
     public function profile(Request $request, EntityManagerInterface $manager) {
         $user = $this->getUser();
 
-        $form = $this->createForm(AccountType::class, $user);
+        $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($user);
             $manager->flush();
         }
 
-        return $this->render('account/profile.html.twig', [
+        return $this->render('account.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -98,7 +98,7 @@ class AccountController extends AbstractController
     /**
      * Affiche le formulaire de modification de mot de passe
      * 
-     * @Route("/account/update-password", name="account_password")
+     * @Route("/account/password", name="account_password")
      *
      * @return Response
      */
@@ -126,7 +126,7 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('homepage');
         }
 
-        return $this->render('account/password.html.twig', [
+        return $this->render('account.html.twig', [
             'form' => $form->createView()
         ]);
     }

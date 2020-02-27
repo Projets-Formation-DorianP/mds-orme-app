@@ -24,13 +24,13 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=20)
      * @Assert\NotBlank(message="Veuillez renseigner votre prénom.")
      */
     private $firstName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=20)
      * @Assert\NotBlank(message="Veuillez renseigner votre nom de famille.")
      */
     private $lastName;

@@ -7,8 +7,6 @@ This repository contains the application part of the project.
 
 To access the Website (WordPress) part ➤ [mds-orme-wp](https://github.com/Natsu235/mds-orme-wp)
 
-<kbd><img width="840" height="401" src="assets/img/homepage.png" /></kbd>
-
 ## Getting started
 
 ### Prerequisites
@@ -36,6 +34,20 @@ Yarn
 * ```yarn upgrade``` - Upgrades packages to their latest version
 * ```yarn build``` - Build all files
 * ```yarn watch``` - Refresh instantly all modifications
+
+## Preview
+
+Login Screen
+
+<kbd><img width="840" height="401" src="assets/img/login.png" /></kbd>
+
+Homepage
+
+<kbd><img width="840" height="401" src="assets/img/homepage.png" /></kbd>
+
+User Profile
+
+<kbd><img width="840" height="401" src="assets/img/account.png" /></kbd>
 
 ## Miscellaneous
 

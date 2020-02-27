@@ -1,0 +1,20 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block body_class %}account{% endblock %}
+{% block body %}
+    <div class="container{% if (app.request.pathInfo|slice(0, 8)) %} fade-in{% endif %}">
+        <h3><i class="fa fa-chevron-right"></i> Mon compte</h3>
+        <div class="d-flex flex-row">
+            <div class="list-group pr-5">
+                {% include 'blocks/account-links.html.twig' %}
+            </div>
+            <div class="flex-fill">
+                {% if (app.request.pathInfo) == '/account/profile' %}
+                    {% include 'blocks/edit-profile.html.twig' %}
+                {% elseif (app.request.pathInfo) == '/account/password' %}
+                    {% include 'blocks/update-password.html.twig' %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
