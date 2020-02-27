@@ -1,4 +1,4 @@
-<!-- Random Message Count (Debug Purpose Only!) -->
+{% set logged = is_granted('IS_AUTHENTICATED_FULLY') %}
 {% set msg = random(0, 18) %}
 
 <!-- Primary Navbar -->
@@ -18,14 +18,14 @@
             <li class="nav-item mx-2">
                 <a class="nav-link" href="/news">Nouveautés</a>
             </li>
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if logged %}
                 <li class="nav-item mx-2">
                     <a class="nav-link" href="/book">Mon journal</a>
                 </li>
             {% endif %}
         </ul>
         <ul class="navbar-nav flex-row ml-md-auto d-none d-lg-flex collapse">
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if logged %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-primary" href="#" role="button" id="dropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="avatar mr-2" 
@@ -58,7 +58,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/news"><i class="fa fa-file-alt fa-fw"></i> Nouveautés</a>
             </li>
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if logged %}
                 <li class="nav-item">
                     <a class="nav-link" href="/book"><i class="fa fa-book fa-fw"></i> Mon journal</a>
                 </li>
@@ -70,6 +70,13 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-danger" href="/logout"><i class="fa fa-sign-out-alt fa-fw"></i> Se déconnecter</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link text-primary" href="/register"><i class="fa fa-pencil-alt fa-fw"></i> Inscription</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-primary" href="/login"><i class="fa fa-sign-in-alt fa-fw"></i> Connexion</a>
                 </li>
             {% endif %}
         </ul>
