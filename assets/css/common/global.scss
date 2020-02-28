@@ -1,6 +1,6 @@
 body {
     min-height: 100vh;
-    background-color:#f8f9fa;
+    background-color: $light-grey;
 }
 
 h3 {
@@ -23,6 +23,7 @@ h4 {
 }
 
 .navbar {
+    box-shadow: -1px -1px 20px #FFFFFF, 18px 18px 25px #D1D9E6;
 
     .logo {
         height: 46px;

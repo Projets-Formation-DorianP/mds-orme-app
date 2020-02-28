@@ -1,0 +1,56 @@
+div.orme {
+    width: auto;
+    height: auto;
+    background-color: $light-grey;
+    border: none;
+    border-radius: 30px;
+    box-shadow: -1px -1px 20px white, 18px 18px 25px #D1D9E6;
+    padding: 1rem;
+
+    &.reverse {
+        box-shadow: inset -1px -1px 20px white, inset 18px 18px 25px #D1D9E6 !important;
+    }
+}
+
+button.orme {
+    width: auto;
+    height: auto;
+    color: $dark-blue;
+    background-color: $light-grey;
+    border: none;
+    outline: 0;
+    border-radius: 10px;
+    box-shadow: -5px -5px 20px white, 10px 5px 25px #D1D9E6;
+    padding: 5px 30px 5px 30px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+
+    &:hover {
+        color: white;
+        background-color: $dark-blue;
+        box-shadow: 0px 0px 12px #E7E9EC;
+    }
+
+    &.reverse {
+        box-shadow: inset -1px -1px 20px white, inset 10px 5px 25px #D1D9E6 !important;
+    }
+}
+
+input.orme {
+    width: auto;
+    height: auto;
+    color: $dark-blue;
+    background-color: $light-grey;
+    border: none;
+    border-radius: 10px;
+    box-shadow: inset -2px -2px 10px white, inset 2px 2px 10px #D1D9E6;
+    transition-duration: 0.4s;
+
+    &:hover {
+        box-shadow: inset 0px 0px 12px #E7E9EC;
+    }
+
+    &.reverse {
+        background-color: -2px -2px 10px white, 2px 2px 10px #D1D9E6 !important;
+    }
+}

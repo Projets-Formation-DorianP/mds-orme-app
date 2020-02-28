@@ -3,13 +3,13 @@
 {% block title %}ORME - S'inscrire{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="logo">
+    <div class="container orme d-flex flex-column align-items-center p-5">
+        <div class="logo mb-4">
             <a href="/homepage"><img src="{{ asset('build/logo.png') }}" width="200" alt=""></a>
         </div>
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button type="submit">S'inscrire</button>
+        {{ form_start(form, {'attr' : {'class': 'd-flex flex-column align-items-center'}}) }}
+        {{ form_widget(form, {'attr' : {'class': 'd-flex flex-column text-center w-100 mb-4'} }) }}
+        <button class="orme h5 mb-3" type="submit">S'inscrire</button>
         <div class="redirect">
             <p>Vous avez déjà un compte ? <a href="/login">Cliquez ici</a></p>
         </div>

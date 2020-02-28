@@ -27,6 +27,7 @@ class RegistrationType extends AbstractType
         return array_merge([
             'label' => $label,
             'attr' => [
+                'class' => 'orme h6 p-2',
                 'placeholder' => $placeholder,
                 'maxlength' => $maxlength
             ],

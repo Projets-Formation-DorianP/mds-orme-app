@@ -11,22 +11,22 @@
             </button>
         </div>
     {% endif %}
-    <div class="container">
-        <div class="logo">
+    <div class="container orme d-flex flex-column align-items-center p-5">
+        <div class="logo mb-4">
             <a href="/homepage"><img src="{{ asset('build/logo.png') }}" width="200" alt=""></a>
         </div>
-        <form name="login" action="{{ path('account_login') }}" method="post">
-            <div id="login">
-                <div>
+        <form class="d-flex flex-column align-items-center" name="login" action="{{ path('account_login') }}" method="post">
+            <div class="d-flex flex-column text-center w-100 mb-4" id="login">
+                <div class="my-2">
                     <label for="login_email" class="required">Adresse email</label>
-                    <input id="login_email" type="email" name="_username" id="email" placeholder="" required value="{{ username }}">
+                    <input class="orme h6 p-2" id="login_email" type="email" name="_username" id="email" placeholder="" required value="{{ username }}">
                 </div>
-                <div>
+                <div class="my-2">
                     <label for="login_hash" class="required">Mot de passe</label>
-                    <input id="login_hash" type="password" name="_password" id="password" placeholder="" required>
+                    <input class="orme h6 p-2" id="login_hash" type="password" name="_password" id="password" placeholder="" required>
                 </div>
             </div>
-            <button type="submit">Connexion</button>
+            <button class="orme h5 mb-3" type="submit">Connexion</button>
             <div class="redirect">
                 <p>Vous n'avez pas encore de compte ? <a href="/register">Cliquez ici</a></p>
             </div>
