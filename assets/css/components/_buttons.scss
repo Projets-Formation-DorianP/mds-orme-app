@@ -1,0 +1,50 @@
+.btn-primary {
+    color: $light-grey;
+    background-color: $dark-blue;
+    border-color: $dark-blue;
+}
+
+.btn-outline-primary {
+    color: $dark-blue;
+    background-color: transparent;
+    background-image: none;
+    border-color: $dark-blue;
+}
+
+.btn-primary:hover, 
+.btn-primary:focus, 
+.btn-primary:active, 
+.btn-primary.active, 
+.open > .dropdown-toggle.btn-primary {
+    color: $light-grey;
+    background-color: #425591;
+    border-color: #425591;
+}
+
+.btn-outline-primary:hover, 
+.btn-outline-primary:focus, 
+.btn-outline-primary:active, 
+.btn-outline-primary.active, 
+.open > .dropdown-toggle.btn-outline-primary {
+    color: $light-grey;
+    background-color: #425591;
+    border-color: #425591;
+}
+
+.btn-secondary {
+    color: $dark-blue;
+    background-color: $light-grey;
+    border-color: $light-grey;
+}
+
+.btn-outline-secondary {
+    color: $light-grey;
+    background-color: transparent;
+    background-image: none;
+    border-color: $light-grey;
+}
+
+div.redirect a {
+    color: $dark-blue !important;
+    text-decoration: underline;
+}
