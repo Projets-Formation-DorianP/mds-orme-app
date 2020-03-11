@@ -2,9 +2,11 @@
 {% set msg = random(0, 18) %}
 
 <!-- Primary Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="navbar-brand">
-        <img class="logo" src="{{ asset('build/logo.png') }}" alt="">
+        <a href="/">
+            <img class="logo" src="{{ asset('build/logo.png') }}" alt="">
+        </a>
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPrimary" aria-controls="navbarPrimary" aria-expanded="false" aria-label="Toggle navigation">
         <span><i class="toggler fa fa-chevron-down"></i></span>
@@ -12,12 +14,6 @@
     <div class="collapse navbar-collapse" id="navbarPrimary">
         <!-- Desktop -->
         <ul class="navbar-nav mr-auto d-none d-lg-flex">
-            <li class="nav-item mx-2">
-                <a class="nav-link" href="/homepage">Accueil</a>
-            </li>
-            <li class="nav-item mx-2">
-                <a class="nav-link" href="/news">Nouveautés</a>
-            </li>
             {% if logged %}
                 <li class="nav-item mx-2">
                     <a class="nav-link" href="/book">Mon journal</a>
@@ -38,7 +34,6 @@
                     {{ app.user.firstname|length > 14 ? app.user.firstname|slice(0, 14) ~ '...' : app.user.firstname  }} 
                     {{ app.user.lastname|length > 14 ? app.user.lastname|slice(0, 14) ~ '...' : app.user.lastname  }}</a>
                     <div class="dropdown-menu dropdown-menu-right fade" aria-labelledby="dropdownProfile">
-                        <a class="dropdown-item" href="/account/mailbox"><i class="fa fa-envelope fa-fw"></i> Mes messages ({{ msg }})</a>
                         <a class="dropdown-item" href="/account/profile"><i class="fa fa-user fa-fw"></i> Mon compte</a>
                         <a class="dropdown-item text-danger" href="/logout"><i class="fa fa-sign-out-alt fa-fw"></i> Se déconnecter</a>
                     </div>
@@ -52,18 +47,9 @@
         </ul>
         <!-- Mobile -->
         <ul class="navbar-nav mr-auto d-lg-none">
-            <li class="nav-item mt-2">
-                <a class="nav-link" href="/homepage"><i class="fa fa-home fa-fw"></i> Accueil</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/news"><i class="fa fa-file-alt fa-fw"></i> Nouveautés</a>
-            </li>
             {% if logged %}
                 <li class="nav-item">
                     <a class="nav-link" href="/book"><i class="fa fa-book fa-fw"></i> Mon journal</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/account/mailbox"><i class="fa fa-envelope fa-fw"></i> Mes messages ({{ msg }})</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/account/profile"><i class="fa fa-user fa-fw"></i> Mon compte</a>

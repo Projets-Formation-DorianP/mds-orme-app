@@ -1,5 +1,8 @@
-<h4>Éditer le profil</h4>
-{{ form_start(form) }}
-{{ form_widget(form) }}
-<button class="btn btn-primary mt-2" type="submit">Enregister</button>
-{{ form_end(form) }}
+<div class="form-edit orme">
+    <h4 class="mb-4">Éditer le profil</h4>
+
+    {{ form_start(form, {'attr': {'class': 'orme'}}) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary mt-2" type="submit">Enregister</button>
+    {{ form_end(form) }}
+</div>

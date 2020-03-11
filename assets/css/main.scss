@@ -14,11 +14,17 @@
 @import "common/variables";
 @import "common/mixins";
 @import "common/global";
-@import "common/orme";
+@import "common/animations";
+
+/*
+ * Components
+ */
+@import "components/navbar";
+@import "components/buttons";
 
 /*
  * Pages
  */
- @import "page/home";
+@import "page/home";
 @import "page/form";
 @import "page/account";
