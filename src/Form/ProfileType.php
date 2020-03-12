@@ -37,7 +37,7 @@ class ProfileType extends AbstractType
             ->add('firstName', TextType::class, $this->getConfiguration('Prénom', '20', true))
             ->add('lastName', TextType::class, $this->getConfiguration('Nom', '20', true))
             ->add('email', EmailType::class, $this->getConfiguration('Adresse email', '255', true))
-            ->add('picture', UrlType::class, $this->getConfiguration('Photo de profil', '255', false))
+            ->add('picture', UrlType::class, array_merge($this->getConfiguration('Photo de profil', '255', false), ['attr' => ['onchange' => 'document.getElementById(\'avatar-preview\').src = this.value']]))
         ;
     }
 

@@ -4,6 +4,10 @@ body.form {
     justify-content: center;
     align-items: center;
 
+    & > div {
+        width: 470px;
+    }
+
     & .alert {
         align-self: flex-start;
         top: 20px;
@@ -16,6 +20,7 @@ body.form {
     }
 
     & form {
+        width: 100%;
 
         & div {
             display: flex;
@@ -31,6 +36,10 @@ body.form {
                     font-size: 1.25rem;
                     font-weight: 500;
                     text-align: left;
+                }
+
+                & > input {
+                    width: 100%;
                 }
             }
         }
