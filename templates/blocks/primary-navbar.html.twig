@@ -2,7 +2,7 @@
 {% set msg = random(0, 18) %}
 
 <!-- Primary Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white">
+<nav class="navbar navbar-expand-lg navbar-light">
     <div class="navbar-brand">
         <a href="/">
             <img class="logo" src="{{ asset('build/logo.png') }}" alt="">
@@ -15,9 +15,13 @@
         <!-- Desktop -->
         <ul class="navbar-nav mr-auto d-none d-lg-flex">
             {% if logged %}
-                <li class="nav-item mx-2">
-                    <a class="nav-link" href="/book">Mon journal</a>
-                </li>
+                {% if diary %}
+                    {# Nothing to do here.. #}
+                {% else %}
+                    <li class="nav-item mx-2">
+                        <a class="nav-link" href="/diary">Mon journal</a>
+                    </li>
+                {% endif %}
             {% endif %}
         </ul>
         <ul class="navbar-nav flex-row ml-md-auto d-none d-lg-flex collapse">
@@ -48,9 +52,13 @@
         <!-- Mobile -->
         <ul class="navbar-nav mr-auto d-lg-none">
             {% if logged %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/book"><i class="fa fa-book fa-fw"></i> Mon journal</a>
-                </li>
+                {% if diary %}
+                    {# Nothing to do here.. #}
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/diary"><i class="fa fa-book fa-fw"></i> Mon journal</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="/account/profile"><i class="fa fa-user fa-fw"></i> Mon compte</a>
                 </li>
