@@ -1,9 +1,20 @@
+/**
+ * Essentials require
+ */
 var $ = require('jquery');
 var jqueryUI = require("jquery-ui");
 require('bootstrap');
 
 global.$ = global.jQuery = $;
 
+/**
+ * Import class
+ */
+import LeftSidebar from './left-sidebar';
+
+/**
+ * Little bit of code
+ */
 $(document).ready(function() {
     // Check Loaded Libraries
     typeof $ == 'undefined' ? console.log('Warning: jQuery can\'t be loaded!') : '';
@@ -24,22 +35,20 @@ $(document).ready(function() {
         $('.navbar-toggler').find('.toggler').removeClass('fa-chevron-up').addClass('fa-chevron-down');
     });
 
-    var body = document.querySelector('body');
-    var navbar = document.querySelector('nav.navbar');
-    body.className.match(new RegExp('(\\s|^)diary(\\s|$)')) ? navbar.classList.add("bg-secondary") : navbar.classList.add("bg-white");
-});
+    const body = document.querySelector('body');
+    const navbar = document.querySelector('nav.navbar');
+    if(body && navbar) {
+        body.className.match(new RegExp('(\\s|^)diary(\\s|$)')) ? navbar.classList.add("bg-secondary") : navbar.classList.add("bg-white");
+    }
 
-// Sidebar
-var fullHeight = function() {
+    /**
+     * Class
+     */
+    const leftSidebar = document.querySelector('.sidebar.left');
+    const leftSidebarCollapse = document.querySelector('.leftSidebarCollapse');
+    const leftSidebarWidgets = [].slice.call(document.querySelectorAll('[data-type]'));
 
-    $('.js-fullheight').css('height', $(window).height());
-    $(window).resize(function(){
-        $('.js-fullheight').css('height', $(window).height());
-    });
-
-};
-fullHeight();
-
-$('#sidebarCollapse').on('click', function () {
-  $('.sidebar.left').toggleClass('active');
+    if(leftSidebar && leftSidebarCollapse && leftSidebarWidgets) {
+        new LeftSidebar(leftSidebar, leftSidebarCollapse, leftSidebarWidgets);
+    }
 });

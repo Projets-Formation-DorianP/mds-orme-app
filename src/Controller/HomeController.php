@@ -12,7 +12,9 @@ class HomeController extends Controller{
      * @Route("/", name="home")
      */
     public function home() {
-        return $this->render('home.html.twig');
+        return $this->render('home.html.twig', [
+            'diary' => false
+        ]);
     }
 
     /**
