@@ -11,6 +11,7 @@ global.$ = global.jQuery = $;
  * Import class
  */
 import LeftSidebar from './left-sidebar';
+import RightSidebar from './right-sidebar';
 
 /**
  * Little bit of code
@@ -41,14 +42,20 @@ $(document).ready(function() {
         body.className.match(new RegExp('(\\s|^)diary(\\s|$)')) ? navbar.classList.add("bg-secondary") : navbar.classList.add("bg-white");
     }
 
-    /**
-     * Class
-     */
+    /* Left Sidebar */
     const leftSidebar = document.querySelector('.sidebar.left');
     const leftSidebarCollapse = document.querySelector('.leftSidebarCollapse');
     const leftSidebarWidgets = [].slice.call(document.querySelectorAll('[data-type]'));
 
     if(leftSidebar && leftSidebarCollapse && leftSidebarWidgets) {
         new LeftSidebar(leftSidebar, leftSidebarCollapse, leftSidebarWidgets);
+    }
+
+    /* Right Sidebar */
+    const rightSidebar = document.querySelector('.sidebar.right');
+    const rightSidebarCollapse = document.querySelector('.rightSidebarCollapse');
+
+    if(rightSidebar && rightSidebarCollapse) {
+        new RightSidebar(rightSidebar, rightSidebarCollapse);
     }
 });
