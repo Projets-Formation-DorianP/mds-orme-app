@@ -9,6 +9,7 @@ use App\Form\PasswordUpdateType;
 use App\Form\ProfileType;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,6 +38,7 @@ class AccountController extends AbstractController
      * Déconnecte la session de l'utilisateur
      * 
      * @Route("/logout", name="account_logout")
+     * @Security("is_granted('ROLE_USER')")
      *
      * @return void
      */
@@ -76,6 +78,7 @@ class AccountController extends AbstractController
      * Affiche le profil de l'utilisateur
      * 
      * @Route("/account/profile", name="account_profile")
+     * @Security("is_granted('ROLE_USER')")
      *
      * @return Response
      */
@@ -100,6 +103,7 @@ class AccountController extends AbstractController
      * Affiche le formulaire de modification de mot de passe
      * 
      * @Route("/account/password", name="account_password")
+     * @Security("is_granted('ROLE_USER')")
      *
      * @return Response
      */
