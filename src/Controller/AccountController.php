@@ -91,6 +91,7 @@ class AccountController extends AbstractController
         }
 
         return $this->render('account.html.twig', [
+            'diary' => false,
             'form' => $form->createView()
         ]);
     }
@@ -127,6 +128,7 @@ class AccountController extends AbstractController
         }
 
         return $this->render('account.html.twig', [
+            'diary' => false,
             'form' => $form->createView()
         ]);
     }

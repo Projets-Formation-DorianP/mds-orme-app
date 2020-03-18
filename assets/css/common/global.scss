@@ -18,11 +18,11 @@ div.form-new-password.orme {
     border-top: 1px solid white;
     border-left: 1px solid white;
     border-radius: 30px;
-    box-shadow: 10px 10px 25px #D1D9E6;
+    box-shadow: 8px 8px 10px #D1D9E6;
     padding: 2rem;
 
     &.reverse {
-        box-shadow: inset -1px -1px 20px white, 1px 1px 20px #D1D9E6 !important;
+        box-shadow: inset 5px 5px 10px #D1D9E6 !important;
     }
 }
 
