@@ -123,4 +123,21 @@ nav.sidebar.right {
 		top: 50%;
 		right: 100%;
 	}
+
+	.widgets {
+		display: block;
+
+		&.active {
+			display: none;
+		}
+
+		&__list {
+			list-style: none;
+			padding: 0 !important;
+		}
+
+		&__items {
+			margin-bottom: 1rem;
+		}
+	}
 }

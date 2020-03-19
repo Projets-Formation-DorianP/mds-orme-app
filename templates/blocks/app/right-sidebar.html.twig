@@ -1,4 +1,18 @@
 <nav class="orme sidebar right active">
     <div class="custom-menu rightSidebarCollapse">
     </div>
+    <div class="widgets active">
+        <ul class="widgets__list">
+            {% for currentWidget in currentUserWidgetOnThisPage %}
+                <li class="widgets__items"
+                    data-id="{{ currentWidget.id }}"
+                    data-type="{{ currentWidget.type }}"
+                >
+                    <div class="widgets__items-infos">
+                        <span>Widget: {{ currentWidget.type }}</span>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 </nav>
