@@ -8,61 +8,43 @@ nav.sidebar {
 	&.orme {
 		background-color: $light-grey;
 		border-top: 1px solid white;
+		padding: 2rem;
+	}
+
+	&.left.orme {
 		border-radius: 0px 30px 0px 0px !important;
 		box-shadow: 10px 10px 25px #D1D9E6;
-		padding: 2rem;
+	}
+
+	&.right.orme {
+		border-radius: 30px 0px 0px 0px !important;
+		box-shadow: -10px -10px 25px #D1D9E6;
+	}
+
+	.custom-menu {
+		display: inline-block;
+		position: absolute;
+		height: 45px;
+		width: 15px;
+		background: grey;
+		display: inline-block;
+		transition: 0.3s;
 	}
 }
 
-nav.sidebar.left{
-  &.active{
-  	margin-left: -17rem;
-  }
+nav.sidebar.left {
+	&.active{
+		margin-left: -17rem;
+	}
 
-  .custom-menu {
-		display: inline-block;
-		position: absolute;
+	.custom-menu {
+		border-bottom-right-radius: 20px;
+		border-top-right-radius: 20px;
 		top: 50%;
-		right: 0;
-		margin-right: -20px;
-		@include transition(.3s);
+		left: 100%;
+	}
 
-		.btn {
-			width: 60px;
-			height: 60px;
-			border-radius: 50%;
-			position: relative;
-
-			i {
-				margin-right: -40px;
-				font-size: 14px;
-			}
-
-			&.btn-primary {
-				background: transparent;
-				border-color: transparent;
-
-				&:after {
-					z-index: -1;
-					position: absolute;
-					top: 0;
-					left: 0;
-					right: 0;
-					bottom: 0;
-					content: '';
-					transform: rotate(45deg);
-					background-color: grey;
-				}
-
-				&:hover,
-				&:focus {
-					box-shadow: none !important;
-				}
-			}
-		}
-	  }
-	  
-	  & > .widgets {
+	& > .widgets {
 		height: 81vh;
 		width: auto;
 
@@ -73,22 +55,22 @@ nav.sidebar.left{
 			flex-direction: row;
 			flex-wrap: wrap;
 			justify-content: space-between;
-			
+
 			& > li {
 				margin-bottom: 1.5rem;
 			}
 		}
 
-		& div.widget.orme {
+		div.widget.orme {
 			border-radius: 15px;
 			width: 90px !important;
 			height: 90px !important;
 			position: relative;
 
-			& span {
+			span {
 				position: absolute;
 				top: 60px;
-    			left: 28px;
+				left: 28px;
 				font-weight: bold;
 				font-size: 0.75rem;
 				color: grey;
@@ -108,29 +90,54 @@ nav.sidebar.left{
 				box-shadow: inset 8px 8px 10px #D1D9E6 !important;
 			}
 
-			& span.texte {
-				&::before {
-					background-image: url(../../../public/build/edit.png);
-				}
+			span.texte::before {
+				background-image: url(../../../public/build/edit.png);
 			}
 
-			& span.image {
-				&::before {
-					background-image: url(../../../public/build/photo.png);
-				}
+			span.image::before {
+				background-image: url(../../../public/build/photo.png);
 			}
 
-			& span.to-do {
-				&::before {
-					background-image: url(../../../public/build/list.png);
-				}
+			span.to-do::before {
+				background-image: url(../../../public/build/list.png);
 			}
 
-			& span.lien {
-				&::before {
-					background-image: url(../../../public/build/link.png);
-				}
+			span.lien::before {
+				background-image: url(../../../public/build/link.png);
 			}
 		}
-	  }
+	}
+}
+
+nav.sidebar.right {
+	&.active{
+		min-width: 0rem;
+		width: 0rem;
+		padding: 0rem;
+		border: none;
+	}
+
+	.custom-menu {
+		border-bottom-left-radius: 20px;
+		border-top-left-radius: 20px;
+		top: 50%;
+		right: 100%;
+	}
+
+	.widgets {
+		display: block;
+
+		&.active {
+			display: none;
+		}
+
+		&__list {
+			list-style: none;
+			padding: 0 !important;
+		}
+
+		&__items {
+			margin-bottom: 1rem;
+		}
+	}
 }
