@@ -28,6 +28,10 @@ class AppFixtures extends Fixture
         $adminRole->setTitle('ROLE_ADMIN');
         $manager->persist($adminRole);
 
+        $userRole = new Role();
+        $userRole->setTitle('ROLE_USER');
+        $manager->persist($userRole);
+
         //Admin
         $adminUser = new User();
         $adminUser->setFirstName("Emilien");
@@ -35,7 +39,7 @@ class AppFixtures extends Fixture
         $adminUser->setEmail("emilien@ymfony.com");
         $adminUser->setHash($this->encoder->encodePassword($adminUser, 'password'));
         $adminUser->setPicture("https://cdn.pixabay.com/photo/2012/04/26/19/43/profile-42914_960_720.png");
-        $adminUser->addUserROle($adminRole);
+        $adminUser->addUserRole($adminRole);
 
         $manager->persist($adminUser);
 
@@ -59,75 +63,70 @@ class AppFixtures extends Fixture
             $user->setEmail($faker->email);
             $user->setPicture($picture);
             $user->setHash($hash);
+            $user->addUserRole($userRole);
 
             $manager->persist($user);
             $users[] = $user;
-        }
 
-        //Nous gérons les pages
-        $pages = [];
+            //Nous gérons les pages
+            $pages = [];
 
-        for ($i=0; $i < 100; $i++) { 
-            $page = new Page();
-            $user = $users[mt_rand(0, count($users) -1)];
-        
-            $page->setPageNumber(mt_rand(0, 150));
-            $page->setUser($user);
+            for ($j=0; $j < 10; $j++) { 
+                $page = new Page();
+                $user = $users[$i];
+            
+                $page->setPageNumber(($j+1));
+                $page->setUser($user);
 
-            $manager->persist($page);
-            $pages[] = $page;
-        }
+                $manager->persist($page);
+                $pages[] = $page;
 
-        //Nous gérons les widgets
-        for ($i=0; $i < count($pages); $i++) { 
-            $nb_widgets = mt_rand(0, 9);
-            $type = ['text', 'image', 'video', 'to-do', 'icon'];
+                //Nous gérons les widgets
+                for ($k=0; $k < count($pages); $k++) { 
+                    $type = ['text', 'image', 'video', 'to-do'];
 
-            for ($j=0; $j < $nb_widgets; $j++) { 
-                $widget = new Widget();
-                $page = $pages[mt_rand(0, count($pages) -1)];
-                
-                $widget->setType($type[mt_rand(0, count($type) -1)]);
-                switch ($widget->getType()) {
-                    case 'text':
-                        $text = $faker->text($maxNbChars = 200);
-                        $widget->setHtmlContent("<p>{$text}</p>");
-                        break;
+                    for ($l=0; $l < 3; $l++) { 
+                        $widget = new Widget();
+                        $page = $pages[mt_rand(0, count($pages) -1)];
+                        
+                        $widget->setType($type[mt_rand(0, count($type) -1)]);
+                        switch ($widget->getType()) {
+                            case 'text':
+                                $text = $faker->text($maxNbChars = 200);
+                                $widget->setHtmlContent("<p>{$text}</p>");
+                                break;
 
-                    case 'image':
-                        $image = $faker->imageUrl($width = 640, $height = 480);
-                        $widget->setHtmlContent("<img src=\"{$image}\"></img>");
-                        break;
-                    
-                    case 'video':
-                        $video = "https://www.youtube.com/watch?v=ILaQjKLcqUQ";
-                        $widget->setHtmlContent("{$video}");
-                        break;
+                            case 'image':
+                                $image = $faker->imageUrl($width = 640, $height = 480);
+                                $widget->setHtmlContent("<img src=\"{$image}\"></img>");
+                                break;
+                            
+                            case 'video':
+                                $video = "https://www.youtube.com/watch?v=ILaQjKLcqUQ";
+                                $widget->setHtmlContent("{$video}");
+                                break;
 
-                    case 'to-do':
-                        $toDoContent = $faker->text($maxNbChars = 15);
-                        $toDo = "<ul>";
-                        for ($k=0; $k < mt_rand(1, 5); $k++) { 
-                            $toDo .= "<li>\"{$toDoContent}\"</li>";
+                            case 'to-do':
+                                $toDoContent = $faker->text($maxNbChars = 15);
+                                $toDo = "<ul>";
+                                for ($m=0; $m < mt_rand(1, 5); $m++) { 
+                                    $toDo .= "<li>\"{$toDoContent}\"</li>";
+                                }
+                                $toDo .= "</ul>";
+
+                                $widget->setHtmlContent($toDo);
+                                break;
+
+                            default:
+                            $widget->setHtmlContent('other');
+                                break;
                         }
-                        $toDo .= "</ul>";
 
-                        $widget->setHtmlContent($toDo);
-                        break;
+                        $widget->setPage($page);
 
-                    case 'icon':
-                        $icon = "https://image.flaticon.com/icons/svg/864/864685.svg";
-                        $widget->setHtmlContent("{$icon}");
-                        break;
-                    
-                    default:
-                    $widget->setHtmlContent('other');
-                        break;
+                        $manager->persist($widget);
+                    }
                 }
-
-                $widget->setPage($page);
-
-                $manager->persist($widget);
             }
         }
 
