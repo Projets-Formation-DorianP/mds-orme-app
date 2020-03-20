@@ -2,8 +2,22 @@
     <div class="custom-menu rightSidebarCollapse">
     </div>
     <div class="widgets active">
+        <h4>Widget de la page de gauche</h4>
         <ul class="widgets__list">
-            {% for currentWidget in currentUserWidgetOnThisPage %}
+            {% for currentWidget in currentUserWidgetOnLeftPage %}
+                <li class="widgets__items"
+                    data-id="{{ currentWidget.id }}"
+                    data-type="{{ currentWidget.type }}"
+                >
+                    <div class="widgets__items-infos">
+                        <span>Widget: {{ currentWidget.type }}</span>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <h4>Widget de la page de droite</h4>
+        <ul class="widgets__list">
+            {% for currentWidget in currentUserWidgetOnRightPage %}
                 <li class="widgets__items"
                     data-id="{{ currentWidget.id }}"
                     data-type="{{ currentWidget.type }}"
