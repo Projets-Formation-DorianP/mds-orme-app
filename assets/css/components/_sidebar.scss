@@ -30,6 +30,11 @@ nav.sidebar {
 		display: inline-block;
 		transition: 0.3s;
 	}
+
+	.widgets {
+		height: 100%;
+		overflow: auto;
+	}
 }
 
 nav.sidebar.left {
@@ -54,7 +59,7 @@ nav.sidebar.left {
 			display: flex;
 			flex-direction: row;
 			flex-wrap: wrap;
-			justify-content: space-between;
+			justify-content: space-evenly;
 
 			& > li {
 				margin-bottom: 1.5rem;

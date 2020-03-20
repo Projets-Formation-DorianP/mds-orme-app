@@ -85,47 +85,45 @@ class AppFixtures extends Fixture
                 for ($k=0; $k < count($pages); $k++) { 
                     $type = ['text', 'image', 'video', 'to-do'];
 
-                    for ($l=0; $l < 3; $l++) { 
-                        $widget = new Widget();
-                        $page = $pages[mt_rand(0, count($pages) -1)];
+                    $widget = new Widget();
+                    
+                    $widget->setType($type[mt_rand(0, count($type) -1)]);
+
+                    switch ($widget->getType()) {
+                        case 'text':
+                            $text = $faker->text($maxNbChars = 200);
+                            $widget->setHtmlContent("<p>{$text}</p>");
+                            break;
+
+                        case 'image':
+                            $image = $faker->imageUrl($width = 640, $height = 480);
+                            $widget->setHtmlContent("<img src=\"{$image}\"></img>");
+                            break;
                         
-                        $widget->setType($type[mt_rand(0, count($type) -1)]);
-                        switch ($widget->getType()) {
-                            case 'text':
-                                $text = $faker->text($maxNbChars = 200);
-                                $widget->setHtmlContent("<p>{$text}</p>");
-                                break;
+                        case 'video':
+                            $video = "https://www.youtube.com/watch?v=ILaQjKLcqUQ";
+                            $widget->setHtmlContent("{$video}");
+                            break;
 
-                            case 'image':
-                                $image = $faker->imageUrl($width = 640, $height = 480);
-                                $widget->setHtmlContent("<img src=\"{$image}\"></img>");
-                                break;
-                            
-                            case 'video':
-                                $video = "https://www.youtube.com/watch?v=ILaQjKLcqUQ";
-                                $widget->setHtmlContent("{$video}");
-                                break;
+                        case 'to-do':
+                            $toDoContent = $faker->text($maxNbChars = 15);
+                            $toDo = "<ul>";
+                            for ($m=0; $m < mt_rand(1, 5); $m++) { 
+                                $toDo .= "<li>\"{$toDoContent}\"</li>";
+                            }
+                            $toDo .= "</ul>";
 
-                            case 'to-do':
-                                $toDoContent = $faker->text($maxNbChars = 15);
-                                $toDo = "<ul>";
-                                for ($m=0; $m < mt_rand(1, 5); $m++) { 
-                                    $toDo .= "<li>\"{$toDoContent}\"</li>";
-                                }
-                                $toDo .= "</ul>";
+                            $widget->setHtmlContent($toDo);
+                            break;
 
-                                $widget->setHtmlContent($toDo);
-                                break;
-
-                            default:
-                            $widget->setHtmlContent('other');
-                                break;
-                        }
-
-                        $widget->setPage($page);
-
-                        $manager->persist($widget);
+                        default:
+                        $widget->setHtmlContent('other');
+                            break;
                     }
+
+                    $widget->setPage($pages[$k]);
+
+                    $manager->persist($widget); 
                 }
             }
         }
