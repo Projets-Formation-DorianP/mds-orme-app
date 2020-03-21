@@ -38,6 +38,24 @@
         justify-content: space-evenly;
     }
 
+    &__button {
+        width: auto;
+        height: auto;
+        background-color: $dark-blue;
+        color: $light-grey;
+        border: none;
+        outline: 0;
+        border-radius: 10px;
+        box-shadow: -5px -5px 20px white, 10px 5px 25px #D1D9E6;
+        padding: 5px 30px 5px 30px;
+        cursor: pointer;
+        transition-duration: 0.4s;
+
+        &:hover {
+            color: $light-grey !important;
+        }
+    }
+
     &__close {
         position: absolute;
         right: 5px;
