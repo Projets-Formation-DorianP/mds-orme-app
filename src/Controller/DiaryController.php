@@ -82,11 +82,12 @@ class DiaryController extends Controller{
         $widgets = [
             'text' => "Texte",
             'image' => "Image",
-            'to-do' => "To-Do",
+            'todo' => "todo",
             'link' => "Lien"
         ];
 
         return $this->render('diary.html.twig', [
+            'coupleLastPageOfCurrentUser' => $coupleLastPageOfCurrentUser,
             'currentUserWidgetOnLeftPage' => $currentUserWidgetOnLeftPage,
             'currentUserWidgetOnRightPage' => $currentUserWidgetOnRightPage,
             'diary' => true,
@@ -164,12 +165,13 @@ class DiaryController extends Controller{
         $widgets = [
             'text' => "Texte",
             'image' => "Image",
-            'to-do' => "To-Do",
+            'todo' => "To-Do",
             'link' => "Lien"
         ];
 
         return $this->render('diary.html.twig', [
             'id' => $id,
+            'coupleLastPageOfCurrentUser' => $coupleLastPageOfCurrentUser,
             'currentUserWidgetOnLeftPage' => $currentUserWidgetOnLeftPage,
             'currentUserWidgetOnRightPage' => $currentUserWidgetOnRightPage,
             'diary' => true,

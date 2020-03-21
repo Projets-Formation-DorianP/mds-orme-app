@@ -29,7 +29,7 @@ class WidgetController extends Controller{
             'text', 
             'image', 
             'link', 
-            'to-do'
+            'todo'
         ];
 
         $user = $this->getUser();
@@ -88,13 +88,8 @@ class WidgetController extends Controller{
                 $widget->setHtmlContent("{$link}");
                 break;
 
-            case 'to-do':
-                $toDo = "<ul>";
-                for ($m=0; $m < mt_rand(1, 5); $m++) { 
-                    $toDo .= "<li>Tâche ${$m}</li>";
-                }
-                $toDo .= "</ul>";
-
+            case 'todo':
+                $toDo = "<ul><li>Tâche 1</li><li>Tâche 2</li></ul>";
                 $widget->setHtmlContent($toDo);
                 break;
 
@@ -110,10 +105,12 @@ class WidgetController extends Controller{
         $manager->flush();
 
         return $this->json([
-            'code'          => 200,
             'userId'        => $user->getId(),
             'pageId'        => $page->getId(),
-            'widgetId'      => $widget->getId()
+            'pageNumber'    => $page->getPageNumber(),
+            'widgetId'      => $widget->getId(),
+            'widgetType'    => $widget->getType(),
+            'widgetContent' => $widget->getHtmlContent()
         ], 200);
     }
 }
