@@ -3,6 +3,7 @@
  */
 var $ = require('jquery');
 var jqueryUI = require("jquery-ui");
+const axios = require('axios').default;
 require('bootstrap');
 
 global.$ = global.jQuery = $;
@@ -20,6 +21,7 @@ $(document).ready(function() {
     // Check Loaded Libraries
     typeof $ == 'undefined' ? console.log('Warning: jQuery can\'t be loaded!') : '';
     typeof jqueryUI == 'undefined' ? console.log('Warning: jQueryUI can\'t be loaded!') : '';
+    typeof axios == 'undefined' ? console.log('Warning: axios can\'t be loaded!') : '';
 
     // Enable Popover
     $('[data-toggle="popover"]').popover();
@@ -45,10 +47,15 @@ $(document).ready(function() {
     /* Left Sidebar */
     const leftSidebar = document.querySelector('.sidebar.left');
     const leftSidebarCollapse = document.querySelector('.leftSidebarCollapse');
-    const leftSidebarWidgets = [].slice.call(document.querySelectorAll('[data-type]'));
+    const leftSidebarWidgets = [].slice.call(document.querySelectorAll('li.left[data-type]'));
+    const popup = document.querySelector('.orme.popup');
+    const popupClose = document.querySelector('.popup__close');
+    const popupButtons = [].slice.call(document.querySelectorAll('.popup__button'));
 
-    if(leftSidebar && leftSidebarCollapse && leftSidebarWidgets) {
-        new LeftSidebar(leftSidebar, leftSidebarCollapse, leftSidebarWidgets);
+    const rightListWidgets = [].slice.call(document.querySelectorAll('.sidebar.right .widgets__list'));
+
+    if(leftSidebar && leftSidebarCollapse && leftSidebarWidgets && popup && popupClose && popupButtons && rightListWidgets) {
+        new LeftSidebar(leftSidebar, leftSidebarCollapse, leftSidebarWidgets, popup, popupClose, popupButtons, rightListWidgets);
     }
 
     /* Right Sidebar */

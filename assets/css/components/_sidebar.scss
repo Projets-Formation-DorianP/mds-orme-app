@@ -123,7 +123,7 @@ nav.sidebar.left {
 				background-image: url(../../../public/build/photo.png);
 			}
 
-			span.to-do::before {
+			span.todo::before {
 				background-image: url(../../../public/build/list.png);
 			}
 
@@ -154,6 +154,17 @@ nav.sidebar.right {
 	.widgets {
 		display: block;
 
+		h4 {
+			font-size: 1rem !important;
+			font-weight: 600;
+			color: grey;
+			margin: 1rem 0 1rem 0;
+		}
+
+		ul:first-of-type {
+			margin-bottom: 1.5rem;
+		}
+
 		&.active {
 			display: none;
 		}
@@ -161,6 +172,11 @@ nav.sidebar.right {
 		&__list {
 			list-style: none;
 			padding: 0 !important;
+
+			li {
+				color: grey;
+				font-size: 0.75rem;
+			}
 		}
 
 		&__items {

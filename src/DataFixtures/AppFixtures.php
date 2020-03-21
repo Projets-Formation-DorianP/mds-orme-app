@@ -83,7 +83,7 @@ class AppFixtures extends Fixture
 
                 //Nous gérons les widgets
                 for ($k=0; $k < count($pages); $k++) { 
-                    $type = ['text', 'image', 'video', 'to-do'];
+                    $type = ['text', 'image', 'link', 'todo'];
 
                     $widget = new Widget();
                     
@@ -100,12 +100,12 @@ class AppFixtures extends Fixture
                             $widget->setHtmlContent("<img src=\"{$image}\"></img>");
                             break;
                         
-                        case 'video':
-                            $video = "https://www.youtube.com/watch?v=ILaQjKLcqUQ";
-                            $widget->setHtmlContent("{$video}");
+                        case 'link':
+                            $link = "https://www.youtube.com/watch?v=ILaQjKLcqUQ";
+                            $widget->setHtmlContent("{$link}");
                             break;
 
-                        case 'to-do':
+                        case 'todo':
                             $toDoContent = $faker->text($maxNbChars = 15);
                             $toDo = "<ul>";
                             for ($m=0; $m < mt_rand(1, 5); $m++) { 
