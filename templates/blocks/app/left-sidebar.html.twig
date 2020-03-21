@@ -7,7 +7,7 @@
                 <li class="widgets__items" 
                     data-type="{{ key|lower }}"
                 >
-                    <a href="#">
+                    <a href="{{ path('create_widget', {'pageNumber':6, 'type':key|lower }) }}">
                         <div class="widget orme">
                             <span class="{{ widget|lower }}">{{ widget|e }}</span>
                         </div>

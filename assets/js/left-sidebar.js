@@ -18,14 +18,14 @@ export default class LeftSidebar {
 
     listenOnClickCollapse() {
         this.leftSidebarCollapse.addEventListener('click', event => {
+            event.preventDefault();
             this.leftSidebar.classList.toggle('active');
-            console.log(event);
         });
     }
 
     listenOnClickWidgets(widgets) {
         console.log(widgets);
-        widgets.map((widget, index) => {
+        widgets.map((widget) => {
             widget.addEventListener('click', event => {
                 event.preventDefault();
                 switch (widget.dataset.type) {

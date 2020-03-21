@@ -3,6 +3,7 @@
  */
 var $ = require('jquery');
 var jqueryUI = require("jquery-ui");
+const axios = require('axios').default;
 require('bootstrap');
 
 global.$ = global.jQuery = $;
@@ -20,6 +21,7 @@ $(document).ready(function() {
     // Check Loaded Libraries
     typeof $ == 'undefined' ? console.log('Warning: jQuery can\'t be loaded!') : '';
     typeof jqueryUI == 'undefined' ? console.log('Warning: jQueryUI can\'t be loaded!') : '';
+    typeof axios == 'undefined' ? console.log('Warning: axios can\'t be loaded!') : '';
 
     // Enable Popover
     $('[data-toggle="popover"]').popover();
