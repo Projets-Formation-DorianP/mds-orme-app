@@ -1,17 +1,17 @@
 export default class RightSidebar {
-    constructor(rightSidebar, rightSidebarCollapse, divWidgets, trash) {
+    constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash) {
         this.rightSidebar = rightSidebar;
 
         if(this.rightSidebar) {
             this.rightSidebarCollapse = rightSidebarCollapse;
             this.divWidgets = divWidgets;
-            this.trash = trash;
+            this.arrayTrash = arrayTrash;
 
             if(this.rightSidebarCollapse && this.divWidgets) {
                 this.listenOnClickCollapse();
             }
 
-            if(this.trash) {
+            if(this.arrayTrash) {
                 this.listenOnClickTrash();
             }
         }
@@ -21,16 +21,25 @@ export default class RightSidebar {
         this.rightSidebarCollapse.addEventListener('click', event => {
             this.rightSidebar.classList.toggle('active');
             this.divWidgets.classList.toggle('active');
-            console.log(event);
         });
     }
 
     listenOnClickTrash() {
-        this.trash.map((trash) => {
+        this.arrayTrash.map((trash) => {
             trash.addEventListener('click', event => {
-                event.preventDefault();
-                // Actions
+                RightSidebar.clickTrash(trash, event);
             })
         })
+    }
+
+    static setListenOnClickTrash(trash) {
+        trash.addEventListener('click', event => {
+            RightSidebar.clickTrash(trash, event);
+        })
+    }
+
+    static clickTrash(trash, event) {
+        event.preventDefault();
+        console.log(trash, event);
     }
 }
