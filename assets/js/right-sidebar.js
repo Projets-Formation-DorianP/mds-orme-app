@@ -1,3 +1,5 @@
+import Axios from "axios";
+
 export default class RightSidebar {
     constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash) {
         this.rightSidebar = rightSidebar;
@@ -40,6 +42,12 @@ export default class RightSidebar {
 
     static clickTrash(trash, event) {
         event.preventDefault();
-        console.log(trash, event);
+
+        var url = `/diary/widget/delete/${trash.dataset.id}`;
+
+        Axios.get(url).then(function(response) {  
+            var li = trash.closest('li');
+            li.remove();
+        })
     }
 }

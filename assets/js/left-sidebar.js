@@ -79,6 +79,7 @@ export default class LeftSidebar {
 
                     var actionsTrash = document.createElement("div");
                     actionsTrash.classList.add('trash');
+                    actionsTrash.dataset.id = response.data.widgetId;
 
                     var actionsA = document.createElement("a");
                     actionsA.href = "#";
