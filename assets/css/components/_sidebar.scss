@@ -181,6 +181,19 @@ nav.sidebar.right {
 
 		&__items {
 			margin-bottom: 1rem;
+			display: flex;
+			flex-direction: row-reverse;
+			justify-content: space-between;
+
+			&-actions {
+				.trash {
+					    background-image: url(../../../public/build/trash.png);
+						width: 15px !important;
+						height: 15px !important;
+						background-size: contain;
+						background-repeat: no-repeat;
+				}
+			}
 		}
 	}
 }

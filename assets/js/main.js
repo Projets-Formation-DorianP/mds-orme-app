@@ -62,8 +62,9 @@ $(document).ready(function() {
     const rightSidebar = document.querySelector('.sidebar.right');
     const rightSidebarCollapse = document.querySelector('.rightSidebarCollapse');
     const divWidgets = document.querySelector('.sidebar.right > .widgets');
+    const trash = [].slice.call(document.querySelectorAll('.trash'));
 
-    if(rightSidebar && rightSidebarCollapse && divWidgets) {
-        new RightSidebar(rightSidebar, rightSidebarCollapse, divWidgets);
+    if(rightSidebar && rightSidebarCollapse && divWidgets && trash) {
+        new RightSidebar(rightSidebar, rightSidebarCollapse, divWidgets, trash);
     }
 });
