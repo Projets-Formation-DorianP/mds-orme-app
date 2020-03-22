@@ -12,6 +12,11 @@
                     <div class="widgets__items-infos">
                         <span>Widget: {{ currentWidget.type }}</span>
                     </div>
+                    <div class="widgets__items-actions">
+                        <a href="#">
+                            <div class="trash" data-id="{{ currentWidget.id }}"></div>
+                        </a>
+                    </div>
                 </li>
             {% endfor %}
         </ul>
@@ -24,6 +29,11 @@
                 >
                     <div class="widgets__items-infos">
                         <span>Widget: {{ currentWidget.type }}</span>
+                    </div>
+                    <div class="widgets__items-actions">
+                        <a href="#">
+                            <div class="trash" data-id="{{ currentWidget.id }}"></div>
+                        </a>
                     </div>
                 </li>
             {% endfor %}

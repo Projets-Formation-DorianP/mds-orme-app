@@ -101,7 +101,7 @@ class AppFixtures extends Fixture
                             break;
                         
                         case 'link':
-                            $link = "https://www.youtube.com/watch?v=ILaQjKLcqUQ";
+                            $link = "<a href='https://www.youtube.com/watch?v=ILaQjKLcqUQ'>Mon lien </a>";
                             $widget->setHtmlContent("{$link}");
                             break;
 

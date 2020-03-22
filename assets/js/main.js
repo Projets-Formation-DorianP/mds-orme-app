@@ -57,13 +57,15 @@ $(document).ready(function() {
     if(leftSidebar && leftSidebarCollapse && leftSidebarWidgets && popup && popupClose && popupButtons && rightListWidgets) {
         new LeftSidebar(leftSidebar, leftSidebarCollapse, leftSidebarWidgets, popup, popupClose, popupButtons, rightListWidgets);
     }
+    
 
     /* Right Sidebar */
     const rightSidebar = document.querySelector('.sidebar.right');
     const rightSidebarCollapse = document.querySelector('.rightSidebarCollapse');
     const divWidgets = document.querySelector('.sidebar.right > .widgets');
+    const arrayTrash = [].slice.call(document.querySelectorAll('.trash'));
 
-    if(rightSidebar && rightSidebarCollapse && divWidgets) {
-        new RightSidebar(rightSidebar, rightSidebarCollapse, divWidgets);
+    if(rightSidebar && rightSidebarCollapse && divWidgets && arrayTrash) {
+        new RightSidebar(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash);
     }
 });

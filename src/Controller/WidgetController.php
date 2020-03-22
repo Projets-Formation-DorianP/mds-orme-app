@@ -100,8 +100,8 @@ class WidgetController extends Controller{
         }
 
         $widget->setPage($page);
-        $manager->persist($widget); 
 
+        $manager->persist($widget); 
         $manager->flush();
 
         return $this->json([
@@ -111,6 +111,37 @@ class WidgetController extends Controller{
             'widgetId'      => $widget->getId(),
             'widgetType'    => $widget->getType(),
             'widgetContent' => $widget->getHtmlContent()
+        ], 200);
+    }
+
+    /**
+     * Delete a widget
+     * 
+     * @Route("/diary/widget/delete/{id}", name="delete_widget")
+     *
+     * @param [type] $id
+     * @param EntityManagerInterface $manager 
+     * @param WidgetRepository $widgetRepo
+     * @return Response
+     */
+    public function delete($id, EntityManagerInterface $manager, WidgetRepository $widgetRepo) : Response {
+        $user = $this->getUser();
+
+        /**
+         * Check if user is connected
+         */
+        if (!$user) return $this->json([
+            'code'      => 403,
+            'message'   => 'Unauthorized'
+        ], 403);
+
+        $widget = $widgetRepo->findOneBy(['id' => $id]);
+
+        $manager->remove($widget);
+        $manager->flush();
+
+        return $this->json([
+            'message'        => 'Widget supprimé avec succès'
         ], 200);
     }
 }

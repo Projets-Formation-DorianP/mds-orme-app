@@ -1,4 +1,5 @@
 import Axios from "axios";
+import RightSidebar from "./right-sidebar";
 
 export default class LeftSidebar {
     constructor(leftSidebar, leftSidebarCollapse, leftSidebarWidgets, popup, popupClose, popupButtons, rightListWidgets) {
@@ -69,24 +70,36 @@ export default class LeftSidebar {
 
                 var url = `/diary/${button.dataset.pageNumber}/widget/create/${this.currentWidget.dataset.type}`;
 
-                console.log(url, list);
-
-                Axios.get(url).then(function(response) {
-                    var li = document.createElement("li");
-                    var div = document.createElement("div");
+                Axios.get(url).then(function(response) {  
                     var span = document.createElement("span");
-
                     span.textContent = "Widget: " + response.data.widgetType;
 
+                    var div = document.createElement("div");
                     div.classList.add('widgets__items-infos');
 
+                    var actionsTrash = document.createElement("div");
+                    actionsTrash.classList.add('trash');
+                    actionsTrash.dataset.id = response.data.widgetId;
+
+                    var actionsA = document.createElement("a");
+                    actionsA.href = "#";
+
+                    var actionsDiv = document.createElement("div");
+                    actionsDiv.classList.add('widgets__items-actions');
+
+                    var li = document.createElement("li");
                     li.classList.add('widgets__items');
                     li.dataset.id = response.data.widgetId;
                     li.dataset.type = response.data.widgetType;
 
                     div.appendChild(span);
+                    actionsA.appendChild(actionsTrash);
+                    actionsDiv.appendChild(actionsA);
                     li.appendChild(div);
+                    li.appendChild(actionsDiv)
                     list.appendChild(li);
+
+                    RightSidebar.setListenOnClickTrash(actionsTrash);
                 })
 
                 this.closePopup();
