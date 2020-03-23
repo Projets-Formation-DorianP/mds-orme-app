@@ -1,9 +1,10 @@
 import Axios from "axios";
 
-export default class Navigation {
-    constructor(navigationArrows, navigationInput) {
+export default class ActionsPage {
+    constructor(navigationArrows, navigationInput, createPages) {
         this.navigationArrows = navigationArrows;
         this.navigationInput = navigationInput;
+        this.createPages = createPages;
 
         if(this.navigationArrows) {
             this.listenOnClickArrows(this.navigationArrows);
@@ -12,6 +13,27 @@ export default class Navigation {
         if(this.navigationInput) {
             this.listenOnEnterInput(this.navigationInput);
         }
+
+        if(this.createPages) {
+            this.listenOnClickCreatePages();
+        }
+    }
+
+    listenOnClickCreatePages() {
+        this.createPages.addEventListener('click', event => {
+            event.preventDefault();
+
+            const urlCreateNewPages= '/page/create';
+            
+            Axios.get(urlCreateNewPages).then(function(response) {  
+                if(response.data.pagesCreated) {
+                    const lastUrlRedirect = '/diary/';
+                    window.location.replace(lastUrlRedirect);
+                }else {
+                    // Nothing to do here..
+                }
+            })   
+        })
     }
 
     listenOnClickArrows(arrows) {
@@ -37,7 +59,6 @@ export default class Navigation {
             // Nothing to do here..
         }else {
             const url = `/diary/${previousPageNumber}`;
-
             window.location.replace(url);
         }
     }
@@ -47,20 +68,11 @@ export default class Navigation {
         const url = `/page/how-many`;
 
         Axios.get(url).then(function(response) {  
-            if(response.data.nbPages > nextPageNumber) {
+            if(response.data.nbPages < nextPageNumber) {
+                // Nothing to do here..
+            }else {
                 const urlRedirect = `/diary/${nextPageNumber}`;
                 window.location.replace(urlRedirect);
-            }else {
-                const urlCreateNewPages= '/page/create';
-                
-                Axios.get(urlCreateNewPages).then(function(response) {  
-                    if(response.data.pagesCreated) {
-                        const lastUrlRedirect = '/diary/';
-                        window.location.replace(lastUrlRedirect);
-                    }else {
-                        // Nothing to do here..
-                    }
-                })
             }
         })
     }
@@ -87,5 +99,13 @@ export default class Navigation {
                 }
             }
         });
+    }
+    
+    openPopup() {
+        this.popupCreate.classList.add('active');
+    }
+
+    closePopup() {
+        this.popupCreate.classList.remove('active');
     }
 }

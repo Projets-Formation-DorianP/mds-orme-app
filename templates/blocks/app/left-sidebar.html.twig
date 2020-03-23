@@ -8,8 +8,13 @@
             </a>
         {% endif %}
         <input type="text" class="navigation__input" placeholder="{{ coupleLastPageOfCurrentUser[0] }} - {{ coupleLastPageOfCurrentUser[1] }}">
-        <a href="#"  class="navigation__link right" data-next-page-number="{{ (coupleLastPageOfCurrentUser[1]+1) }}">
-            <div class="navigation__right square"></div>
+        {% if (coupleLastPageOfCurrentUser[1]+1) < nbPagesCurrentUser %}
+            <a href="#"  class="navigation__link right" data-next-page-number="{{ (coupleLastPageOfCurrentUser[1]+1) }}">
+                <div class="navigation__right square"></div>
+            </a>
+        {% endif %}
+        <a href="#" class="create-page__link">
+            <div class="create-page__div"></div>
         </a>
     </div>
     <div class="widgets">

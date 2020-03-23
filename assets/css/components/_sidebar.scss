@@ -62,6 +62,20 @@ nav.sidebar.left {
 		margin-left: -17rem;
 	}
 
+	.create-page {
+		&__link {
+			margin-left: 1.5rem;
+		}
+
+		&__div {
+			background-image: url(../../../public/build/plus.png);
+			width: 25px !important;
+			height: 25px !important;
+			background-size: contain;
+			background-repeat: no-repeat;
+		}
+	}
+
 	.navigation {
 		display: flex;
 		flex-direction: row;
