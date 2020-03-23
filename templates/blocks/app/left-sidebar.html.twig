@@ -1,6 +1,17 @@
 <nav class="orme sidebar left">
     <div class="custom-menu leftSidebarCollapse">
     </div>
+    <div class="navigation">
+        {% if (coupleLastPageOfCurrentUser[0]-1) != 0 %}
+            <a href="#" class="navigation__link left" data-previous-page-number="{{ (coupleLastPageOfCurrentUser[0]-1) }}">
+                <div class="navigation__left square"></div>
+            </a>
+        {% endif %}
+        <input type="text" class="navigation__input" placeholder="{{ coupleLastPageOfCurrentUser[0] }} - {{ coupleLastPageOfCurrentUser[1] }}">
+        <a href="#"  class="navigation__link right" data-next-page-number="{{ (coupleLastPageOfCurrentUser[1]+1) }}">
+            <div class="navigation__right square"></div>
+        </a>
+    </div>
     <div class="widgets">
         <ul class="widgets__list">
             {% for key,widget in array_widgets %}
