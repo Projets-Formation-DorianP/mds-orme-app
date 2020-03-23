@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-export default class Navigation {
+export default class Page {
     constructor(navigationArrows, navigationInput) {
         this.navigationArrows = navigationArrows;
         this.navigationInput = navigationInput;
@@ -37,7 +37,6 @@ export default class Navigation {
             // Nothing to do here..
         }else {
             const url = `/diary/${previousPageNumber}`;
-
             window.location.replace(url);
         }
     }
@@ -47,20 +46,11 @@ export default class Navigation {
         const url = `/page/how-many`;
 
         Axios.get(url).then(function(response) {  
-            if(response.data.nbPages > nextPageNumber) {
+            if(response.data.nbPages < nextPageNumber) {
+                // Nothing to do here..
+            }else {
                 const urlRedirect = `/diary/${nextPageNumber}`;
                 window.location.replace(urlRedirect);
-            }else {
-                const urlCreateNewPages= '/page/create';
-                
-                Axios.get(urlCreateNewPages).then(function(response) {  
-                    if(response.data.pagesCreated) {
-                        const lastUrlRedirect = '/diary/';
-                        window.location.replace(lastUrlRedirect);
-                    }else {
-                        // Nothing to do here..
-                    }
-                })
             }
         })
     }
@@ -89,3 +79,14 @@ export default class Navigation {
         });
     }
 }
+
+// const urlCreateNewPages= '/page/create';
+                
+// Axios.get(urlCreateNewPages).then(function(response) {  
+//     if(response.data.pagesCreated) {
+//         const lastUrlRedirect = '/diary/';
+//         window.location.replace(lastUrlRedirect);
+//     }else {
+//         // Nothing to do here..
+//     }
+// })

@@ -87,6 +87,7 @@ class DiaryController extends Controller{
         ];
 
         return $this->render('diary.html.twig', [
+            'nbPagesCurrentUser' => count($currentUserPages),
             'coupleLastPageOfCurrentUser' => $coupleLastPageOfCurrentUser,
             'currentUserWidgetOnLeftPage' => $currentUserWidgetOnLeftPage,
             'currentUserWidgetOnRightPage' => $currentUserWidgetOnRightPage,
@@ -171,6 +172,7 @@ class DiaryController extends Controller{
 
         return $this->render('diary.html.twig', [
             'id' => $id,
+            'nbPagesCurrentUser' => count($currentUserPages),
             'coupleLastPageOfCurrentUser' => $coupleLastPageOfCurrentUser,
             'currentUserWidgetOnLeftPage' => $currentUserWidgetOnLeftPage,
             'currentUserWidgetOnRightPage' => $currentUserWidgetOnRightPage,
