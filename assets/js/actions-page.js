@@ -1,9 +1,10 @@
 import Axios from "axios";
 
-export default class Page {
-    constructor(navigationArrows, navigationInput) {
+export default class ActionsPage {
+    constructor(navigationArrows, navigationInput, createPages) {
         this.navigationArrows = navigationArrows;
         this.navigationInput = navigationInput;
+        this.createPages = createPages;
 
         if(this.navigationArrows) {
             this.listenOnClickArrows(this.navigationArrows);
@@ -12,6 +13,27 @@ export default class Page {
         if(this.navigationInput) {
             this.listenOnEnterInput(this.navigationInput);
         }
+
+        if(this.createPages) {
+            this.listenOnClickCreatePages();
+        }
+    }
+
+    listenOnClickCreatePages() {
+        this.createPages.addEventListener('click', event => {
+            event.preventDefault();
+
+            const urlCreateNewPages= '/page/create';
+            
+            Axios.get(urlCreateNewPages).then(function(response) {  
+                if(response.data.pagesCreated) {
+                    const lastUrlRedirect = '/diary/';
+                    window.location.replace(lastUrlRedirect);
+                }else {
+                    // Nothing to do here..
+                }
+            })   
+        })
     }
 
     listenOnClickArrows(arrows) {
@@ -78,15 +100,12 @@ export default class Page {
             }
         });
     }
-}
+    
+    openPopup() {
+        this.popupCreate.classList.add('active');
+    }
 
-// const urlCreateNewPages= '/page/create';
-                
-// Axios.get(urlCreateNewPages).then(function(response) {  
-//     if(response.data.pagesCreated) {
-//         const lastUrlRedirect = '/diary/';
-//         window.location.replace(lastUrlRedirect);
-//     }else {
-//         // Nothing to do here..
-//     }
-// })
+    closePopup() {
+        this.popupCreate.classList.remove('active');
+    }
+}

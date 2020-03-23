@@ -13,7 +13,7 @@ global.$ = global.jQuery = $;
  */
 import LeftSidebar from './left-sidebar';
 import RightSidebar from './right-sidebar';
-import Page from './page';
+import ActionsPage from './actions-page';
 
 /**
  * Little bit of code
@@ -60,9 +60,10 @@ $(document).ready(function() {
 
         const navigationArrows = [].slice.call(document.querySelectorAll('.navigation__link'));
         const navigationInput = document.querySelector('.navigation__input');
+        const createPages = document.querySelector('.create-page__link');
 
         if(navigationArrows && navigationInput) {
-            new Page(navigationArrows, navigationInput);
+            new ActionsPage(navigationArrows, navigationInput, createPages);
         }
     }
     
