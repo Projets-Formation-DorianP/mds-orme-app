@@ -31,7 +31,7 @@ export default class Navigation {
     }
 
     onClickLeftArrow(arrow) {
-        var previousPageNumber = arrow.dataset.previousPageNumber;
+        var previousPageNumber = parseInt(arrow.dataset.previousPageNumber);
 
         if(previousPageNumber === 0) {
             // Nothing to do here..
@@ -43,7 +43,26 @@ export default class Navigation {
     }
 
     onClickRightArrow(arrow) {
-        console.log('right');
+        var nextPageNumber = parseInt(arrow.dataset.nextPageNumber);
+        const url = `/page/how-many`;
+
+        Axios.get(url).then(function(response) {  
+            if(response.data.nbPages > nextPageNumber) {
+                const urlRedirect = `/diary/${nextPageNumber}`;
+                window.location.replace(urlRedirect);
+            }else {
+                const urlCreateNewPages= '/page/create';
+                
+                Axios.get(urlCreateNewPages).then(function(response) {  
+                    if(response.data.pagesCreated) {
+                        const lastUrlRedirect = '/diary/';
+                        window.location.replace(lastUrlRedirect);
+                    }else {
+                        // Nothing to do here..
+                    }
+                })
+            }
+        })
     }
 
     listenOnEnterInput(input) {

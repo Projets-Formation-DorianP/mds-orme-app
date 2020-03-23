@@ -49,9 +49,9 @@ $(document).ready(function() {
     const leftSidebar = document.querySelector('.sidebar.left');
     const leftSidebarCollapse = document.querySelector('.leftSidebarCollapse');
     const leftSidebarWidgets = [].slice.call(document.querySelectorAll('li.left[data-type]'));
-    const popup = document.querySelector('.orme.popup');
-    const popupClose = document.querySelector('.popup__close');
-    const popupButtons = [].slice.call(document.querySelectorAll('.popup__button'));
+    const popup = document.querySelector('.orme.popup.choose');
+    const popupClose = document.querySelector('.popup__close.choose');
+    const popupButtons = [].slice.call(document.querySelectorAll('.popup__button.choose'));
 
     const rightListWidgets = [].slice.call(document.querySelectorAll('.sidebar.right .widgets__list'));
 
