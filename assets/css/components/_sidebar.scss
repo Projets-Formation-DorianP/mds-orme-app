@@ -32,7 +32,6 @@ nav.sidebar {
 	}
 
 	.widgets {
-		height: 100%;
 		overflow: auto;
 		padding: 1rem;
 
@@ -99,6 +98,7 @@ nav.sidebar.left {
 	}
 
 	& > .widgets {
+		height: 96%;
 		width: auto;
 
 		& > ul {
@@ -180,6 +180,7 @@ nav.sidebar.right {
 	}
 
 	.widgets {
+		height: 100%;
 		display: block;
 
 		h4 {
