@@ -63,6 +63,34 @@ nav.sidebar.left {
 		margin-left: -17rem;
 	}
 
+	.navigation {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+
+		.square {
+			width: 0;
+			height: 0;
+			border-top: 13px solid transparent;
+			border-bottom: 13px solid transparent;
+		}
+
+		&__left {
+			border-right: 15px solid grey;
+			margin-right: 1rem;
+		}
+
+		&__input{
+			width: 30%;
+			height: 97%;
+		}
+
+		&__right {
+			border-left: 15px solid grey;
+			margin-left: 1rem;
+		}
+	}
+
 	.custom-menu {
 		border-bottom-right-radius: 20px;
 		border-top-right-radius: 20px;

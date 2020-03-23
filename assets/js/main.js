@@ -13,6 +13,7 @@ global.$ = global.jQuery = $;
  */
 import LeftSidebar from './left-sidebar';
 import RightSidebar from './right-sidebar';
+import Navigation from './navigation';
 
 /**
  * Little bit of code
@@ -56,6 +57,13 @@ $(document).ready(function() {
 
     if(leftSidebar && leftSidebarCollapse && leftSidebarWidgets && popup && popupClose && popupButtons && rightListWidgets) {
         new LeftSidebar(leftSidebar, leftSidebarCollapse, leftSidebarWidgets, popup, popupClose, popupButtons, rightListWidgets);
+
+        const navigationArrows = [].slice.call(document.querySelectorAll('.navigation__link'));
+        const navigationInput = document.querySelector('.navigation__input');
+
+        if(navigationArrows && navigationInput) {
+            new Navigation(navigationArrows, navigationInput);
+        }
     }
     
 
