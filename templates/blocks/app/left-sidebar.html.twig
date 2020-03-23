@@ -7,7 +7,7 @@
                 <div class="navigation__left square"></div>
             </a>
         {% endif %}
-        <input type="text" class="navigation__input">
+        <input type="text" class="navigation__input" placeholder="{{ coupleLastPageOfCurrentUser[0] }} - {{ coupleLastPageOfCurrentUser[1] }}">
         <a href="#"  class="navigation__link right" data-next-page-number="{{ (coupleLastPageOfCurrentUser[1]+1) }}">
             <div class="navigation__right square"></div>
         </a>

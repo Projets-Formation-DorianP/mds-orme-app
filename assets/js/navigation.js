@@ -34,7 +34,7 @@ export default class Navigation {
         var previousPageNumber = arrow.dataset.previousPageNumber;
 
         if(previousPageNumber === 0) {
-            // Nothing to do here
+            // Nothing to do here..
         }else {
             const url = `/diary/${previousPageNumber}`;
 
@@ -49,7 +49,23 @@ export default class Navigation {
     listenOnEnterInput(input) {
         input.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
-                console.log('input');
+                var pageNumber = parseInt(input.value);
+                
+                if(isNaN(pageNumber)) {
+                    input.value = "";
+                }else{
+                    const url = `/page/check/${pageNumber}`;
+
+                    Axios.get(url).then(function(response) {  
+                        if(response.data.exists) {
+                            const urlRedirect = `/diary/${pageNumber}`;
+
+                            window.location.replace(urlRedirect);
+                        }else {
+                            input.value = "";
+                        }
+                    })
+                }
             }
         });
     }
