@@ -1,6 +1,6 @@
 nav.sidebar {
-	min-width: 17rem;
-	max-width: 17rem;
+	min-width: 15vw;
+	max-width: 15vw;
 	transition: all 0.3s;
 	position: relative;
 	height: 85vh;
@@ -29,6 +29,7 @@ nav.sidebar {
 		background: grey;
 		display: inline-block;
 		transition: 0.3s;
+		cursor: pointer;
 	}
 
 	.widgets {
@@ -59,7 +60,7 @@ nav.sidebar {
 
 nav.sidebar.left {
 	&.active{
-		margin-left: -17rem;
+		margin-left: -15vw;
 	}
 
 	.create-page {
@@ -180,9 +181,9 @@ nav.sidebar.right {
     direction: rtl;
 	
 	&.active{
-		min-width: 0rem;
-		width: 0rem;
-		padding: 0rem;
+		min-width: 0vw;
+		width: 0vw;
+		padding: 0vw;
 		border: none;
 	}
 
