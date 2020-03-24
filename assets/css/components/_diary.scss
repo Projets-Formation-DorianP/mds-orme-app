@@ -1,0 +1,32 @@
+.diary {
+    &__bloc {
+        width: 30vw !important;
+        height: 83vh !important;
+        padding: 1rem !important;
+        position: fixed;
+        top: 15%;
+
+        &.fav {
+            width: 4vw !important;
+            min-height: 10vh !important;
+            height: auto !important;
+            left: 79%;
+        }
+
+        &.left {
+            left: 17%;
+        }
+
+        &.right {
+            left: 48%;
+        }
+    }
+
+    &__widget {
+        width: 90px; 
+        height: 90px; 
+        padding: 0.5em; 
+        float: left; 
+        border: 1px solid red;
+    }
+}

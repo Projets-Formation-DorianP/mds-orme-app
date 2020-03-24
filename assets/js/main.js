@@ -19,6 +19,12 @@ import ActionsPage from './actions-page';
  * Little bit of code
  */
 $(document).ready(function() {
+    //Test draggable
+    $( ".draggable" ).draggable({ 
+        containment: "parent", 
+        scroll: false 
+    });
+
     // Check Loaded Libraries
     typeof $ == 'undefined' ? console.log('Warning: jQuery can\'t be loaded!') : '';
     typeof jqueryUI == 'undefined' ? console.log('Warning: jQueryUI can\'t be loaded!') : '';
