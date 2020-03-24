@@ -1,10 +1,16 @@
 import Axios from "axios";
 
 export default class ActionsPage {
-    constructor(navigationArrows, navigationInput, createPages) {
+    constructor(navigationArrows, navigationInput, createPages, diaryLeftPage, diaryRightPage) {
         this.navigationArrows = navigationArrows;
         this.navigationInput = navigationInput;
         this.createPages = createPages;
+        this.diaryLeftPage = diaryLeftPage;
+        this.diaryRightPage = diaryRightPage;
+
+        if(this.diaryLeftPage && this.diaryRightPage) {
+            this.loadCurrentsPageWidgets(this.diaryLeftPage, this.diaryRightPage);
+        }
 
         if(this.navigationArrows) {
             this.listenOnClickArrows(this.navigationArrows);
@@ -17,6 +23,64 @@ export default class ActionsPage {
         if(this.createPages) {
             this.listenOnClickCreatePages();
         }
+    }
+
+    loadCurrentsPageWidgets(leftPage, rightPage) {
+        var pageNumber = parseInt(this.diaryLeftPage.dataset.pageNumber);
+
+        const url = `/page/widgets/${pageNumber}`;
+        
+        Axios.get(url).then(function(response) {  
+            var firstPageWidgets = response.data.widgets.firstPage;
+            var secondPageWidgets = response.data.widgets.secondPage;
+
+            firstPageWidgets.forEach(widget => {
+                if(widget.type === "text") {
+                    var divWidget = document.createElement('div');
+
+                    divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
+                    divWidget.style.position = 'relative';
+                    divWidget.dataset.id = widget.id;
+                    divWidget.dataset.type = widget.type;
+                    
+                    let widgetHtmlContent = document.createRange().createContextualFragment(widget.htmlContent);
+
+                    divWidget.appendChild(widgetHtmlContent);
+                    leftPage.appendChild(divWidget);
+
+                    $( ".diary__widget" ).draggable({ 
+                        containment: "parent", 
+                        scroll: false
+                        // stop: function(event) {
+                        //     var l = ( 100 * parseFloat($(this).position().left / parseFloat($(this).parent().width())) ) + "%" ;
+                        //     var t = ( 100 * parseFloat($(this).position().top / parseFloat($(this).parent().height())) ) + "%" ;
+                        //     console.log(l, t);
+                        // }
+                    });
+                }  
+            });
+
+            secondPageWidgets.forEach(widget => {
+                if(widget.type === "text") {
+                    var divWidget = document.createElement('div');
+
+                    divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
+                    divWidget.style.position = 'relative';
+                    divWidget.dataset.id = widget.id;
+                    divWidget.dataset.type = widget.type;
+                    
+                    let widgetHtmlContent = document.createRange().createContextualFragment(widget.htmlContent);
+
+                    divWidget.appendChild(widgetHtmlContent);
+                    rightPage.appendChild(divWidget);
+
+                    $( ".diary__widget" ).draggable({ 
+                        containment: "parent", 
+                        scroll: false
+                    });
+                }  
+            });
+        })
     }
 
     listenOnClickCreatePages() {

@@ -19,12 +19,6 @@ import ActionsPage from './actions-page';
  * Little bit of code
  */
 $(document).ready(function() {
-    //Test draggable
-    $( ".draggable" ).draggable({ 
-        containment: "parent", 
-        scroll: false 
-    });
-
     // Check Loaded Libraries
     typeof $ == 'undefined' ? console.log('Warning: jQuery can\'t be loaded!') : '';
     typeof jqueryUI == 'undefined' ? console.log('Warning: jQueryUI can\'t be loaded!') : '';
@@ -67,12 +61,13 @@ $(document).ready(function() {
         const navigationArrows = [].slice.call(document.querySelectorAll('.navigation__link'));
         const navigationInput = document.querySelector('.navigation__input');
         const createPages = document.querySelector('.create-page__link');
+        const diaryLeftPage = document.querySelector('.diary__bloc.left');
+        const diaryRightPage = document.querySelector('.diary__bloc.right');
 
-        if(navigationArrows && navigationInput) {
-            new ActionsPage(navigationArrows, navigationInput, createPages);
+        if(navigationArrows && navigationInput && createPages && diaryLeftPage && diaryRightPage) {
+            new ActionsPage(navigationArrows, navigationInput, createPages, diaryLeftPage, diaryRightPage);
         }
     }
-    
 
     /* Right Sidebar */
     const rightSidebar = document.querySelector('.sidebar.right');

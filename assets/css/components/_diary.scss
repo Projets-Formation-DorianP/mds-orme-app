@@ -23,8 +23,9 @@
     }
 
     &__widget {
-        width: 90px; 
-        height: 90px; 
+        width: auto;
+        max-width: 250px; 
+        height: auto; 
         padding: 0.5em; 
         float: left; 
         border: 1px solid red;
