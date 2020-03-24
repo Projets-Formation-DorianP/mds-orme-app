@@ -40,6 +40,8 @@ export default class ActionsPage {
 
                     divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
                     divWidget.style.position = 'relative';
+                    divWidget.style.top = widget.top + "%";
+                    divWidget.style.left = widget.left + "%";
                     divWidget.dataset.id = widget.id;
                     divWidget.dataset.type = widget.type;
                     
