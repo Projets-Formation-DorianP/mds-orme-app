@@ -122,6 +122,8 @@ class AppFixtures extends Fixture
                     }
 
                     $widget->setPage($pages[$k]);
+                    $widget->setPositionTop(25.5 + rand(0, 5));
+                    $widget->setPositionLeft(30.5 + rand(0, 7));
 
                     $manager->persist($widget); 
                 }

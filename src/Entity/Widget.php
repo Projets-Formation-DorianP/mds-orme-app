@@ -32,6 +32,16 @@ class Widget
      */
     private $page;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $positionTop;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $positionLeft;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +79,30 @@ class Widget
     public function setPage(?Page $page): self
     {
         $this->page = $page;
+
+        return $this;
+    }
+
+    public function getPositionTop(): ?float
+    {
+        return $this->positionTop;
+    }
+
+    public function setPositionTop(float $positionTop): self
+    {
+        $this->positionTop = $positionTop;
+
+        return $this;
+    }
+
+    public function getPositionLeft(): ?float
+    {
+        return $this->positionLeft;
+    }
+
+    public function setPositionLeft(float $positionLeft): self
+    {
+        $this->positionLeft = $positionLeft;
 
         return $this;
     }

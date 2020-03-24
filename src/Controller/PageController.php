@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Page;
 use App\Repository\PageRepository;
+use App\Repository\WidgetRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -107,6 +108,91 @@ class PageController extends Controller{
             'firstPage'     => $firstPage->getId(),
             'secondPage'    => $secondPage->getId(),
             'pagesCreated'   => true
+        ], 200);
+    }
+
+    /**
+     * Get all widgets from a couple of pages
+     * 
+     * @Route("/page/widgets/{pageNumber}", name="get_widgets")
+     *
+     * @param [int] $pageNumber
+     * @param PageRepository $pageRepo
+     * @return Response
+     */
+    public function getWidgets($pageNumber, PageRepository $pageRepo, WidgetRepository $widgetRepo) : Response {
+        $user = $this->getUser();
+
+        /**
+         * Check if user is connected
+         */
+        if (!$user) return $this->json([
+            'code'      => 403,
+            'message'   => 'Unauthorized'
+        ], 403);
+
+        /**
+         * Retrieve the requested pages
+         */
+        $pages = array();
+
+        $firstPage = $pageRepo->findOneBy([
+            'user' => $user,
+            'pageNumber' => (int) $pageNumber,
+        ]);
+
+        array_push($pages, $firstPage);
+
+        $secondPage = $pageRepo->findOneBy([
+            'user' => $user,
+            'pageNumber' => (int) $pageNumber % 2 == 1 ? ($pageNumber +1) : ($pageNumber -1),
+        ]);
+
+        array_push($pages, $secondPage);
+
+        /**
+         * Retrieve the widgets of requested pages
+         */
+        $widgetsFirstPage = $widgetRepo->findBy([
+            'page' => (int) $pages[0]->getId(),
+        ]);
+
+        $widgetsSecondPage = $widgetRepo->findBy([
+            'page' => (int) $pages[1]->getId(),
+        ]);
+
+        /**
+         * Construct response array
+         */
+        $response = [
+            'firstPage' => array(),
+            'secondPage' => array()
+        ];
+
+        foreach ($widgetsFirstPage as $key => $widget) {
+            array_push($response['firstPage'], array(
+                    'id'          => $widget->getId(),
+                    'type'        => $widget->getType(),
+                    'htmlContent' => $widget->getHtmlContent(),
+                    'top'         => $widget->getPositionTop(),
+                    'left'        => $widget->getPositionLeft(),
+                    'pageNumber'  => $pages[0]->getPageNumber(),
+                ));
+        }
+
+        foreach ($widgetsSecondPage as $key => $widget) {
+            array_push($response['secondPage'], array(
+                'id'          => $widget->getId(),
+                'type'        => $widget->getType(),
+                'htmlContent' => $widget->getHtmlContent(),
+                'top'         => $widget->getPositionTop(),
+                'left'        => $widget->getPositionLeft(),
+                'pageNumber'  => $pages[1]->getPageNumber(),
+            ));
+        }
+
+        return $this->json([
+            'widgets' => $response
         ], 200);
     }
 }

@@ -1,10 +1,16 @@
 import Axios from "axios";
 
 export default class ActionsPage {
-    constructor(navigationArrows, navigationInput, createPages) {
+    constructor(navigationArrows, navigationInput, createPages, diaryLeftPage, diaryRightPage) {
         this.navigationArrows = navigationArrows;
         this.navigationInput = navigationInput;
         this.createPages = createPages;
+        this.diaryLeftPage = diaryLeftPage;
+        this.diaryRightPage = diaryRightPage;
+
+        if(this.diaryLeftPage && this.diaryRightPage) {
+            this.loadCurrentsPageWidgets(this.diaryLeftPage, this.diaryRightPage);
+        }
 
         if(this.navigationArrows) {
             this.listenOnClickArrows(this.navigationArrows);
@@ -17,6 +23,82 @@ export default class ActionsPage {
         if(this.createPages) {
             this.listenOnClickCreatePages();
         }
+    }
+
+    loadCurrentsPageWidgets(leftPage, rightPage) {
+        var pageNumber = parseInt(this.diaryLeftPage.dataset.pageNumber);
+
+        const url = `/page/widgets/${pageNumber}`;
+        
+        Axios.get(url).then(function(response) {  
+            var firstPageWidgets = response.data.widgets.firstPage;
+            var secondPageWidgets = response.data.widgets.secondPage;
+
+            firstPageWidgets.forEach(widget => {
+                if(widget.type === "text") {
+                    var divWidget = document.createElement('div');
+
+                    divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
+                    divWidget.style.position = 'relative';
+                    divWidget.style.top = widget.top + "px";
+                    divWidget.style.left = widget.left + "px";
+                    divWidget.dataset.id = widget.id;
+                    divWidget.dataset.type = widget.type;
+                    
+                    let widgetHtmlContent = document.createRange().createContextualFragment(widget.htmlContent);
+
+                    divWidget.appendChild(widgetHtmlContent);
+                    leftPage.appendChild(divWidget);
+
+                    $( ".diary__widget" ).draggable({ 
+                        containment: "parent", 
+                        scroll: false,
+                        stop: function(event) {
+                            var id = this.dataset.id;
+                            var top = this.style.top.replace('px','');
+                            var left = this.style.left.replace('px','');
+                            console.log(top, left);
+                        
+                            const url = `/diary/widget/positions/${id}/${top}/${left}`;
+
+                            Axios.get(url).then(function() {})
+                        }
+                    });
+                }  
+            });
+
+            secondPageWidgets.forEach(widget => {
+                if(widget.type === "text") {
+                    var divWidget = document.createElement('div');
+
+                    divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
+                    divWidget.style.position = 'relative';
+                    divWidget.style.top = widget.top + "px";
+                    divWidget.style.left = widget.left + "px";
+                    divWidget.dataset.id = widget.id;
+                    divWidget.dataset.type = widget.type;
+                    
+                    let widgetHtmlContent = document.createRange().createContextualFragment(widget.htmlContent);
+
+                    divWidget.appendChild(widgetHtmlContent);
+                    rightPage.appendChild(divWidget);
+
+                    $( ".diary__widget" ).draggable({ 
+                        containment: "parent", 
+                        scroll: false,
+                        stop: function(event) {
+                            var id = this.dataset.id;
+                            var top = this.style.top.replace('px','');
+                            var left = this.style.left.replace('px','');
+                        
+                            const url = `/diary/widget/positions/${id}/${top}/${left}`;
+
+                            Axios.get(url).then(function() {})
+                        }
+                    });
+                }  
+            });
+        })
     }
 
     listenOnClickCreatePages() {
