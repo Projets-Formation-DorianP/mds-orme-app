@@ -100,6 +100,8 @@ class WidgetController extends Controller{
         }
 
         $widget->setPage($page);
+        $widget->setPositionTop(3);
+        $widget->setPositionLeft(3);
 
         $manager->persist($widget); 
         $manager->flush();
@@ -141,7 +143,43 @@ class WidgetController extends Controller{
         $manager->flush();
 
         return $this->json([
-            'message'        => 'Widget supprimé avec succès'
+            'message'        => 'Success'
         ], 200);
+    }
+
+    /**
+     * Modify positions of a widget
+     * 
+     * @Route("/diary/widget/positions/{id}/{top}/{left}", name="modify_positions")
+     *
+     * @param [int] $id
+     * @param [int] $top
+     * @param [int] $left
+     * @param EntityManagerInterface $manager
+     * @param WidgetRepository $widgetRepo
+     * @return Response
+     */
+    public function modifyPositions($id, $top, $left, EntityManagerInterface $manager, WidgetRepository $widgetRepo) : Response {
+        $user = $this->getUser();
+
+        /**
+         * Check if user is connected
+         */
+        if (!$user) return $this->json([
+            'code'      => 403,
+            'message'   => 'Unauthorized'
+        ], 403);
+
+        $widget = $widgetRepo->findOneBy(['id' => $id]);
+
+        $widget->setPositionTop($top);
+        $widget->setPositionLeft($left);
+
+        $manager->flush();
+
+        return $this->json([
+            'message'        => 'Position modifiée'
+        ], 200);
+
     }
 }

@@ -40,8 +40,8 @@ export default class ActionsPage {
 
                     divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
                     divWidget.style.position = 'relative';
-                    divWidget.style.top = widget.top + "%";
-                    divWidget.style.left = widget.left + "%";
+                    divWidget.style.top = widget.top + "px";
+                    divWidget.style.left = widget.left + "px";
                     divWidget.dataset.id = widget.id;
                     divWidget.dataset.type = widget.type;
                     
@@ -52,12 +52,17 @@ export default class ActionsPage {
 
                     $( ".diary__widget" ).draggable({ 
                         containment: "parent", 
-                        scroll: false
-                        // stop: function(event) {
-                        //     var l = ( 100 * parseFloat($(this).position().left / parseFloat($(this).parent().width())) ) + "%" ;
-                        //     var t = ( 100 * parseFloat($(this).position().top / parseFloat($(this).parent().height())) ) + "%" ;
-                        //     console.log(l, t);
-                        // }
+                        scroll: false,
+                        stop: function(event) {
+                            var id = this.dataset.id;
+                            var top = this.style.top.replace('px','');
+                            var left = this.style.left.replace('px','');
+                            console.log(top, left);
+                        
+                            const url = `/diary/widget/positions/${id}/${top}/${left}`;
+
+                            Axios.get(url).then(function() {})
+                        }
                     });
                 }  
             });
@@ -68,6 +73,8 @@ export default class ActionsPage {
 
                     divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
                     divWidget.style.position = 'relative';
+                    divWidget.style.top = widget.top + "px";
+                    divWidget.style.left = widget.left + "px";
                     divWidget.dataset.id = widget.id;
                     divWidget.dataset.type = widget.type;
                     
@@ -78,7 +85,16 @@ export default class ActionsPage {
 
                     $( ".diary__widget" ).draggable({ 
                         containment: "parent", 
-                        scroll: false
+                        scroll: false,
+                        stop: function(event) {
+                            var id = this.dataset.id;
+                            var top = this.style.top.replace('px','');
+                            var left = this.style.left.replace('px','');
+                        
+                            const url = `/diary/widget/positions/${id}/${top}/${left}`;
+
+                            Axios.get(url).then(function() {})
+                        }
                     });
                 }  
             });
