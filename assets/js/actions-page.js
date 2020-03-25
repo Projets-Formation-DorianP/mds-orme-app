@@ -48,9 +48,23 @@ export default class ActionsPage {
                     let widgetHtmlContent = document.createRange().createContextualFragment(widget.htmlContent);
 
                     divWidget.appendChild(widgetHtmlContent);
+                    divWidget.addEventListener('mouseenter', event => {                
+                        var li = document.querySelector(`.widgets__items[data-id="${widget.id}"]`);
+        
+                        li.style.textDecoration = 'underline';
+                        divWidget.style.border = '1px solid red';
+                    }),
+                    divWidget.addEventListener('mouseleave', event => {
+                        var li = document.querySelector(`.widgets__items[data-id="${widget.id}"]`);
+        
+                        li.style.textDecoration = 'none';
+                        divWidget.style.border = '1px solid #F1F3F7';
+                    });
+
                     leftPage.appendChild(divWidget);
 
                     $( ".diary__widget" ).draggable({ 
+                        cursor: "grabbing",
                         containment: "parent", 
                         scroll: false,
                         stop: function(event) {
@@ -81,9 +95,23 @@ export default class ActionsPage {
                     let widgetHtmlContent = document.createRange().createContextualFragment(widget.htmlContent);
 
                     divWidget.appendChild(widgetHtmlContent);
+                    divWidget.addEventListener('mouseenter', event => {                
+                        var li = document.querySelector(`.widgets__items[data-id="${widget.id}"]`);
+        
+                        li.style.textDecoration = 'underline';
+                        divWidget.style.border = '1px solid red';
+                    }),
+                    divWidget.addEventListener('mouseleave', event => {
+                        var li = document.querySelector(`.widgets__items[data-id="${widget.id}"]`);
+        
+                        li.style.textDecoration = 'none';
+                        divWidget.style.border = '1px solid #F1F3F7';
+                    });
+
                     rightPage.appendChild(divWidget);
 
                     $( ".diary__widget" ).draggable({ 
+                        cursor: "grabbing",
                         containment: "parent", 
                         scroll: false,
                         stop: function(event) {

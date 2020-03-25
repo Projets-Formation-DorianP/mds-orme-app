@@ -229,6 +229,10 @@ nav.sidebar.right {
 			flex-direction: row-reverse;
 			justify-content: space-between;
 
+			&:hover {
+				cursor: pointer;
+			}
+
 			&-actions {
 				.trash {
 					    background-image: url(../../../public/build/trash.png);

@@ -90,9 +90,23 @@ export default class LeftSidebar {
                         let widgetHtmlContent = document.createRange().createContextualFragment(response.data.widgetContent);
     
                         divWidget.appendChild(widgetHtmlContent);
+                        divWidget.addEventListener('mouseenter', event => {                
+                            var li = document.querySelector(`.widgets__items[data-id="${response.data.widgetId}"]`);
+            
+                            li.style.textDecoration = 'underline';
+                            divWidget.style.border = '1px solid red';
+                        }),
+                        divWidget.addEventListener('mouseleave', event => {
+                            var li = document.querySelector(`.widgets__items[data-id="${response.data.widgetId}"]`);
+            
+                            li.style.textDecoration = 'none';
+                            divWidget.style.border = '1px solid #F1F3F7';
+                        });
+
                         page.appendChild(divWidget);
     
                         $( ".diary__widget" ).draggable({ 
+                            cursor: "grabbing",
                             containment: "parent", 
                             scroll: false,
                             stop: function(event) {
@@ -137,8 +151,22 @@ export default class LeftSidebar {
                     actionsDiv.appendChild(actionsA);
                     li.appendChild(div);
                     li.appendChild(actionsDiv)
-                    list.appendChild(li);
 
+                    li.addEventListener('mouseenter', event => {                
+                        var div = document.querySelector(`.diary__widget[data-id="${response.data.widgetId}"]`);
+        
+                        li.style.textDecoration = 'underline';
+                        div.style.border = '1px solid red';
+                    }),
+                    li.addEventListener('mouseleave', event => {
+                        var div = document.querySelector(`.diary__widget[data-id="${response.data.widgetId}"]`);
+        
+                        li.style.textDecoration = 'none';
+                        div.style.border = '1px solid #F1F3F7';
+                    });
+
+                    list.appendChild(li);
+                
                     RightSidebar.setListenOnClickTrash(actionsTrash);
                 })
 

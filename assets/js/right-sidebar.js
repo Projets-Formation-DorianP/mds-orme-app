@@ -1,13 +1,14 @@
 import Axios from "axios";
 
 export default class RightSidebar {
-    constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash) {
+    constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, widgetsList) {
         this.rightSidebar = rightSidebar;
 
         if(this.rightSidebar) {
             this.rightSidebarCollapse = rightSidebarCollapse;
             this.divWidgets = divWidgets;
             this.arrayTrash = arrayTrash;
+            this.widgetsList = widgetsList;
 
             if(this.rightSidebarCollapse && this.divWidgets) {
                 this.listenOnClickCollapse();
@@ -15,6 +16,10 @@ export default class RightSidebar {
 
             if(this.arrayTrash) {
                 this.listenOnClickTrash();
+            }
+
+            if(this.widgetsList) {
+                this.listenOnMouseEnterWidgets();
             }
         }
     }
@@ -30,6 +35,23 @@ export default class RightSidebar {
         this.arrayTrash.map((trash) => {
             trash.addEventListener('click', event => {
                 RightSidebar.clickTrash(trash, event);
+            })
+        })
+    }
+
+    listenOnMouseEnterWidgets() {
+        this.widgetsList.map((widget) => {
+            widget.addEventListener('mouseenter', event => {                
+                var div = document.querySelector(`.diary__widget[data-id="${widget.dataset.id}"]`);
+
+                widget.style.textDecoration = 'underline';
+                div.style.border = '1px solid red';
+            }),
+            widget.addEventListener('mouseleave', event => {
+                var div = document.querySelector(`.diary__widget[data-id="${widget.dataset.id}"]`);
+
+                widget.style.textDecoration = 'none';
+                div.style.border = '1px solid #F1F3F7';
             })
         })
     }
