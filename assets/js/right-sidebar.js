@@ -45,9 +45,12 @@ export default class RightSidebar {
 
         var url = `/diary/widget/delete/${trash.dataset.id}`;
 
-        Axios.get(url).then(function(response) {  
-            var li = trash.closest('li');
-            li.remove();
-        })
+        Axios.get(url).then(function() {})
+
+        var li = trash.closest('li');
+        li.remove();
+
+        var divWidget = document.querySelector(`.diary__widget[data-id="${trash.dataset.id}"]`);
+        divWidget.remove();
     }
 }
