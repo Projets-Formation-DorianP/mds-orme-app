@@ -72,8 +72,9 @@ $(document).ready(function() {
     const rightSidebarCollapse = document.querySelector('.rightSidebarCollapse');
     const divWidgets = document.querySelector('.sidebar.right > .widgets');
     const arrayTrash = [].slice.call(document.querySelectorAll('.trash'));
+    const widgetsList = [].slice.call(document.querySelectorAll('.sidebar.right .widgets__items'));
 
-    if(rightSidebar && rightSidebarCollapse && divWidgets && arrayTrash) {
-        new RightSidebar(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash);
+    if(rightSidebar && rightSidebarCollapse && divWidgets && arrayTrash && widgetsList) {
+        new RightSidebar(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, widgetsList);
     }
 });
