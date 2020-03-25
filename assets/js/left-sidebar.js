@@ -59,11 +59,14 @@ export default class LeftSidebar {
             button.addEventListener('click', event => {
                 event.preventDefault();
                 var list = null;
+                var page = null;
                 
                 if(button.classList.contains('left')) {
                     list = document.querySelector('.sidebar.right .widgets__list.left');
+                    page = document.querySelector('.diary__bloc.left');
                 }else if(button.classList.contains('right')) {
                     list = document.querySelector('.sidebar.right .widgets__list.right');
+                    page = document.querySelector('.diary__bloc.right');
                 }else {
                     // Nothing to do Headers...
                 }
@@ -71,6 +74,43 @@ export default class LeftSidebar {
                 var url = `/diary/${button.dataset.pageNumber}/widget/create/${this.currentWidget.dataset.type}`;
 
                 Axios.get(url).then(function(response) {  
+                    /**
+                     * Create element on page
+                     */
+                    if(response.data.widgetType === "text") {
+                        var divWidget = document.createElement('div');
+    
+                        divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
+                        divWidget.style.position = 'relative';
+                        divWidget.style.top = response.data.widgetPositionTop + "px";
+                        divWidget.style.left = response.data.widgetPositionLeft + "px";
+                        divWidget.dataset.id = response.data.widgetId;
+                        divWidget.dataset.type = response.data.widgetType;
+                        
+                        let widgetHtmlContent = document.createRange().createContextualFragment(response.data.widgetContent);
+    
+                        divWidget.appendChild(widgetHtmlContent);
+                        page.appendChild(divWidget);
+    
+                        $( ".diary__widget" ).draggable({ 
+                            containment: "parent", 
+                            scroll: false,
+                            stop: function(event) {
+                                var id = this.dataset.id;
+                                var top = this.style.top.replace('px','');
+                                var left = this.style.left.replace('px','');
+                                console.log(top, left);
+                            
+                                const url = `/diary/widget/positions/${id}/${top}/${left}`;
+    
+                                Axios.get(url).then(function() {})
+                            }
+                        });
+                    }  
+
+                    /**
+                     * Create element on list
+                     */
                     var span = document.createElement("span");
                     span.textContent = "Widget: " + response.data.widgetType;
 
