@@ -112,7 +112,9 @@ class WidgetController extends Controller{
             'pageNumber'    => $page->getPageNumber(),
             'widgetId'      => $widget->getId(),
             'widgetType'    => $widget->getType(),
-            'widgetContent' => $widget->getHtmlContent()
+            'widgetContent' => $widget->getHtmlContent(),
+            'widgetPositionTop' => $widget->getPositionTop(),
+            'widgetPositionLeft' => $widget->getPositionLeft()
         ], 200);
     }
 
