@@ -57,8 +57,20 @@ export default class ActionsPage {
                         let widgetHtmlContent = document.createRange().createContextualFragment(widget.htmlContent);
 
                         divWidget.appendChild(widgetHtmlContent);
-                        ActionsPage.setMouseEnterAndLeaveOnItemAndWidget(divWidget);
-                        console.log(divWidget);
+
+                        // Add event listener mouseenter and mouseleave
+                        divWidget.addEventListener('mouseenter', event => {                
+                            var li = document.querySelector(`.widgets__items[data-id="${divWidget.dataset.id}"]`);
+                
+                            li.style.textDecoration = 'underline';
+                            divWidget.style.border = '1px solid red';
+                        }),
+                        divWidget.addEventListener('mouseleave', event => {
+                            var li = document.querySelector(`.widgets__items[data-id="${divWidget.dataset.id}"]`);
+                
+                            li.style.textDecoration = 'none';
+                            divWidget.style.border = '1px solid #F1F3F7';
+                        })
 
                         // Add widget to the good page
                         widget.pageNumber === parseInt(leftPage.dataset.pageNumber) ? leftPage.appendChild(divWidget) : rightPage.appendChild(divWidget);    
@@ -172,25 +184,5 @@ export default class ActionsPage {
                 }
             }
         });
-    }
-
-    /**
-     * Put an event listener mouseenter and mouseleave on widget
-     * 
-     * @param {elt} widget 
-     */
-    static setMouseEnterAndLeaveOnItemAndWidget(widget) {
-        widget.addEventListener('mouseenter', event => {                
-            var li = document.querySelector(`.widgets__items[data-id="${widget.dataset.id}"]`);
-
-            li.style.textDecoration = 'underline';
-            widget.style.border = '1px solid red';
-        }),
-        widget.addEventListener('mouseleave', event => {
-            var li = document.querySelector(`.widgets__items[data-id="${widget.dataset.id}"]`);
-
-            li.style.textDecoration = 'none';
-            widget.style.border = '1px solid #F1F3F7';
-        })
     }
 }

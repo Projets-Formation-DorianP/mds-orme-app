@@ -143,8 +143,20 @@ export default class RightSidebar {
      * Add CSS style on mouseenter to match a list item with a widget and vice versa
      */
     listenOnMouseEnterWidgets() {
-        this.widgetsList.map((widget) => {
-            RightSidebar.setMouseEnterAndLeaveOnItemAndWidget(widget);
+        this.widgetsList.map((li) => {
+            // Add event listener mouseenter and mouseleave
+            li.addEventListener('mouseenter', event => {                
+                var divWidget = document.querySelector(`.diary__widget[data-id="${li.dataset.id}"]`);
+    
+                li.style.textDecoration = 'underline';
+                divWidget.style.border = '1px solid red';
+            }),
+            li.addEventListener('mouseleave', event => {
+                var divWidget = document.querySelector(`.diary__widget[data-id="${li.dataset.id}"]`);
+    
+                li.style.textDecoration = 'none';
+                divWidget.style.border = '1px solid #F1F3F7';
+            })
         })
     }
 
@@ -210,26 +222,6 @@ export default class RightSidebar {
             textarea.dataset.content = encodeURIComponent(window.btoa(htmlContent));
             
             textarea.value = htmlContent;  
-        })
-    }
-
-    /**
-     * Put an event listener mouseenter and mouseleave on widget
-     * 
-     * @param {elt} widget 
-     */
-    static setMouseEnterAndLeaveOnItemAndWidget(widget) {
-        widget.addEventListener('mouseenter', event => {                
-            var div = document.querySelector(`.diary__widget[data-id="${widget.dataset.id}"]`);
-
-            widget.style.textDecoration = 'underline';
-            div.style.border = '1px solid red';
-        }),
-        widget.addEventListener('mouseleave', event => {
-            var div = document.querySelector(`.diary__widget[data-id="${widget.dataset.id}"]`);
-
-            widget.style.textDecoration = 'none';
-            div.style.border = '1px solid #F1F3F7';
         })
     }
 }

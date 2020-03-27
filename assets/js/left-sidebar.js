@@ -99,7 +99,20 @@ export default class LeftSidebar {
                         let widgetHtmlContent = document.createRange().createContextualFragment(response.data.widgetContent);
     
                         divWidget.appendChild(widgetHtmlContent);
-                        RightSidebar.setMouseEnterAndLeaveOnItemAndWidget(divWidget);
+                        
+                        // Add event listener mouseenter and mouseleave
+                        divWidget.addEventListener('mouseenter', event => {                
+                            var li = document.querySelector(`.widgets__items[data-id="${divWidget.dataset.id}"]`);
+                
+                            li.style.textDecoration = 'underline';
+                            divWidget.style.border = '1px solid red';
+                        }),
+                        divWidget.addEventListener('mouseleave', event => {
+                            var li = document.querySelector(`.widgets__items[data-id="${divWidget.dataset.id}"]`);
+                
+                            li.style.textDecoration = 'none';
+                            divWidget.style.border = '1px solid #F1F3F7';
+                        })
 
                         page.appendChild(divWidget);
     
@@ -153,9 +166,22 @@ export default class LeftSidebar {
                     actionsDiv.appendChild(actionsA);
                     actionsDiv.appendChild(actionsB);
                     li.appendChild(div);
-                    li.appendChild(actionsDiv)
+                    li.appendChild(actionsDiv);
 
-                    LeftSidebar.setMouseEnterAndLeaveOnItemAndWidget(li);
+                    // Add event listener mouseenter and mouseleave
+                    li.addEventListener('mouseenter', event => {                
+                        var divWidget = document.querySelector(`.diary__widget[data-id="${li.dataset.id}"]`);
+            
+                        li.style.textDecoration = 'underline';
+                        divWidget.style.border = '1px solid red';
+                    }),
+                    li.addEventListener('mouseleave', event => {
+                        var divWidget = document.querySelector(`.diary__widget[data-id="${li.dataset.id}"]`);
+            
+                        li.style.textDecoration = 'none';
+                        divWidget.style.border = '1px solid #F1F3F7';
+                    })
+
                     list.appendChild(li);
                 
                     RightSidebar.setListenOnClickEdit(actionsModify);
@@ -179,25 +205,5 @@ export default class LeftSidebar {
      */
     closePopup() {
         this.popup.classList.remove('active');
-    }
-
-    /**
-     * Listen to a mouseenter and mouseleave on item
-     * 
-     * @param {elt} li 
-     */
-    static setMouseEnterAndLeaveOnItemAndWidget(li) {
-        li.addEventListener('mouseenter', event => {                
-            var div = document.querySelector(`.diary__widget[data-id="${li.dataset.id}"]`);
-
-            li.style.textDecoration = 'underline';
-            div.style.border = '1px solid red';
-        }),
-        li.addEventListener('mouseleave', event => {
-            var div = document.querySelector(`.diary__widget[data-id="${li.dataset.id}"]`);
-
-            li.style.textDecoration = 'none';
-            div.style.border = '1px solid #F1F3F7';
-        });
     }
 }
