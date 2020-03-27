@@ -16,6 +16,9 @@
                         <a href="#">
                             <div class="trash" data-id="{{ currentWidget.id }}"></div>
                         </a>
+                        <a href="#">
+                            <div class="modify" data-id="{{ currentWidget.id }}"></div>
+                        </a>
                     </div>
                 </li>
             {% endfor %}
@@ -34,9 +37,23 @@
                         <a href="#">
                             <div class="trash" data-id="{{ currentWidget.id }}"></div>
                         </a>
+                        <a href="#">
+                            <div class="modify" data-id="{{ currentWidget.id }}"></div>
+                        </a>
                     </div>
                 </li>
             {% endfor %}
         </ul>
+    </div>
+    <div class="widgets__form text active">
+        <h4>Modification du widget choisi</h4>
+        <textarea 
+            data-html="htmlContent"
+            rows="5"
+        ></textarea>
+        <div class="widgets__form-actions">
+            <a href="#" data-action="abandon" class="abandon">Abadon</a>
+            <a href="#" data-action="persist" class="persist">Persist</a>
+        </div>
     </div>
 </nav>

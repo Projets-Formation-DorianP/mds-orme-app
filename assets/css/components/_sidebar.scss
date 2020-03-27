@@ -234,12 +234,56 @@ nav.sidebar.right {
 			}
 
 			&-actions {
-				.trash {
-					    background-image: url(../../../public/build/trash.png);
-						width: 15px !important;
-						height: 15px !important;
-						background-size: contain;
-						background-repeat: no-repeat;
+				display: flex;
+				flex-direction: row;
+
+				div {
+					width: 15px !important;
+					height: 15px !important;
+					background-size: contain;
+					background-repeat: no-repeat;
+
+					&.trash {
+						background-image: url(../../../public/build/trash.png);
+						margin-left: 0.5rem;
+					}
+
+					&.modify {
+						background-image: url(../../../public/build/form.png)
+					}
+				}
+			}
+		}
+
+		&__form.text {
+			padding: 1rem;
+			direction: ltr;
+
+			&.active {
+				display: none;
+			}
+
+			h4 {
+				font-size: 1rem !important;
+				font-weight: 600;
+				color: grey;
+				margin: 1rem 0 1rem 0;
+			}
+
+			textarea {
+				text-align: left;
+				font-size: 10px;
+				width: 100%;
+			}
+
+			&-actions {
+				display: flex;
+				flex-direction: row-reverse;
+				justify-content: start;
+
+				a.abandon,
+				a.persist {
+					margin: 0 0.5rem 0 0.5rem;
 				}
 			}
 		}

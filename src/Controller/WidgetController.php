@@ -119,6 +119,43 @@ class WidgetController extends Controller{
     }
 
     /**
+     * Read a widget
+     * 
+     * @Route("/diary/widget/read/{id}", name="read_widget")
+     *
+     * @param [int] $id
+     * @param WidgetRepository $widgetRepo
+     * @return Response
+     */
+    public function read($id, WidgetRepository $widgetRepo) : Response {
+        $user = $this->getUser();
+
+        /**
+         * Check if user is connected
+         */
+        if (!$user) return $this->json([
+            'code'      => 403,
+            'message'   => 'Unauthorized'
+        ], 403);
+
+        /**
+         * Get current widget
+         */
+        $widget = $widgetRepo->findOneBy([
+            'id' => (int) $id
+        ]);
+
+        $response = [
+            'type'          => $widget->getType(),
+            'htmlContent'   => $widget->getHtmlContent()
+        ];
+
+        return $this->json([
+            'response'      => $response
+        ], 200);
+    }
+
+    /**
      * Delete a widget
      * 
      * @Route("/diary/widget/delete/{id}", name="delete_widget")
@@ -150,7 +187,7 @@ class WidgetController extends Controller{
     }
 
     /**
-     * Modify positions of a widget
+     * Update positions of a widget
      * 
      * @Route("/diary/widget/positions/{id}/{top}/{left}", name="modify_positions")
      *
@@ -183,5 +220,45 @@ class WidgetController extends Controller{
             'message'        => 'Position modifiée'
         ], 200);
 
+    }
+
+    /**
+     * Update data
+     * 
+     * @Route("/diary/widget/update/{id}/{htmlContent}", name="update_widget")
+     *
+     * @param [type] $id
+     * @param [type] $htmlContent
+     * @param EntityManagerInterface $manager
+     * @param WidgetRepository $widgetRepo
+     * @return Response
+     */
+    public function modifyForm($id, $htmlContent, EntityManagerInterface $manager, WidgetRepository $widgetRepo) : Response {
+        $user = $this->getUser();
+
+        /**
+         * Check if user is connected
+         */
+        if (!$user) return $this->json([
+            'code'      => 403,
+            'message'   => 'Unauthorized'
+        ], 403);
+
+        $htmlContent = WidgetController::decode($htmlContent);
+        
+        $htmlContent = "<p>${htmlContent}</p>";
+
+        $widget = $widgetRepo->findOneBy(['id' => $id]);
+        $widget->setHtmlContent($htmlContent);
+    
+        $manager->flush();
+
+        return $this->json([
+            'code'        => $htmlContent
+        ], 200);
+    }
+
+    public static function decode($str) {
+        return base64_decode(urldecode($str));
     }
 }

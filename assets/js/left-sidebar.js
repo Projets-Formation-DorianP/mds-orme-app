@@ -37,6 +37,9 @@ export default class LeftSidebar {
         }
     }
 
+    /**
+     * Listen to a click on collapse
+     */
     listenOnClickCollapse() {
         this.leftSidebarCollapse.addEventListener('click', event => {
             event.preventDefault();
@@ -44,6 +47,11 @@ export default class LeftSidebar {
         });
     }
 
+    /**
+     * Listen to a click on all type of widget
+     * 
+     * @param {array} widgets 
+     */
     listenOnClickWidgets(widgets) {
         widgets.map((widget) => {
             widget.addEventListener('click', event => {
@@ -54,6 +62,9 @@ export default class LeftSidebar {
         })
     }
 
+    /**
+     * Listen to a click on popup
+     */
     listenOnClickPopup() {
         this.popupButtons.forEach(button => {
             button.addEventListener('click', event => {
@@ -61,6 +72,7 @@ export default class LeftSidebar {
                 var list = null;
                 var page = null;
                 
+                // Takes the right page and the right list depending on the user's choice
                 if(button.classList.contains('left')) {
                     list = document.querySelector('.sidebar.right .widgets__list.left');
                     page = document.querySelector('.diary__bloc.left');
@@ -68,18 +80,14 @@ export default class LeftSidebar {
                     list = document.querySelector('.sidebar.right .widgets__list.right');
                     page = document.querySelector('.diary__bloc.right');
                 }else {
-                    // Nothing to do Headers...
+                    // Nothing to do here...
                 }
 
                 var url = `/diary/${button.dataset.pageNumber}/widget/create/${this.currentWidget.dataset.type}`;
-
                 Axios.get(url).then(function(response) {  
-                    /**
-                     * Create element on page
-                     */
+                    // Create widget on page
                     if(response.data.widgetType === "text") {
                         var divWidget = document.createElement('div');
-    
                         divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
                         divWidget.style.position = 'relative';
                         divWidget.style.top = response.data.widgetPositionTop + "px";
@@ -87,21 +95,11 @@ export default class LeftSidebar {
                         divWidget.dataset.id = response.data.widgetId;
                         divWidget.dataset.type = response.data.widgetType;
                         
+                        // Creates an HTML element according to the string contained in the database
                         let widgetHtmlContent = document.createRange().createContextualFragment(response.data.widgetContent);
     
                         divWidget.appendChild(widgetHtmlContent);
-                        divWidget.addEventListener('mouseenter', event => {                
-                            var li = document.querySelector(`.widgets__items[data-id="${response.data.widgetId}"]`);
-            
-                            li.style.textDecoration = 'underline';
-                            divWidget.style.border = '1px solid red';
-                        }),
-                        divWidget.addEventListener('mouseleave', event => {
-                            var li = document.querySelector(`.widgets__items[data-id="${response.data.widgetId}"]`);
-            
-                            li.style.textDecoration = 'none';
-                            divWidget.style.border = '1px solid #F1F3F7';
-                        });
+                        RightSidebar.setMouseEnterAndLeaveOnItemAndWidget(divWidget);
 
                         page.appendChild(divWidget);
     
@@ -113,18 +111,14 @@ export default class LeftSidebar {
                                 var id = this.dataset.id;
                                 var top = this.style.top.replace('px','');
                                 var left = this.style.left.replace('px','');
-                                console.log(top, left);
                             
                                 const url = `/diary/widget/positions/${id}/${top}/${left}`;
-    
                                 Axios.get(url).then(function() {})
                             }
                         });
                     }  
 
-                    /**
-                     * Create element on list
-                     */
+                    // Create element on list
                     var span = document.createElement("span");
                     span.textContent = "Widget: " + response.data.widgetType;
 
@@ -138,6 +132,13 @@ export default class LeftSidebar {
                     var actionsA = document.createElement("a");
                     actionsA.href = "#";
 
+                    var actionsModify = document.createElement("div");
+                    actionsModify.classList.add('modify');
+                    actionsModify.dataset.id = response.data.widgetId;
+
+                    var actionsB = document.createElement("a");
+                    actionsB.href = "#";
+
                     var actionsDiv = document.createElement("div");
                     actionsDiv.classList.add('widgets__items-actions');
 
@@ -148,25 +149,16 @@ export default class LeftSidebar {
 
                     div.appendChild(span);
                     actionsA.appendChild(actionsTrash);
+                    actionsB.appendChild(actionsModify);
                     actionsDiv.appendChild(actionsA);
+                    actionsDiv.appendChild(actionsB);
                     li.appendChild(div);
                     li.appendChild(actionsDiv)
 
-                    li.addEventListener('mouseenter', event => {                
-                        var div = document.querySelector(`.diary__widget[data-id="${response.data.widgetId}"]`);
-        
-                        li.style.textDecoration = 'underline';
-                        div.style.border = '1px solid red';
-                    }),
-                    li.addEventListener('mouseleave', event => {
-                        var div = document.querySelector(`.diary__widget[data-id="${response.data.widgetId}"]`);
-        
-                        li.style.textDecoration = 'none';
-                        div.style.border = '1px solid #F1F3F7';
-                    });
-
+                    LeftSidebar.setMouseEnterAndLeaveOnItemAndWidget(li);
                     list.appendChild(li);
                 
+                    RightSidebar.setListenOnClickEdit(actionsModify);
                     RightSidebar.setListenOnClickTrash(actionsTrash);
                 })
 
@@ -175,11 +167,37 @@ export default class LeftSidebar {
         });
     }
 
+    /**
+     * Open popup
+     */
     openPopup() {
         this.popup.classList.add('active');
     }
 
+    /**
+     * Close popup
+     */
     closePopup() {
         this.popup.classList.remove('active');
+    }
+
+    /**
+     * Listen to a mouseenter and mouseleave on item
+     * 
+     * @param {elt} li 
+     */
+    static setMouseEnterAndLeaveOnItemAndWidget(li) {
+        li.addEventListener('mouseenter', event => {                
+            var div = document.querySelector(`.diary__widget[data-id="${li.dataset.id}"]`);
+
+            li.style.textDecoration = 'underline';
+            div.style.border = '1px solid red';
+        }),
+        li.addEventListener('mouseleave', event => {
+            var div = document.querySelector(`.diary__widget[data-id="${li.dataset.id}"]`);
+
+            li.style.textDecoration = 'none';
+            div.style.border = '1px solid #F1F3F7';
+        });
     }
 }
