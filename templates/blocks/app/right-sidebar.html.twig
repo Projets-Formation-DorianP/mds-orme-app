@@ -45,15 +45,5 @@
             {% endfor %}
         </ul>
     </div>
-    <div class="widgets__form text active">
-        <h4>Modification du widget choisi</h4>
-        <textarea 
-            data-html="htmlContent"
-            rows="5"
-        ></textarea>
-        <div class="widgets__form-actions">
-            <a href="#" data-action="abandon" class="abandon">Abadon</a>
-            <a href="#" data-action="persist" class="persist">Persist</a>
-        </div>
-    </div>
+    {% include 'blocks/app/form/form-text.html.twig' %}
 </nav>

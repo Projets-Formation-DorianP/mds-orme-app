@@ -254,38 +254,5 @@ nav.sidebar.right {
 				}
 			}
 		}
-
-		&__form.text {
-			padding: 1rem;
-			direction: ltr;
-
-			&.active {
-				display: none;
-			}
-
-			h4 {
-				font-size: 1rem !important;
-				font-weight: 600;
-				color: grey;
-				margin: 1rem 0 1rem 0;
-			}
-
-			textarea {
-				text-align: left;
-				font-size: 10px;
-				width: 100%;
-			}
-
-			&-actions {
-				display: flex;
-				flex-direction: row-reverse;
-				justify-content: start;
-
-				a.abandon,
-				a.persist {
-					margin: 0 0.5rem 0 0.5rem;
-				}
-			}
-		}
 	}
 }

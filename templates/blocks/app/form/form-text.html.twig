@@ -1,0 +1,61 @@
+<div class="widgets__form text active">
+    <h4>Modification du widget choisi</h4>
+    <div class="html-content">
+        <label for="htmlContent">Contenu du widget</label>
+        <textarea 
+            data-text="htmlContent"
+            data-html="htmlContent"
+            rows="5"
+        ></textarea>
+    </div>
+
+    <div class="full-width">
+        <input type="checkbox" name="full-width">
+        <label data-text="full-width">Pleine largeur</label>
+    </div>
+
+    <div class="size">
+        <label>Taille du texte</label>
+        <input data-text="size" type="number" min="5" max="60">
+    </div>
+
+    <div class="color">
+        <label data-text="color">Couleur du texte</label>
+        <input type="color" name="color" value="#000000">  
+    </div>
+
+    <div class="formatting">
+        <label>Mise en forme du texte</label>
+        <div class="bold">
+            <input type="checkbox" name="bold">
+            <label data-text="bold" for="bold">Gras</label>
+        </div>
+
+        <div class="italic">
+            <input type="checkbox" name="italic">
+            <label data-text="italic" for="italic">Italique</label>
+        </div>
+
+        <div class="underline">
+            <input type="checkbox" name="underline">
+            <label data-text="underline" for="underline">Souligné</label>
+        </div>
+    </div>
+
+    <div class="highlight-formatting">
+        <div class="highlight">
+            <input type="checkbox" name="highlight">
+            <label data-text="highlight" for="highlight">Surligné</label>
+        </div>
+
+        <div class="highlight-color active">
+            <label data-text="highlight-color">Couleur du surlignement</label>
+            <input type="color" name="highlight-color" value="#000000">  
+        </div>
+    </div>
+    
+    <div class="widgets__form-actions">
+        <a href="#" data-action="abandon" class="abandon">Abandon</a>
+        <a href="#" data-action="persist" class="persist">Persist</a>
+    </div>
+</div>
