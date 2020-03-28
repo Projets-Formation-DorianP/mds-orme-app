@@ -42,6 +42,11 @@ class Widget
      */
     private $positionLeft;
 
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $data = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class Widget
     public function setPositionLeft(float $positionLeft): self
     {
         $this->positionLeft = $positionLeft;
+
+        return $this;
+    }
+
+    public function getData(): ?array
+    {
+        return $this->data;
+    }
+
+    public function setData(array $data): self
+    {
+        $this->data = $data;
 
         return $this;
     }

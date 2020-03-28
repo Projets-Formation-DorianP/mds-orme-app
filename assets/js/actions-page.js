@@ -38,9 +38,6 @@ export default class ActionsPage {
         const url = `/page/widgets/${pageNumber}`;
         // Will retrieve the active widgets on the requested page as well as on the sister page
         Axios.get(url).then(function(response) {
-            var firstPageWidgets = response.data.widgets.firstPage;
-            var secondPageWidgets = response.data.widgets.secondPage;
-
             var widgets = Object.values(response.data.widgets);
             widgets.forEach(page => {
                 page.forEach(widget => {
@@ -52,11 +49,33 @@ export default class ActionsPage {
                         divWidget.style.left = widget.left + "px";
                         divWidget.dataset.id = widget.id;
                         divWidget.dataset.type = widget.type;
+                        divWidget.dataset.lastLeftPosition = widget.left;
                         
                         // Creates an HTML element according to the string contained in the database
                         let widgetHtmlContent = document.createRange().createContextualFragment(widget.htmlContent);
 
                         divWidget.appendChild(widgetHtmlContent);
+
+                        var divWidgetParagraph = divWidget.firstChild;
+
+                        // Set data
+                        if(widget.data.fullWidth === "checked") {
+                            divWidget.style.maxWidth = 'none';
+                            divWidget.style.left = null;
+                        } 
+                        divWidgetParagraph.style.fontSize = widget.data.size + 'px';
+                        divWidgetParagraph.style.color = widget.data.color;
+                        widget.data.bold === "checked" ? divWidgetParagraph.style.fontWeight = "bold" : '';
+                        widget.data.italic === "checked" ? divWidgetParagraph.style.fontStyle = "italic" : '';
+                        widget.data.underline === "checked" ? divWidgetParagraph.style.textDecoration = "underline" : '';
+                        
+                        if(widget.data.highlight === "checked") {
+                            if(widget.data.highlight === "#000000") {
+                                divWidgetParagraph.style.backgroundColor = "rgba(255,255,0,0.3)";
+                            }else {
+                                divWidgetParagraph.style.backgroundColor = RightSidebar.hexToRGB(widget.data.highlightColor, 0.3);
+                            }
+                        }
 
                         // Add event listener mouseenter and mouseleave
                         divWidget.addEventListener('mouseenter', event => {                

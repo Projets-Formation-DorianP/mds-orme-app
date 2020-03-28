@@ -102,6 +102,7 @@ class WidgetController extends Controller{
         $widget->setPage($page);
         $widget->setPositionTop(3);
         $widget->setPositionLeft(3);
+        $widget->setData([]);
 
         $manager->persist($widget); 
         $manager->flush();
@@ -147,7 +148,8 @@ class WidgetController extends Controller{
 
         $response = [
             'type'          => $widget->getType(),
-            'htmlContent'   => $widget->getHtmlContent()
+            'htmlContent'   => $widget->getHtmlContent(),
+            'data'          => $widget->getData()
         ];
 
         return $this->json([
@@ -225,7 +227,7 @@ class WidgetController extends Controller{
     /**
      * Update data
      * 
-     * @Route("/diary/widget/update/{id}/{htmlContent}", name="update_widget")
+     * @Route("/diary/widget/update/{id}/{htmlContent}/{dataJson}", name="update_widget")
      *
      * @param [type] $id
      * @param [type] $htmlContent
@@ -233,7 +235,7 @@ class WidgetController extends Controller{
      * @param WidgetRepository $widgetRepo
      * @return Response
      */
-    public function modifyForm($id, $htmlContent, EntityManagerInterface $manager, WidgetRepository $widgetRepo) : Response {
+    public function modifyForm($id, $htmlContent, $dataJson, EntityManagerInterface $manager, WidgetRepository $widgetRepo) : Response {
         $user = $this->getUser();
 
         /**
@@ -245,16 +247,18 @@ class WidgetController extends Controller{
         ], 403);
 
         $htmlContent = WidgetController::decode($htmlContent);
-        
         $htmlContent = "<p>${htmlContent}</p>";
+
+        $data = WidgetController::decode($dataJson);
 
         $widget = $widgetRepo->findOneBy(['id' => $id]);
         $widget->setHtmlContent($htmlContent);
+        $widget->setData((array) json_decode($data));
     
         $manager->flush();
 
         return $this->json([
-            'code'        => $htmlContent
+            'code'        => 200
         ], 200);
     }
 

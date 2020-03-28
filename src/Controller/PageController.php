@@ -176,6 +176,7 @@ class PageController extends Controller{
                     'htmlContent' => $widget->getHtmlContent(),
                     'top'         => $widget->getPositionTop(),
                     'left'        => $widget->getPositionLeft(),
+                    'data'        => $widget->getData(),
                     'pageNumber'  => $pages[0]->getPageNumber(),
                 ));
         }
@@ -187,6 +188,7 @@ class PageController extends Controller{
                 'htmlContent' => $widget->getHtmlContent(),
                 'top'         => $widget->getPositionTop(),
                 'left'        => $widget->getPositionLeft(),
+                'data'        => $widget->getData(),
                 'pageNumber'  => $pages[1]->getPageNumber(),
             ));
         }
