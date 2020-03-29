@@ -38,6 +38,7 @@ export default class RightSidebar {
                 this.formContentRightSidebar.classList.add('active')
                 this.rightSidebar.classList.add('active');
                 this.divWidgets.classList.add('active');
+                this.abandon.click();
             }else {
                 this.rightSidebar.classList.toggle('active');
                 this.divWidgets.classList.toggle('active');
@@ -225,7 +226,8 @@ export default class RightSidebar {
      */
     listenOnClickAbandon() {   
         this.abandon.addEventListener('click', event => {
-            this.divWidgets.classList.remove('active');
+            // Check if we click on collapse, display good active class on good elements
+            this.divWidgets.classList.contains('active') ? '' : this.divWidgets.classList.remove('active');
             this.formContentRightSidebar.classList.add('active');
 
             // Reset value of text area 
@@ -233,9 +235,27 @@ export default class RightSidebar {
 
             // We reset the content of the widget to its origin (because it changed with the keypress)
             var id = document.querySelector('.widgets__form.text textarea').dataset.id; 
-            var content = document.querySelector('.widgets__form.text textarea').dataset.content;
-            var diaryWidget = document.querySelector(`.diary__widget[data-id="${id}"] p`);
-            diaryWidget.innerHTML = decodeURIComponent(window.atob(content));
+            var htmlContent = document.querySelector('.widgets__form.text textarea').dataset.content;
+            var fullWidthCheckboxContent = document.querySelector('.widgets__form.text input[type="checkbox"][name="full-width"]').dataset.content;
+            var sizeInputContent = document.querySelector('.widgets__form.text input[type="number"][name="size"]').dataset.content;
+            var colorInputContent = document.querySelector('.widgets__form.text input[type="color"][name="color"]').dataset.content;
+            var boldCheckboxContent = document.querySelector('.widgets__form.text input[type="checkbox"][name="bold"]').dataset.content;
+            var italicCheckboxContent = document.querySelector('.widgets__form.text input[type="checkbox"][name="italic"]').dataset.content;
+            var underlineCheckboxContent = document.querySelector('.widgets__form.text input[type="checkbox"][name="underline"]').dataset.content;
+            var highlightCheckboxContent = document.querySelector('.widgets__form.text input[type="checkbox"][name="highlight"]').dataset.content;
+            var highlightColorInputContent = document.querySelector('.widgets__form.text input[type="color"][name="highlight-color"]').dataset.content;
+
+            var diaryWidget = document.querySelector(`.diary__widget[data-id="${id}"]`);
+            var diaryWidgetParagraph = document.querySelector(`.diary__widget[data-id="${id}"] p`);
+
+            diaryWidgetParagraph.innerHTML = decodeURIComponent(window.atob(htmlContent));
+            fullWidthCheckboxContent === "checked" ? diaryWidget.style.maxWidth = 'none' : diaryWidget.style.maxWidth = '250px';
+            diaryWidgetParagraph.style.fontSize = sizeInputContent + 'px';
+            diaryWidgetParagraph.style.color = colorInputContent;
+            boldCheckboxContent === "checked" ? diaryWidgetParagraph.style.fontWeight = "bold" : diaryWidgetParagraph.style.fontWeight = "none";
+            italicCheckboxContent === "checked" ? diaryWidgetParagraph.style.fontStyle = "italic" : diaryWidgetParagraph.style.fontStyle = "";
+            underlineCheckboxContent === "checked" ? diaryWidgetParagraph.style.textDecoration = "underline" : diaryWidgetParagraph.style.textDecoration = "";
+            highlightCheckboxContent === "checked" ? (highlightColorInputContent !== "#000000" ? diaryWidgetParagraph.style.backgroundColor = RightSidebar.hexToRGB(highlightColorInputContent, 0.3) : diaryWidgetParagraph.style.backgroundColor =  "rgba(255, 255, 0, 0.3)") : diaryWidgetParagraph.style.backgroundColor = '';
         })         
     }
 
@@ -298,7 +318,6 @@ export default class RightSidebar {
         };
 
         var dataJson = encodeURIComponent(window.btoa(JSON.stringify(arrayData)));
-        console.log(dataJson);
         
         // Update data of current widget
         var url = `/diary/widget/update/${id}/${dataHtmlContent}/${dataJson}`;
@@ -383,7 +402,6 @@ export default class RightSidebar {
 
         const url = `/diary/widget/read/${edit.dataset.id}`;
         Axios.get(url).then(function(response) {
-            console.log(response.data);
             // Takes content without HTML tags from response
             var content = response.data.response.htmlContent.replace('<p>', '').replace('</p>', '');     
              
@@ -398,6 +416,8 @@ export default class RightSidebar {
             var highlightCheckbox = document.querySelector('.widgets__form.text input[type="checkbox"][name="highlight"]');
             var highlightColorInput = document.querySelector('.widgets__form.text input[type="color"][name="highlight-color"]');
 
+            var data = response.data.response.data;
+
             // Set dataset Id like response
             htmlContentTextarea.dataset.id = edit.dataset.id;
             fullWidthCheckbox.dataset.id = edit.dataset.id;
@@ -409,19 +429,37 @@ export default class RightSidebar {
             highlightCheckbox.dataset.id = edit.dataset.id;
             highlightColorInput.dataset.id = edit.dataset.id;
 
-            //Set content like response
+            // Set content on dataset content
             htmlContentTextarea.dataset.content = encodeURIComponent(window.btoa(content));
-            htmlContentTextarea.value = content; 
+            fullWidthCheckbox.dataset.content = data.fullWidth;
+            sizeInput.dataset.content = data.size;
+            colorInput.dataset.content = data.color;
+            boldCheckbox.dataset.content = data.bold;
+            italicCheckbox.dataset.content = data.italic;
+            underlineCheckbox.dataset.content = data.underline;
+            highlightCheckbox.dataset.content = data.highlight;
+            highlightColorInput.dataset.content = data.highlightColor;
             
-            var data = response.data.response.data;
-            data.fullWidth === "checked" ? fullWidthCheckbox.checked = true : '';
+            //Set content like response
+            htmlContentTextarea.value = content; 
+            data.fullWidth === "checked" ? fullWidthCheckbox.checked = true : fullWidthCheckbox.checked = false;
             sizeInput.value = data.size;
             colorInput.value = data.color;
-            data.bold === "checked" ? boldCheckbox.checked = true : '';
-            data.italic === "checked" ? italicCheckbox.checked = true : '';
-            data.underline === "checked" ? underlineCheckbox.checked = true : '';
-            data.highlight === "checked" ? highlightCheckbox.checked = true : '';
-            highlightColorInput.value = data.highlightColor;
+            data.bold === "checked" ? boldCheckbox.checked = true : boldCheckbox.checked = false;
+            data.italic === "checked" ? italicCheckbox.checked = true : italicCheckbox.checked = false;
+            data.underline === "checked" ? underlineCheckbox.checked = true : underlineCheckbox.checked = false;
+            if(data.highlight === "checked") {
+                highlightCheckbox.checked = true
+                if(data.highlightColor !== "#000000") {
+                    highlightColorInput.value = data.highlightColor;
+                }
+                var divNone = document.querySelector('.highlight-color');
+                divNone.classList.remove('active');
+            }else {
+                highlightCheckbox.checked = false;
+                var divNone = document.querySelector('.highlight-color');
+                divNone.classList.add('active');
+            }
         })
     }
 
