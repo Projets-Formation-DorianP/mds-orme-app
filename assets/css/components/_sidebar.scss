@@ -234,12 +234,23 @@ nav.sidebar.right {
 			}
 
 			&-actions {
-				.trash {
-					    background-image: url(../../../public/build/trash.png);
-						width: 15px !important;
-						height: 15px !important;
-						background-size: contain;
-						background-repeat: no-repeat;
+				display: flex;
+				flex-direction: row;
+
+				div {
+					width: 15px !important;
+					height: 15px !important;
+					background-size: contain;
+					background-repeat: no-repeat;
+
+					&.trash {
+						background-image: url(../../../public/build/trash.png);
+						margin-left: 0.5rem;
+					}
+
+					&.modify {
+						background-image: url(../../../public/build/form.png)
+					}
 				}
 			}
 		}

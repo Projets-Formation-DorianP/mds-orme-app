@@ -16,6 +16,9 @@
                         <a href="#">
                             <div class="trash" data-id="{{ currentWidget.id }}"></div>
                         </a>
+                        <a href="#">
+                            <div class="modify" data-id="{{ currentWidget.id }}"></div>
+                        </a>
                     </div>
                 </li>
             {% endfor %}
@@ -34,9 +37,13 @@
                         <a href="#">
                             <div class="trash" data-id="{{ currentWidget.id }}"></div>
                         </a>
+                        <a href="#">
+                            <div class="modify" data-id="{{ currentWidget.id }}"></div>
+                        </a>
                     </div>
                 </li>
             {% endfor %}
         </ul>
     </div>
+    {% include 'blocks/app/form/form-text.html.twig' %}
 </nav>

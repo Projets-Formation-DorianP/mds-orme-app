@@ -1,0 +1,77 @@
+.widgets__form {
+    padding: 1rem;
+    direction: ltr;
+
+    &.active {
+        display: none;
+    }
+
+    & > div {
+        margin-bottom: 1rem;
+    } 
+
+    h4 {
+        font-size: 1rem !important;
+        font-weight: 600;
+        color: grey;
+        margin: 1rem 0 1rem 0;
+    }
+
+    label {
+        font-size: 0.75rem !important;
+        font-weight: 400;
+        color: grey;
+    }
+
+    textarea {
+        text-align: left;
+        font-size: 10px;
+        width: 100%;
+    }
+
+    &-actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        a.abandon,
+        a.persist {
+            margin: 0 0.5rem 0 0.5rem;
+        }
+    }
+
+    &.text {
+        .size,
+        .color,
+        .formatting {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bold,
+        .italic,
+        .underline {
+            label {
+                margin: 0;
+            }
+        }
+
+        .size {
+            input { 
+                height: 50%;
+            }
+        }
+
+        .color {
+            img {
+                display: none;
+            }
+        }
+
+        .highlight-color {
+            &.active {
+                display: none;
+            }
+        }
+    }
+}
