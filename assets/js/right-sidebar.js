@@ -71,6 +71,7 @@ export default class RightSidebar {
         // Set event listener on all form elements
         this.listenOnKeyPressTextArea();
         this.listenOnChangeFullWidthCheckbox();
+        this.listenOnChangeTextAlignRadioButton();
         this.listenOnValueChangeSizeInput();
         this.listenOnValueChangeColorInput();
         this.listenOnChangeTextFormattingCheckbox();
@@ -121,6 +122,20 @@ export default class RightSidebar {
                 flag = true;
             }
         });
+    }
+
+    /**
+     * Listen to a change on group text align radio buttons
+     */
+    listenOnChangeTextAlignRadioButton() {
+        var textAlignRadioButtons = document.querySelectorAll('.widgets__form.text input[type="radio"][name="align"]');
+
+        textAlignRadioButtons.forEach(radioButton => {
+            radioButton.addEventListener('input', function () {
+                var associatedWidget = document.querySelector(`.diary__widget[data-id="${radioButton.dataset.id}"] p`);
+                associatedWidget.style.textAlign = radioButton.id;
+            })
+        })
     }
 
     /**
@@ -240,6 +255,7 @@ export default class RightSidebar {
             var id = document.querySelector('.widgets__form.text textarea').dataset.id; 
             var htmlContent = document.querySelector('.widgets__form.text textarea').dataset.content;
             var fullWidthCheckboxContent = document.querySelector('.widgets__form.text input[type="checkbox"][name="full-width"]').dataset.content;
+            var textAlignRadioButtonsContent = document.querySelector('.widgets__form.text input[type="radio"][name="align"]').dataset.content;
             var sizeInputContent = document.querySelector('.widgets__form.text input[type="number"][name="size"]').dataset.content;
             var colorInputContent = document.querySelector('.widgets__form.text input[type="color"][name="color"]').dataset.content;
             var boldCheckboxContent = document.querySelector('.widgets__form.text input[type="checkbox"][name="bold"]').dataset.content;
@@ -253,6 +269,7 @@ export default class RightSidebar {
 
             diaryWidgetParagraph.innerHTML = decodeURIComponent(window.atob(htmlContent));
             fullWidthCheckboxContent === "checked" ? diaryWidget.style.maxWidth = 'none' : diaryWidget.style.maxWidth = '250px';
+            diaryWidgetParagraph.style.textAlign = textAlignRadioButtonsContent;
             diaryWidgetParagraph.style.fontSize = sizeInputContent + 'px';
             diaryWidgetParagraph.style.color = colorInputContent;
             boldCheckboxContent === "checked" ? diaryWidgetParagraph.style.fontWeight = "bold" : diaryWidgetParagraph.style.fontWeight = "none";
@@ -287,6 +304,7 @@ export default class RightSidebar {
         // Get all elements
         var htmlContent = document.querySelector('.widgets__form.text textarea').value;
         var fullWidthCheckbox = document.querySelector('.widgets__form.text input[type="checkbox"][name="full-width"]');
+        var textAlignRadioButtons = document.querySelectorAll('.widgets__form.text input[type="radio"][name="align"]');
         var sizeInput = document.querySelector('.widgets__form.text input[type="number"][name="size"]');
         var colorInput = document.querySelector('.widgets__form.text input[type="color"][name="color"]');
         var boldCheckbox = document.querySelector('.widgets__form.text input[type="checkbox"][name="bold"]');
@@ -300,6 +318,12 @@ export default class RightSidebar {
 
         // Get content of all elements
         var fullWidthCheckboxContent = fullWidthCheckbox.checked ? "checked" : null;
+        var textAlignRadioButtonContent = null;
+        textAlignRadioButtons.forEach(radioButton => {
+            if(radioButton.checked) {
+                textAlignRadioButtonContent = radioButton.id;
+            }
+        });
         var sizeInputContent = sizeInput.value == "" ? "16" : sizeInput.value;
         var colorInputContent = colorInput.value;
         var boldCheckboxContent = boldCheckbox.checked ? "checked" : null;
@@ -317,7 +341,8 @@ export default class RightSidebar {
             italic          : italicCheckboxContent,
             underline       : underlineCheckboxContent,
             highlight       : highlightCheckboxContent,
-            highlightColor  : highlightColorInputContent
+            highlightColor  : highlightColorInputContent,
+            textAlign       : textAlignRadioButtonContent
         };
 
         var dataJson = encodeURIComponent(window.btoa(JSON.stringify(arrayData)));
@@ -411,6 +436,7 @@ export default class RightSidebar {
             // Takes form elements
             var htmlContentTextarea = document.querySelector('.widgets__form.text textarea');  
             var fullWidthCheckbox = document.querySelector('.widgets__form.text input[type="checkbox"][name="full-width"]');
+            var textAlignRadioButtons = document.querySelectorAll('.widgets__form.text input[type="radio"][name="align"]');
             var sizeInput = document.querySelector('.widgets__form.text input[type="number"][name="size"]');
             var colorInput = document.querySelector('.widgets__form.text input[type="color"][name="color"]');
             var boldCheckbox = document.querySelector('.widgets__form.text input[type="checkbox"][name="bold"]');
@@ -424,6 +450,9 @@ export default class RightSidebar {
             // Set dataset Id like response
             htmlContentTextarea.dataset.id = edit.dataset.id;
             fullWidthCheckbox.dataset.id = edit.dataset.id;
+            textAlignRadioButtons.forEach(radioButton => {
+                radioButton.dataset.id = edit.dataset.id;
+            });
             sizeInput.dataset.id = edit.dataset.id;
             colorInput.dataset.id = edit.dataset.id;
             boldCheckbox.dataset.id = edit.dataset.id;
@@ -435,6 +464,9 @@ export default class RightSidebar {
             // Set content on dataset content
             htmlContentTextarea.dataset.content = encodeURIComponent(window.btoa(content));
             fullWidthCheckbox.dataset.content = data.fullWidth;
+            textAlignRadioButtons.forEach(radioButton => {
+                radioButton.dataset.content = data.textAlign;
+            });
             sizeInput.dataset.content = data.size;
             colorInput.dataset.content = data.color;
             boldCheckbox.dataset.content = data.bold;
@@ -446,6 +478,9 @@ export default class RightSidebar {
             //Set content like response
             htmlContentTextarea.value = content; 
             data.fullWidth === "checked" ? fullWidthCheckbox.checked = true : fullWidthCheckbox.checked = false;
+            textAlignRadioButtons.forEach(radioButton => {
+                if(radioButton.id === radioButton.dataset.content) radioButton.checked = true;
+            });
             sizeInput.value = data.size;
             colorInput.value = data.color;
             data.bold === "checked" ? boldCheckbox.checked = true : boldCheckbox.checked = false;

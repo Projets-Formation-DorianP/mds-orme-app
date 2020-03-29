@@ -68,6 +68,7 @@ export default class ActionsPage {
                         widget.data.bold === "checked" ? divWidgetParagraph.style.fontWeight = "bold" : '';
                         widget.data.italic === "checked" ? divWidgetParagraph.style.fontStyle = "italic" : '';
                         widget.data.underline === "checked" ? divWidgetParagraph.style.textDecoration = "underline" : '';
+                        divWidgetParagraph.style.textAlign = widget.data.textAlign;
                         
                         if(widget.data.highlight === "checked") {
                             if(widget.data.highlight === "#000000") {
