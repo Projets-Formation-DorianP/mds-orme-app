@@ -39,6 +39,7 @@ export default class RightSidebar {
                 this.rightSidebar.classList.add('active');
                 this.divWidgets.classList.add('active');
                 this.abandon.click();
+                this.divWidgets.classList.add('active');
             }else {
                 this.rightSidebar.classList.toggle('active');
                 this.divWidgets.classList.toggle('active');
@@ -227,9 +228,11 @@ export default class RightSidebar {
     listenOnClickAbandon() {   
         this.abandon.addEventListener('click', event => {
             // Check if we click on collapse, display good active class on good elements
-            this.divWidgets.classList.contains('active') ? '' : this.divWidgets.classList.remove('active');
             this.formContentRightSidebar.classList.add('active');
-
+            if(this.divWidgets.classList.contains('active')) {
+                this.divWidgets.classList.remove('active');
+            }
+            
             // Reset value of text area 
             document.querySelector('.widgets__form.text textarea').value = "";
 
