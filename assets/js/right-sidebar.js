@@ -272,7 +272,7 @@ export default class RightSidebar {
             diaryWidgetParagraph.style.textAlign = textAlignRadioButtonsContent;
             diaryWidgetParagraph.style.fontSize = sizeInputContent + 'px';
             diaryWidgetParagraph.style.color = colorInputContent;
-            boldCheckboxContent === "checked" ? diaryWidgetParagraph.style.fontWeight = "bold" : diaryWidgetParagraph.style.fontWeight = "none";
+            boldCheckboxContent === "checked" ? diaryWidgetParagraph.style.fontWeight = "bold" : diaryWidgetParagraph.style.fontWeight = "unset";
             italicCheckboxContent === "checked" ? diaryWidgetParagraph.style.fontStyle = "italic" : diaryWidgetParagraph.style.fontStyle = "";
             underlineCheckboxContent === "checked" ? diaryWidgetParagraph.style.textDecoration = "underline" : diaryWidgetParagraph.style.textDecoration = "";
             highlightCheckboxContent === "checked" ? (highlightColorInputContent !== "#000000" ? diaryWidgetParagraph.style.backgroundColor = RightSidebar.hexToRGB(highlightColorInputContent, 0.3) : diaryWidgetParagraph.style.backgroundColor =  "rgba(255, 255, 0, 0.3)") : diaryWidgetParagraph.style.backgroundColor = '';
@@ -484,6 +484,7 @@ export default class RightSidebar {
             sizeInput.value = data.size;
             colorInput.value = data.color;
             data.bold === "checked" ? boldCheckbox.checked = true : boldCheckbox.checked = false;
+            console.log(data.bold, boldCheckbox.checked);
             data.italic === "checked" ? italicCheckbox.checked = true : italicCheckbox.checked = false;
             data.underline === "checked" ? underlineCheckbox.checked = true : underlineCheckbox.checked = false;
             if(data.highlight === "checked") {

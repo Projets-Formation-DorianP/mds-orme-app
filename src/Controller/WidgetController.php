@@ -102,7 +102,21 @@ class WidgetController extends Controller{
         $widget->setPage($page);
         $widget->setPositionTop(3);
         $widget->setPositionLeft(3);
-        $widget->setData([]);
+
+        // Set data for widget text
+        if($widget->getType() == "text") {
+            $widget->setData([
+                'fullWidth'         => null,
+                'size'              => 16,
+                'color'             => '#000000',
+                'bold'              => null,
+                'italic'            => null,
+                'underline'         => null,
+                'highlight'         => null,
+                'highlightColor'    => '#000000',
+                'textAlign'         => 'left'
+            ]);
+        }
 
         $manager->persist($widget); 
         $manager->flush();
