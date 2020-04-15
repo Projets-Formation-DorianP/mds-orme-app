@@ -68,17 +68,22 @@ $(document).ready(function() {
     }
 
     /* Right Sidebar */
-    const rightSidebar              = document.querySelector('.sidebar.right');
-    const rightSidebarCollapse      = document.querySelector('.rightSidebarCollapse');
-    const divWidgets                = document.querySelector('.sidebar.right > .widgets');
-    const arrayTrash                = [].slice.call(document.querySelectorAll('.trash'));
-    const arrayEdit                 = [].slice.call(document.querySelectorAll('.modify'));
-    const widgetsList               = [].slice.call(document.querySelectorAll('.sidebar.right .widgets__items'));
-    const formContentRightSidebar   = document.querySelector('.sidebar.right div.widgets__form.text');
-    const abandon                   = document.querySelector('.abandon');
-    const persist                   = document.querySelector('.persist');
+    const rightSidebar                  = document.querySelector('.sidebar.right');
+    const rightSidebarCollapse          = document.querySelector('.rightSidebarCollapse');
+    const divWidgets                    = document.querySelector('.sidebar.right > .widgets');
+    const arrayTrash                    = [].slice.call(document.querySelectorAll('.trash'));
+    const arrayEdit                     = [].slice.call(document.querySelectorAll('.modify'));
+    const widgetsList                   = [].slice.call(document.querySelectorAll('.sidebar.right .widgets__items'));
+    // Widget text
+    const formContentRightSidebar       = document.querySelector('.sidebar.right div.widgets__form.text');
+    const abandon                       = document.querySelector('.abandon.text');
+    const persist                       = document.querySelector('.persist.text');
+    // Widget Image
+    const formContentImageRightSidebar  = document.querySelector('.sidebar.right div.widgets__form.image');
+    const abandonImage                  = document.querySelector('.abandon.image');
+    const persistImage                  = document.querySelector('.persist.image');
 
-    if(rightSidebar && rightSidebarCollapse && divWidgets && arrayTrash && arrayEdit && widgetsList && formContentRightSidebar && abandon && persist) {
-        new RightSidebar(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist);
+    if(rightSidebar && rightSidebarCollapse && divWidgets && arrayTrash && arrayEdit && widgetsList && formContentRightSidebar && abandon && persist && formContentImageRightSidebar && abandonImage && persistImage) {
+        new RightSidebar(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage);
     }
 });

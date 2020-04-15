@@ -1,20 +1,27 @@
 import Axios from "axios";
 
 export default class RightSidebar {
-    constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist) {
+    constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage) {
         this.rightSidebar = rightSidebar;
 
         if(this.rightSidebar) {
-            this.formContentRightSidebar = formContentRightSidebar;
             this.rightSidebarCollapse = rightSidebarCollapse;
             this.widgetsList = widgetsList;
             this.divWidgets = divWidgets;
             this.arrayTrash = arrayTrash;
             this.arrayEdit = arrayEdit;
+
+            // Widget Text
+            this.formContentRightSidebar = formContentRightSidebar;
             this.abandon = abandon;
             this.persist = persist;
 
-            if(this.formContentRightSidebar && this.rightSidebarCollapse && this.divWidgets) {
+            // Widget Image
+            this.formContentImageRightSidebar = formContentImageRightSidebar;
+            this.abandonImage = abandonImage;
+            this.persistImage = persistImage;
+
+            if(this.rightSidebarCollapse && this.divWidgets) {
                 this.listenOnClickCollapse();
             }
 
@@ -77,10 +84,19 @@ export default class RightSidebar {
         this.listenOnChangeTextFormattingCheckbox();
         this.listenOnChangeHighlightCheckboxAndHighlightColorInput();
 
-        // Set event listener on two buttons
+        // Set event listener on buttons
         this.abandon ? this.listenOnClickAbandon() : '';
-        this.persist ? this.listenOnClickPersist() : '';        
+        this.persist ? this.listenOnClickPersist() : '';    
+        
+        this.abandonImage ? this.listenOnClickAbandonImage() : '';
+        // this.persist ? this.listenOnClickPersist() : '';   
     }
+
+    /**
+     * 
+     * Widget TEXT
+     * 
+     */
 
     /**
      * Listen to all key press for update widget content in real time
@@ -378,6 +394,21 @@ export default class RightSidebar {
     }
 
     /**
+     * 
+     * Widget IMAGE
+     * 
+     */
+    listenOnClickAbandonImage() {
+        this.abandonImage.addEventListener('click', event => {
+            // Check if we click on collapse, display good active class on good elements
+            this.formContentImageRightSidebar.classList.add('active');
+            if(this.divWidgets.classList.contains('active')) {
+                this.divWidgets.classList.remove('active');
+            }
+        })
+    }
+
+    /**
      * Put an event listener click on the trash icon
      * 
      * @param {elt} trash 
@@ -426,8 +457,13 @@ export default class RightSidebar {
         event.preventDefault();
         
         document.querySelector('.sidebar.right > .widgets').classList.add('active');        
-        document.querySelector('.sidebar.right div.widgets__form.text').classList.remove('active');
 
+        (edit.dataset.type === "text") ? RightSidebar.clickEditWidgetText(edit) : '';
+        (edit.dataset.type === "image") ? RightSidebar.clickEditWidgetImage(edit) : '';
+    }
+
+    static clickEditWidgetText(edit) {
+        document.querySelector('.sidebar.right div.widgets__form.text').classList.remove('active');
         const url = `/diary/widget/read/${edit.dataset.id}`;
         Axios.get(url).then(function(response) {
             // Takes content without HTML tags from response
@@ -500,6 +536,10 @@ export default class RightSidebar {
                 divNone.classList.add('active');
             }
         })
+    }
+
+    static clickEditWidgetImage() {
+        document.querySelector('.sidebar.right div.widgets__form.image').classList.remove('active');
     }
 
     static hexToRGB(hex, alpha) {

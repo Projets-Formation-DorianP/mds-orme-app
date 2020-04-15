@@ -74,4 +74,12 @@
             }
         }
     }
+
+    &.image {
+        .width,
+        .rotate {
+            display: flex;
+            flex-direction: column;
+        }
+    }
 }
