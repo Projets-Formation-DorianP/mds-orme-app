@@ -41,7 +41,7 @@ export default class ActionsPage {
             var widgets = Object.values(response.data.widgets);
             widgets.forEach(page => {
                 page.forEach(widget => {
-                    if(widget.type === "text") {
+                    if(widget.type === "text" || widget.type === "image") {
                         var divWidget = document.createElement('div');
                         divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
                         divWidget.style.position = 'relative';
@@ -50,33 +50,10 @@ export default class ActionsPage {
                         divWidget.dataset.id = widget.id;
                         divWidget.dataset.type = widget.type;
                         divWidget.dataset.lastLeftPosition = widget.left;
-                        
-                        // Creates an HTML element according to the string contained in the database
-                        let widgetHtmlContent = document.createRange().createContextualFragment(widget.htmlContent);
 
-                        divWidget.appendChild(widgetHtmlContent);
-
-                        var divWidgetParagraph = divWidget.firstChild;
-
-                        // Set data
-                        if(widget.data.fullWidth === "checked") {
-                            divWidget.style.maxWidth = 'none';
-                            divWidget.style.left = null;
-                        } 
-                        divWidgetParagraph.style.fontSize = widget.data.size + 'px';
-                        divWidgetParagraph.style.color = widget.data.color;
-                        widget.data.bold === "checked" ? divWidgetParagraph.style.fontWeight = "bold" : '';
-                        widget.data.italic === "checked" ? divWidgetParagraph.style.fontStyle = "italic" : '';
-                        widget.data.underline === "checked" ? divWidgetParagraph.style.textDecoration = "underline" : '';
-                        divWidgetParagraph.style.textAlign = widget.data.textAlign;
-                        
-                        if(widget.data.highlight === "checked") {
-                            if(widget.data.highlight === "#000000") {
-                                divWidgetParagraph.style.backgroundColor = "rgba(255,255,0,0.3)";
-                            }else {
-                                divWidgetParagraph.style.backgroundColor = RightSidebar.hexToRGB(widget.data.highlightColor, 0.3);
-                            }
-                        }
+                        // Set data and child
+                        (widget.type === "text") ? ActionsPage.setDataWidgetText(divWidget, widget) : '';
+                        (widget.type === "image") ? ActionsPage.setDataWidgetImage(divWidget, widget) : '';
 
                         // Add event listener mouseenter and mouseleave
                         divWidget.addEventListener('mouseenter', event => {                
@@ -113,6 +90,48 @@ export default class ActionsPage {
                 })
             })
         })
+    }
+
+    static setDataWidgetText(divWidget, widget) {
+        // Creates an HTML element according to the string contained in the database
+        let widgetHtmlContent = document.createRange().createContextualFragment(widget.htmlContent);
+        divWidget.appendChild(widgetHtmlContent);
+
+        var divWidgetParagraph = divWidget.firstChild;
+
+        if(widget.data.fullWidth === "checked") {
+            divWidget.style.maxWidth = 'none';
+            divWidget.style.left = null;
+        } 
+        divWidgetParagraph.style.fontSize = widget.data.size + 'px';
+        divWidgetParagraph.style.color = widget.data.color;
+        widget.data.bold === "checked" ? divWidgetParagraph.style.fontWeight = "bold" : '';
+        widget.data.italic === "checked" ? divWidgetParagraph.style.fontStyle = "italic" : '';
+        widget.data.underline === "checked" ? divWidgetParagraph.style.textDecoration = "underline" : '';
+        divWidgetParagraph.style.textAlign = widget.data.textAlign;
+        
+        if(widget.data.highlight === "checked") {
+            if(widget.data.highlight === "#000000") {
+                divWidgetParagraph.style.backgroundColor = "rgba(255,255,0,0.3)";
+            }else {
+                divWidgetParagraph.style.backgroundColor = RightSidebar.hexToRGB(widget.data.highlightColor, 0.3);
+            }
+        }
+    }
+
+    static setDataWidgetImage(divWidget, widget) {
+        String.prototype.splice = function(idx, rem, str) {
+            return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
+        };
+
+        // Creates an HTML element according to the string contained in the database
+        var styleImage = `style="width: ${widget.data.width}px; "`;
+        let widgetHtmlContent = document.createRange().createContextualFragment(widget.htmlContent.splice(5, 0, styleImage));
+
+        divWidget.style.transform = `rotate(${parseInt(widget.data.rotate)}deg)`;
+        divWidget.style.maxWidth = "none";
+
+        divWidget.appendChild(widgetHtmlContent);    
     }
 
     /**

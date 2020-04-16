@@ -118,6 +118,14 @@ class WidgetController extends Controller{
             ]);
         }
 
+        // Set data for widget image
+        if($widget->getType() == "image") {
+            $widget->setData([
+                'width'     => 350,
+                'rotate'    => 0
+            ]);
+        }
+
         $manager->persist($widget); 
         $manager->flush();
 
@@ -260,12 +268,14 @@ class WidgetController extends Controller{
             'message'   => 'Unauthorized'
         ], 403);
 
-        $htmlContent = WidgetController::decode($htmlContent);
-        $htmlContent = "<p>${htmlContent}</p>";
+        $widget = $widgetRepo->findOneBy(['id' => $id]);
 
+        $htmlContent = WidgetController::decode($htmlContent);
         $data = WidgetController::decode($dataJson);
 
-        $widget = $widgetRepo->findOneBy(['id' => $id]);
+        ($widget->getType() === "text") ? $htmlContent = "<p>${htmlContent}</p>" : '';
+        ($widget->getType() === "image") ? $htmlContent = "<img src=\"${htmlContent}\"</img>" : '';
+
         $widget->setHtmlContent($htmlContent);
         $widget->setData((array) json_decode($data));
     

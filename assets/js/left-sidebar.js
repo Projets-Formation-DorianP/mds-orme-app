@@ -86,12 +86,13 @@ export default class LeftSidebar {
                 var url = `/diary/${button.dataset.pageNumber}/widget/create/${this.currentWidget.dataset.type}`;
                 Axios.get(url).then(function(response) {  
                     // Create widget on page
-                    if(response.data.widgetType === "text") {
+                    if(response.data.widgetType === "text" || response.data.widgetType === "image") {
                         var divWidget = document.createElement('div');
                         divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
                         divWidget.style.position = 'relative';
                         divWidget.style.top = response.data.widgetPositionTop + "px";
                         divWidget.style.left = response.data.widgetPositionLeft + "px";
+                        (response.data.widgetType === "image") ? divWidget.style.maxWidth = "none" : '';
                         divWidget.dataset.id = response.data.widgetId;
                         divWidget.dataset.type = response.data.widgetType;
                         
@@ -148,6 +149,7 @@ export default class LeftSidebar {
                     var actionsModify = document.createElement("div");
                     actionsModify.classList.add('modify');
                     actionsModify.dataset.id = response.data.widgetId;
+                    actionsModify.dataset.type = response.data.widgetType;
 
                     var actionsB = document.createElement("a");
                     actionsB.href = "#";

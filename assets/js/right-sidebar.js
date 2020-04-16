@@ -1,20 +1,27 @@
 import Axios from "axios";
 
 export default class RightSidebar {
-    constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist) {
+    constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage) {
         this.rightSidebar = rightSidebar;
 
         if(this.rightSidebar) {
-            this.formContentRightSidebar = formContentRightSidebar;
             this.rightSidebarCollapse = rightSidebarCollapse;
             this.widgetsList = widgetsList;
             this.divWidgets = divWidgets;
             this.arrayTrash = arrayTrash;
             this.arrayEdit = arrayEdit;
+
+            // Widget Text
+            this.formContentRightSidebar = formContentRightSidebar;
             this.abandon = abandon;
             this.persist = persist;
 
-            if(this.formContentRightSidebar && this.rightSidebarCollapse && this.divWidgets) {
+            // Widget Image
+            this.formContentImageRightSidebar = formContentImageRightSidebar;
+            this.abandonImage = abandonImage;
+            this.persistImage = persistImage;
+
+            if(this.rightSidebarCollapse && this.divWidgets) {
                 this.listenOnClickCollapse();
             }
 
@@ -77,10 +84,23 @@ export default class RightSidebar {
         this.listenOnChangeTextFormattingCheckbox();
         this.listenOnChangeHighlightCheckboxAndHighlightColorInput();
 
-        // Set event listener on two buttons
+        this.listenOnChangeLinkInputImage();
+        this.listenOnChangeWidthInputImage();
+        this.listenOnClickRotateInputImage();
+
+        // Set event listener on buttons
         this.abandon ? this.listenOnClickAbandon() : '';
-        this.persist ? this.listenOnClickPersist() : '';        
+        this.persist ? this.listenOnClickPersist() : '';    
+        
+        this.abandonImage ? this.listenOnClickAbandonImage() : '';
+        this.persistImage ? this.listenOnClickPersistImage() : '';   
     }
+
+    /**
+     * 
+     * Widget TEXT
+     * 
+     */
 
     /**
      * Listen to all key press for update widget content in real time
@@ -378,6 +398,108 @@ export default class RightSidebar {
     }
 
     /**
+     * 
+     * Widget IMAGE
+     * 
+     */
+
+    listenOnChangeLinkInputImage() {
+        var linkInput = document.querySelector('.widgets__form.image input[name="link"]');
+        linkInput.addEventListener('input', function () {
+            var associatedWidgetImage = document.querySelector(`.diary__widget[data-id="${linkInput.dataset.id}"] img`);
+            var src = linkInput.value;
+
+            if(RightSidebar.checkURL(src)) {
+                associatedWidgetImage.src = `${src}`;
+            }else {
+                confirm('Ce lien n\'est pas une image');
+            }
+        });
+    }
+
+    listenOnChangeWidthInputImage() {
+        var widthInput = document.querySelector('.widgets__form.image input[name="width"]');
+        widthInput.addEventListener('input', function () {
+            var associatedWidgetImage = document.querySelector(`.diary__widget[data-id="${widthInput.dataset.id}"] img`);
+            associatedWidgetImage.style.width = widthInput.value + "px";
+        });
+    }
+
+    listenOnClickRotateInputImage() {
+        var rotateInput = document.querySelector('.widgets__form.image input[name="rotate"]');
+        rotateInput.addEventListener('input', function () {
+            var associatedWidgetImage = document.querySelector(`.diary__widget[data-id="${rotateInput.dataset.id}"]`);
+            associatedWidgetImage.style.transform = `rotate(${rotateInput.value}deg)`;
+        });
+    }
+    
+    listenOnClickAbandonImage() {
+        this.abandonImage.addEventListener('click', event => {
+            // Check if we click on collapse, display good active class on good elements
+            this.formContentImageRightSidebar.classList.add('active');
+            if(this.divWidgets.classList.contains('active')) {
+                this.divWidgets.classList.remove('active');
+            }
+
+            var id = document.querySelector('.widgets__form.image input[name="link"]').dataset.id; 
+
+            // We reset the content of the widget to its origin (because it changed with the keypress)
+            var link = document.querySelector('.widgets__form.image input[name="link"]').dataset.content;
+            var width = document.querySelector('.widgets__form.image input[name="width"]').dataset.content;
+            var rotate = document.querySelector('.widgets__form.image input[name="rotate"]').dataset.content;
+
+            var diaryWidget = document.querySelector(`.diary__widget[data-id="${id}"]`);
+            var diaryWidgetImage = document.querySelector(`.diary__widget[data-id="${id}"] img`);
+
+            diaryWidgetImage.src = `${decodeURIComponent(window.atob(link))}`;
+            diaryWidgetImage.style.width = width + "px";
+            diaryWidget.style.transform = `rotate(${rotate}deg)`;
+
+        })
+    }
+
+    listenOnClickPersistImage() {
+        this.persistImage.addEventListener('click', event => {
+            var id = document.querySelector('.widgets__form.image input[name="link"]').dataset.id;
+            this.persistFormDataWidgetImage(id);            
+        })
+    }
+
+    persistFormDataWidgetImage(id) {
+        // Get all elements
+        var linkE = document.querySelector('.widgets__form.image input[name="link"]').value;
+        var widthE = document.querySelector('.widgets__form.image input[name="width"]').value;
+        var rotateE = document.querySelector('.widgets__form.image input[name="rotate"]').value;
+        console.log(linkE);
+
+        // Encode the html content to make it "transportable" in the url
+        var dataHtmlContent = encodeURIComponent(window.btoa(linkE));
+
+        // Set an array, transform to json and encode it for pass JSON in URL
+        var arrayData = {
+            width   : widthE,
+            rotate  : rotateE
+        };
+
+        var dataJson = encodeURIComponent(window.btoa(JSON.stringify(arrayData)));
+        
+        console.log(id, dataHtmlContent, dataJson);
+        // Update data of current widget
+        var url = `/diary/widget/update/${id}/${dataHtmlContent}/${dataJson}`;
+        Axios.get(url).then(function() {})
+
+        // Return to the list of widgets
+        this.divWidgets.classList.remove('active');
+        this.formContentImageRightSidebar.classList.add('active');
+    }
+
+    /**
+     * 
+     * Other ACTIONS
+     * 
+     */
+
+    /**
      * Put an event listener click on the trash icon
      * 
      * @param {elt} trash 
@@ -425,7 +547,13 @@ export default class RightSidebar {
     static clickEdit(edit, event) {
         event.preventDefault();
         
-        document.querySelector('.sidebar.right > .widgets').classList.add('active');        
+        document.querySelector('.sidebar.right > .widgets').classList.add('active'); 
+
+        (edit.dataset.type === "text") ? RightSidebar.clickEditWidgetText(edit) : '';
+        (edit.dataset.type === "image") ? RightSidebar.clickEditWidgetImage(edit) : '';
+    }
+
+    static clickEditWidgetText(edit) {
         document.querySelector('.sidebar.right div.widgets__form.text').classList.remove('active');
 
         const url = `/diary/widget/read/${edit.dataset.id}`;
@@ -484,7 +612,6 @@ export default class RightSidebar {
             sizeInput.value = data.size;
             colorInput.value = data.color;
             data.bold === "checked" ? boldCheckbox.checked = true : boldCheckbox.checked = false;
-            console.log(data.bold, boldCheckbox.checked);
             data.italic === "checked" ? italicCheckbox.checked = true : italicCheckbox.checked = false;
             data.underline === "checked" ? underlineCheckbox.checked = true : underlineCheckbox.checked = false;
             if(data.highlight === "checked") {
@@ -502,6 +629,41 @@ export default class RightSidebar {
         })
     }
 
+    static clickEditWidgetImage(edit) {
+        document.querySelector('.sidebar.right div.widgets__form.image').classList.remove('active');
+
+        const url = `/diary/widget/read/${edit.dataset.id}`;
+        Axios.get(url).then(function(response) {
+            console.log(response.data.response);
+
+            // Takes content without HTML tags from response
+            var str = response.data.response.htmlContent;
+            var regex = /<img[^>]+src="(http:\/\/[^">]+)"/g;
+            var src = regex.exec(str)[1];
+ 
+            // Takes form elements
+            var linkInput = document.querySelector('.widgets__form.image input[name="link"]');  
+            var widthInput = document.querySelector('.widgets__form.image input[name="width"]');  
+            var rotateInput = document.querySelector('.widgets__form.image input[name="rotate"]');
+
+            var data = response.data.response.data;
+            // Set dataset Id like response
+            linkInput.dataset.id = edit.dataset.id;
+            widthInput.dataset.id = edit.dataset.id;
+            rotateInput.dataset.id = edit.dataset.id;
+
+            // Set content on dataset content
+            linkInput.dataset.content = encodeURIComponent(window.btoa(src));
+            widthInput.dataset.content = data.width;
+            rotateInput.dataset.content = data.rotate;
+            
+            //Set content like response
+            linkInput.value = src;
+            widthInput.value = data.width;
+            rotateInput.value = data.rotate;
+        })
+    }
+
     static hexToRGB(hex, alpha) {
         var r = parseInt(hex.slice(1, 3), 16),
             g = parseInt(hex.slice(3, 5), 16),
@@ -512,5 +674,9 @@ export default class RightSidebar {
         } else {
             return "rgb(" + r + ", " + g + ", " + b + ")";
         }
+    }
+
+    static checkURL(url) {
+        return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
     }
 }
