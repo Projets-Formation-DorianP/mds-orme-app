@@ -84,12 +84,16 @@ export default class RightSidebar {
         this.listenOnChangeTextFormattingCheckbox();
         this.listenOnChangeHighlightCheckboxAndHighlightColorInput();
 
+        this.listenOnChangeLinkInputImage();
+        this.listenOnChangeWidthInputImage();
+        this.listenOnClickRotateInputImage();
+
         // Set event listener on buttons
         this.abandon ? this.listenOnClickAbandon() : '';
         this.persist ? this.listenOnClickPersist() : '';    
         
         this.abandonImage ? this.listenOnClickAbandonImage() : '';
-        // this.persist ? this.listenOnClickPersist() : '';   
+        this.persistImage ? this.listenOnClickPersistImage() : '';   
     }
 
     /**
@@ -398,6 +402,37 @@ export default class RightSidebar {
      * Widget IMAGE
      * 
      */
+
+    listenOnChangeLinkInputImage() {
+        var linkInput = document.querySelector('.widgets__form.image input[name="link"]');
+        linkInput.addEventListener('input', function () {
+            var associatedWidgetImage = document.querySelector(`.diary__widget[data-id="${linkInput.dataset.id}"] img`);
+            var src = linkInput.value;
+
+            if(RightSidebar.checkURL(src)) {
+                associatedWidgetImage.src = `${src}`;
+            }else {
+                confirm('Ce lien n\'est pas une image');
+            }
+        });
+    }
+
+    listenOnChangeWidthInputImage() {
+        var widthInput = document.querySelector('.widgets__form.image input[name="width"]');
+        widthInput.addEventListener('input', function () {
+            var associatedWidgetImage = document.querySelector(`.diary__widget[data-id="${widthInput.dataset.id}"] img`);
+            associatedWidgetImage.style.width = widthInput.value + "px";
+        });
+    }
+
+    listenOnClickRotateInputImage() {
+        var rotateInput = document.querySelector('.widgets__form.image input[name="rotate"]');
+        rotateInput.addEventListener('input', function () {
+            var associatedWidgetImage = document.querySelector(`.diary__widget[data-id="${rotateInput.dataset.id}"]`);
+            associatedWidgetImage.style.transform = `rotate(${rotateInput.value}deg)`;
+        });
+    }
+    
     listenOnClickAbandonImage() {
         this.abandonImage.addEventListener('click', event => {
             // Check if we click on collapse, display good active class on good elements
@@ -405,8 +440,64 @@ export default class RightSidebar {
             if(this.divWidgets.classList.contains('active')) {
                 this.divWidgets.classList.remove('active');
             }
+
+            var id = document.querySelector('.widgets__form.image input[name="link"]').dataset.id; 
+
+            // We reset the content of the widget to its origin (because it changed with the keypress)
+            var link = document.querySelector('.widgets__form.image input[name="link"]').dataset.content;
+            var width = document.querySelector('.widgets__form.image input[name="width"]').dataset.content;
+            var rotate = document.querySelector('.widgets__form.image input[name="rotate"]').dataset.content;
+
+            var diaryWidget = document.querySelector(`.diary__widget[data-id="${id}"]`);
+            var diaryWidgetImage = document.querySelector(`.diary__widget[data-id="${id}"] img`);
+
+            diaryWidgetImage.src = `${decodeURIComponent(window.atob(link))}`;
+            diaryWidgetImage.style.width = width + "px";
+            diaryWidget.style.transform = `rotate(${rotate}deg)`;
+
         })
     }
+
+    listenOnClickPersistImage() {
+        this.persistImage.addEventListener('click', event => {
+            var id = document.querySelector('.widgets__form.image input[name="link"]').dataset.id;
+            this.persistFormDataWidgetImage(id);            
+        })
+    }
+
+    persistFormDataWidgetImage(id) {
+        // Get all elements
+        var linkE = document.querySelector('.widgets__form.image input[name="link"]').value;
+        var widthE = document.querySelector('.widgets__form.image input[name="width"]').value;
+        var rotateE = document.querySelector('.widgets__form.image input[name="rotate"]').value;
+        console.log(linkE);
+
+        // Encode the html content to make it "transportable" in the url
+        var dataHtmlContent = encodeURIComponent(window.btoa(linkE));
+
+        // Set an array, transform to json and encode it for pass JSON in URL
+        var arrayData = {
+            width   : widthE,
+            rotate  : rotateE
+        };
+
+        var dataJson = encodeURIComponent(window.btoa(JSON.stringify(arrayData)));
+        
+        console.log(id, dataHtmlContent, dataJson);
+        // Update data of current widget
+        var url = `/diary/widget/update/${id}/${dataHtmlContent}/${dataJson}`;
+        Axios.get(url).then(function() {})
+
+        // Return to the list of widgets
+        this.divWidgets.classList.remove('active');
+        this.formContentImageRightSidebar.classList.add('active');
+    }
+
+    /**
+     * 
+     * Other ACTIONS
+     * 
+     */
 
     /**
      * Put an event listener click on the trash icon
@@ -456,7 +547,7 @@ export default class RightSidebar {
     static clickEdit(edit, event) {
         event.preventDefault();
         
-        document.querySelector('.sidebar.right > .widgets').classList.add('active');        
+        document.querySelector('.sidebar.right > .widgets').classList.add('active'); 
 
         (edit.dataset.type === "text") ? RightSidebar.clickEditWidgetText(edit) : '';
         (edit.dataset.type === "image") ? RightSidebar.clickEditWidgetImage(edit) : '';
@@ -464,6 +555,7 @@ export default class RightSidebar {
 
     static clickEditWidgetText(edit) {
         document.querySelector('.sidebar.right div.widgets__form.text').classList.remove('active');
+
         const url = `/diary/widget/read/${edit.dataset.id}`;
         Axios.get(url).then(function(response) {
             // Takes content without HTML tags from response
@@ -520,7 +612,6 @@ export default class RightSidebar {
             sizeInput.value = data.size;
             colorInput.value = data.color;
             data.bold === "checked" ? boldCheckbox.checked = true : boldCheckbox.checked = false;
-            console.log(data.bold, boldCheckbox.checked);
             data.italic === "checked" ? italicCheckbox.checked = true : italicCheckbox.checked = false;
             data.underline === "checked" ? underlineCheckbox.checked = true : underlineCheckbox.checked = false;
             if(data.highlight === "checked") {
@@ -538,8 +629,39 @@ export default class RightSidebar {
         })
     }
 
-    static clickEditWidgetImage() {
+    static clickEditWidgetImage(edit) {
         document.querySelector('.sidebar.right div.widgets__form.image').classList.remove('active');
+
+        const url = `/diary/widget/read/${edit.dataset.id}`;
+        Axios.get(url).then(function(response) {
+            console.log(response.data.response);
+
+            // Takes content without HTML tags from response
+            var str = response.data.response.htmlContent;
+            var regex = /<img[^>]+src="(http:\/\/[^">]+)"/g;
+            var src = regex.exec(str)[1];
+ 
+            // Takes form elements
+            var linkInput = document.querySelector('.widgets__form.image input[name="link"]');  
+            var widthInput = document.querySelector('.widgets__form.image input[name="width"]');  
+            var rotateInput = document.querySelector('.widgets__form.image input[name="rotate"]');
+
+            var data = response.data.response.data;
+            // Set dataset Id like response
+            linkInput.dataset.id = edit.dataset.id;
+            widthInput.dataset.id = edit.dataset.id;
+            rotateInput.dataset.id = edit.dataset.id;
+
+            // Set content on dataset content
+            linkInput.dataset.content = encodeURIComponent(window.btoa(src));
+            widthInput.dataset.content = data.width;
+            rotateInput.dataset.content = data.rotate;
+            
+            //Set content like response
+            linkInput.value = src;
+            widthInput.value = data.width;
+            rotateInput.value = data.rotate;
+        })
     }
 
     static hexToRGB(hex, alpha) {
@@ -552,5 +674,9 @@ export default class RightSidebar {
         } else {
             return "rgb(" + r + ", " + g + ", " + b + ")";
         }
+    }
+
+    static checkURL(url) {
+        return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
     }
 }

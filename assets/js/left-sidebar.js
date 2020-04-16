@@ -149,6 +149,7 @@ export default class LeftSidebar {
                     var actionsModify = document.createElement("div");
                     actionsModify.classList.add('modify');
                     actionsModify.dataset.id = response.data.widgetId;
+                    actionsModify.dataset.type = response.data.widgetType;
 
                     var actionsB = document.createElement("a");
                     actionsB.href = "#";
