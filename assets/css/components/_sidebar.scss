@@ -168,6 +168,10 @@ nav.sidebar.left {
 				background-image: url(../../../public/build/edit.png);
 			}
 
+			span.video::before {
+				background-image: url(../../../public/build/play-button.png);
+			}
+
 			span.image::before {
 				background-image: url(../../../public/build/photo.png);
 			}

@@ -124,3 +124,16 @@ div.form-new-password.orme input {
 .bg-white {
     background-color: white !important;
 }
+
+a.widget__video {
+    &::before {
+        content: "";
+        display: block;
+        background-image: url(https://image.flaticon.com/icons/svg/483/483054.svg);
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 20px;
+        float: left;
+        margin: 0 6px 0 0;
+    }
+}

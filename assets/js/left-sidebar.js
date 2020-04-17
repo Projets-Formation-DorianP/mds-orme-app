@@ -86,7 +86,7 @@ export default class LeftSidebar {
                 var url = `/diary/${button.dataset.pageNumber}/widget/create/${this.currentWidget.dataset.type}`;
                 Axios.get(url).then(function(response) {  
                     // Create widget on page
-                    if(response.data.widgetType === "text" || response.data.widgetType === "image") {
+                    if(response.data.widgetType === "text" || response.data.widgetType === "image" || response.data.widgetType === "video") {
                         var divWidget = document.createElement('div');
                         divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
                         divWidget.style.position = 'relative';

@@ -28,6 +28,7 @@ class WidgetController extends Controller{
         $widgetType = [
             'text', 
             'image',
+            'video',
             'todo'
         ];
 
@@ -81,6 +82,11 @@ class WidgetController extends Controller{
                 $image = 'http://localhost:8000/build/logo.png';
                 $widget->setHtmlContent("<img src=\"{$image}\"></img>");
                 break;
+                
+            case 'video':
+                $video = 'https://www.youtube.com/watch?v=mFbWmNgnde0&list=PL4Nzei3ISixLfnoCCW-0i60CSUvdIkYPJ&index=7';
+                $widget->setHtmlContent("<a class=\"widget__video\" href=\"{$video}\">Ma vidéo</a>");
+                break;
 
             case 'todo':
                 $toDo = "<ul><li>Tâche 1</li><li>Tâche 2</li></ul>";
@@ -118,6 +124,11 @@ class WidgetController extends Controller{
                 'width'     => 350,
                 'rotate'    => 0
             ]);
+        }
+
+        // Set data for widget video
+        if($widget->getType() == "video") {
+            $widget->setData([]);
         }
 
         $manager->persist($widget); 

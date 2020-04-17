@@ -41,7 +41,7 @@ export default class ActionsPage {
             var widgets = Object.values(response.data.widgets);
             widgets.forEach(page => {
                 page.forEach(widget => {
-                    if(widget.type === "text" || widget.type === "image") {
+                    if(widget.type === "text" || widget.type === "image" ||widget.type === "video") {
                         var divWidget = document.createElement('div');
                         divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
                         divWidget.style.position = 'relative';
@@ -54,6 +54,7 @@ export default class ActionsPage {
                         // Set data and child
                         (widget.type === "text") ? ActionsPage.setDataWidgetText(divWidget, widget) : '';
                         (widget.type === "image") ? ActionsPage.setDataWidgetImage(divWidget, widget) : '';
+                        (widget.type === "video") ? ActionsPage.setDataWidgetVideo(divWidget, widget) : '';
 
                         // Add event listener mouseenter and mouseleave
                         divWidget.addEventListener('mouseenter', event => {                
@@ -132,6 +133,12 @@ export default class ActionsPage {
         divWidget.style.maxWidth = "none";
 
         divWidget.appendChild(widgetHtmlContent);    
+    }
+
+    static setDataWidgetVideo(divWidget, widget) {
+        // Creates an HTML element according to the string contained in the database
+        let widgetHtmlContent = document.createRange().createContextualFragment(widget.htmlContent);
+        divWidget.appendChild(widgetHtmlContent);
     }
 
     /**
