@@ -168,6 +168,10 @@ nav.sidebar.left {
 				background-image: url(../../../public/build/edit.png);
 			}
 
+			span.video::before {
+				background-image: url(https://image.flaticon.com/icons/svg/483/483054.svg);
+			}
+
 			span.image::before {
 				background-image: url(../../../public/build/photo.png);
 			}

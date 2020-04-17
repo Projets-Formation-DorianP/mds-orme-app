@@ -28,6 +28,7 @@ class WidgetController extends Controller{
         $widgetType = [
             'text', 
             'image',
+            'video',
             'todo'
         ];
 
@@ -81,6 +82,11 @@ class WidgetController extends Controller{
                 $image = 'http://localhost:8000/build/logo.png';
                 $widget->setHtmlContent("<img src=\"{$image}\"></img>");
                 break;
+                
+            case 'video':
+                $video = 'https://www.youtube.com/watch?v=mFbWmNgnde0&list=PL4Nzei3ISixLfnoCCW-0i60CSUvdIkYPJ&index=7';
+                $widget->setHtmlContent("<a class=\"widget__video\" href=\"{$video}\" target=\"_blank\">Ma vidéo</a>");
+                break;
 
             case 'todo':
                 $toDo = "<ul><li>Tâche 1</li><li>Tâche 2</li></ul>";
@@ -117,6 +123,13 @@ class WidgetController extends Controller{
             $widget->setData([
                 'width'     => 350,
                 'rotate'    => 0
+            ]);
+        }
+
+        // Set data for widget video
+        if($widget->getType() == "video") {
+            $widget->setData([
+                'textContent' => "Ma vidéo"
             ]);
         }
 
@@ -264,14 +277,20 @@ class WidgetController extends Controller{
 
         $widget = $widgetRepo->findOneBy(['id' => $id]);
 
-        $htmlContent = WidgetController::decode($htmlContent);
-        $data = WidgetController::decode($dataJson);
+        if($widget->getType() === "video") {
+            $htmlContent = WidgetController::decode2($htmlContent);
+        }else {
+            $htmlContent = WidgetController::decode($htmlContent);
+        }
+
+        $data = (array) json_decode(WidgetController::decode($dataJson));
 
         ($widget->getType() === "text") ? $htmlContent = "<p>${htmlContent}</p>" : '';
         ($widget->getType() === "image") ? $htmlContent = "<img src=\"${htmlContent}\"></img>" : '';
+        ($widget->getType() === "video") ? $htmlContent = "<a class=\"widget__video\" href=\"{$htmlContent}\" target=\"_blank\">{$data['textContent']}</a>" : '';
 
         $widget->setHtmlContent($htmlContent);
-        $widget->setData((array) json_decode($data));
+        $widget->setData($data);
     
         $manager->flush();
 
@@ -282,5 +301,9 @@ class WidgetController extends Controller{
 
     public static function decode($str) {
         return base64_decode(urldecode($str));
+    }
+
+    public static function decode2($str) {
+        return urldecode(base64_decode($str));
     }
 }

@@ -82,8 +82,12 @@ $(document).ready(function() {
     const formContentImageRightSidebar  = document.querySelector('.sidebar.right div.widgets__form.image');
     const abandonImage                  = document.querySelector('.abandon.image');
     const persistImage                  = document.querySelector('.persist.image');
+    // Widget Vidéo
+    const formContentVideoRightSidebar  = document.querySelector('.sidebar.right div.widgets__form.video');
+    const abandonVideo                  = document.querySelector('.abandon.video');
+    const persistVideo                  = document.querySelector('.persist.video');
 
-    if(rightSidebar && rightSidebarCollapse && divWidgets && arrayTrash && arrayEdit && widgetsList && formContentRightSidebar && abandon && persist && formContentImageRightSidebar && abandonImage && persistImage) {
-        new RightSidebar(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage);
+    if(rightSidebar && rightSidebarCollapse && divWidgets && arrayTrash && arrayEdit && widgetsList && formContentRightSidebar && abandon && persist && formContentImageRightSidebar && abandonImage && persistImage && formContentVideoRightSidebar && abandonVideo && persistVideo) {
+        new RightSidebar(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage, formContentVideoRightSidebar, abandonVideo, persistVideo);
     }
 });

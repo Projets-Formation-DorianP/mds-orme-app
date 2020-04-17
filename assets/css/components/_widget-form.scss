@@ -93,4 +93,12 @@
             flex-direction: column;
         }
     }
+
+    &.video {
+        .link,
+        .text-content {
+            display: flex;
+            flex-direction: column;
+        }
+    }
 }
