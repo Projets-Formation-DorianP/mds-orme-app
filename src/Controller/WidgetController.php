@@ -268,7 +268,7 @@ class WidgetController extends Controller{
         $data = WidgetController::decode($dataJson);
 
         ($widget->getType() === "text") ? $htmlContent = "<p>${htmlContent}</p>" : '';
-        ($widget->getType() === "image") ? $htmlContent = "<img src=\"${htmlContent}\"</img>" : '';
+        ($widget->getType() === "image") ? $htmlContent = "<img src=\"${htmlContent}\"></img>" : '';
 
         $widget->setHtmlContent($htmlContent);
         $widget->setData((array) json_decode($data));

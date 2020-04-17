@@ -100,6 +100,9 @@ export default class LeftSidebar {
                         let widgetHtmlContent = document.createRange().createContextualFragment(response.data.widgetContent);
     
                         divWidget.appendChild(widgetHtmlContent);
+
+                        // Add width on widget image
+                        (response.data.widgetType === "image") ? divWidget.firstChild.style.width = "350px" : '';
                         
                         // Add event listener mouseenter and mouseleave
                         divWidget.addEventListener('mouseenter', event => {                
