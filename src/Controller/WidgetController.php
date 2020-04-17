@@ -107,7 +107,7 @@ class WidgetController extends Controller{
                 'italic'            => null,
                 'underline'         => null,
                 'highlight'         => null,
-                'highlightColor'    => '#000000',
+                'highlightColor'    => '#ffff00',
                 'textAlign'         => 'left'
             ]);
         }

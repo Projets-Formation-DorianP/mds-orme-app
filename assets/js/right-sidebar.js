@@ -295,7 +295,7 @@ export default class RightSidebar {
             boldCheckboxContent === "checked" ? diaryWidgetParagraph.style.fontWeight = "bold" : diaryWidgetParagraph.style.fontWeight = "unset";
             italicCheckboxContent === "checked" ? diaryWidgetParagraph.style.fontStyle = "italic" : diaryWidgetParagraph.style.fontStyle = "";
             underlineCheckboxContent === "checked" ? diaryWidgetParagraph.style.textDecoration = "underline" : diaryWidgetParagraph.style.textDecoration = "";
-            highlightCheckboxContent === "checked" ? (highlightColorInputContent !== "#000000" ? diaryWidgetParagraph.style.backgroundColor = RightSidebar.hexToRGB(highlightColorInputContent, 0.3) : diaryWidgetParagraph.style.backgroundColor =  "rgba(255, 255, 0, 0.3)") : diaryWidgetParagraph.style.backgroundColor = '';
+            highlightCheckboxContent === "checked" ? (highlightColorInputContent !== "#ffff00" ? diaryWidgetParagraph.style.backgroundColor = RightSidebar.hexToRGB(highlightColorInputContent, 0.3) : diaryWidgetParagraph.style.backgroundColor =  "rgba(255, 255, 0, 0.3)") : diaryWidgetParagraph.style.backgroundColor = '';
         })         
     }
 

@@ -111,7 +111,7 @@ export default class ActionsPage {
         divWidgetParagraph.style.textAlign = widget.data.textAlign;
         
         if(widget.data.highlight === "checked") {
-            if(widget.data.highlight === "#000000") {
+            if(widget.data.highlight === "#ffff00") {
                 divWidgetParagraph.style.backgroundColor = "rgba(255,255,0,0.3)";
             }else {
                 divWidgetParagraph.style.backgroundColor = RightSidebar.hexToRGB(widget.data.highlightColor, 0.3);
