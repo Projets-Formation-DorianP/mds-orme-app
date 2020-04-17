@@ -638,8 +638,13 @@ export default class RightSidebar {
 
             // Takes content without HTML tags from response
             var str = response.data.response.htmlContent;
-            var regex = /<img[^>]+src="(http:\/\/[^">]+)"/g;
+
+            // Check if it is http or https
+            var regex = null;
+            (str.includes("http")) ? ((str.includes("https")) ? regex = /<img[^>]+src="(https:\/\/[^">]+)"/g : regex = /<img[^>]+src="(http:\/\/[^">]+)"/g) : '';
+
             var src = regex.exec(str)[1];
+            
  
             // Takes form elements
             var linkInput = document.querySelector('.widgets__form.image input[name="link"]');  
