@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 export default class RightSidebar {
-    constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage) {
+    constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage, formContentVideoRightSidebar, abandonVideo, persistVideo) {
         this.rightSidebar = rightSidebar;
 
         if(this.rightSidebar) {
@@ -20,6 +20,11 @@ export default class RightSidebar {
             this.formContentImageRightSidebar = formContentImageRightSidebar;
             this.abandonImage = abandonImage;
             this.persistImage = persistImage;
+
+            // Widget Video
+            this.formContentVideoRightSidebar = formContentVideoRightSidebar;
+            this.abandonVideo = abandonVideo;
+            this.persistVideo = persistVideo;
 
             if(this.rightSidebarCollapse && this.divWidgets) {
                 this.listenOnClickCollapse();
@@ -88,12 +93,18 @@ export default class RightSidebar {
         this.listenOnChangeWidthInputImage();
         this.listenOnClickRotateInputImage();
 
+        this.listenOnFocusBlurLinkVideo();
+        this.listenOnChangeTextContentVideo();
+
         // Set event listener on buttons
         this.abandon ? this.listenOnClickAbandon() : '';
         this.persist ? this.listenOnClickPersist() : '';    
         
         this.abandonImage ? this.listenOnClickAbandonImage() : '';
         this.persistImage ? this.listenOnClickPersistImage() : '';   
+
+        this.abandonVideo ? this.listenOnClickAbandonVideo() : '';
+        this.persistVideo ? this.listenOnClickPersistVideo() : '';   
     }
 
     /**
@@ -454,7 +465,6 @@ export default class RightSidebar {
             diaryWidgetImage.src = `${decodeURIComponent(window.atob(link))}`;
             diaryWidgetImage.style.width = width + "px";
             diaryWidget.style.transform = `rotate(${rotate}deg)`;
-
         })
     }
 
@@ -491,6 +501,87 @@ export default class RightSidebar {
         // Return to the list of widgets
         this.divWidgets.classList.remove('active');
         this.formContentImageRightSidebar.classList.add('active');
+    }
+
+    /**
+     * 
+     * Widget VIDEO
+     * 
+     */
+
+    listenOnFocusBlurLinkVideo() {
+        var linkVideo = document.querySelector('.widgets__form.video input[name="link"]');
+
+        linkVideo.addEventListener('blur', function () {
+            var associatedWidgetVideo = document.querySelector(`.diary__widget[data-id="${linkVideo.dataset.id}"] a`); 
+            if(RightSidebar.validURL(linkVideo.value)) {
+                associatedWidgetVideo.href = linkVideo.value;
+            }else {
+                confirm("Veuillez rentrer un lien valide !");
+            }
+        });
+    }
+
+    listenOnChangeTextContentVideo() {
+        var textContentInput = document.querySelector('.widgets__form.video input[name="text-content"]');
+        textContentInput.addEventListener('input', function () {
+            var associatedWidgetVideo = document.querySelector(`.diary__widget[data-id="${textContentInput.dataset.id}"] a`);
+            associatedWidgetVideo.innerHTML = textContentInput.value;
+        });
+    }
+
+    listenOnClickAbandonVideo() {
+        this.abandonVideo.addEventListener('click', event => {
+            // Check if we click on collapse, display good active class on good elements
+            this.formContentVideoRightSidebar.classList.add('active');
+            if(this.divWidgets.classList.contains('active')) {
+                this.divWidgets.classList.remove('active');
+            }
+
+            var id = document.querySelector('.widgets__form.video input[name="link"]').dataset.id; 
+
+            // We reset the content of the widget to its origin (because it changed with the keypress)
+            var link = document.querySelector('.widgets__form.video input[name="link"]').dataset.content;
+            var textContent = document.querySelector('.widgets__form.video input[name="text-content"]').dataset.content;
+
+            var diaryWidgetVideo = document.querySelector(`.diary__widget[data-id="${id}"] a`);
+
+            diaryWidgetVideo.href = `${window.atob(decodeURIComponent(link))}`;
+            diaryWidgetVideo.innerHTML = textContent;
+        })
+    }
+
+    listenOnClickPersistVideo() {
+        this.persistVideo.addEventListener('click', event => {
+            var id = document.querySelector('.widgets__form.video input[name="link"]').dataset.id;
+            console.log(id);
+            this.persistFormDataWidgetVideo(id);            
+        })
+    }
+
+    persistFormDataWidgetVideo(id) {
+        // Get all elements
+        var linkE = document.querySelector('.widgets__form.video input[name="link"]').value;
+        var textContentE = document.querySelector('.widgets__form.video input[name="text-content"]').value;
+
+        // Encode the html content to make it "transportable" in the url
+        var dataHtmlContent = window.btoa(encodeURIComponent(linkE));
+
+        // Set an array, transform to json and encode it for pass JSON in URL
+        var arrayData = {
+            textContent   : textContentE
+        };
+
+        var dataJson = encodeURIComponent(window.btoa(JSON.stringify(arrayData)));
+        
+        // Update data of current widget
+        console.log(dataJson, arrayData);
+        var url = `/diary/widget/update/${id}/${dataHtmlContent}/${dataJson}`;
+        Axios.get(url).then(function() {})
+
+        // Return to the list of widgets
+        this.divWidgets.classList.remove('active');
+        this.formContentVideoRightSidebar.classList.add('active');
     }
 
     /**
@@ -551,6 +642,7 @@ export default class RightSidebar {
 
         (edit.dataset.type === "text") ? RightSidebar.clickEditWidgetText(edit) : '';
         (edit.dataset.type === "image") ? RightSidebar.clickEditWidgetImage(edit) : '';
+        (edit.dataset.type === "video") ? RightSidebar.clickEditWidgetVideo(edit) : '';
     }
 
     static clickEditWidgetText(edit) {
@@ -669,6 +761,41 @@ export default class RightSidebar {
         })
     }
 
+    static clickEditWidgetVideo(edit) {
+        document.querySelector('.sidebar.right div.widgets__form.video').classList.remove('active');
+
+        const url = `/diary/widget/read/${edit.dataset.id}`;
+        Axios.get(url).then(function(response) {
+            console.log(response.data.response);
+
+            // Takes content without HTML tags from response
+            var str = response.data.response.htmlContent;
+
+            // Check if it is http or https
+            var regex = null;
+            (str.includes("http")) ? ((str.includes("https")) ? regex = /<a[^>]+href="(https:\/\/[^">]+)"/g : regex = /<a[^>]+href="(http:\/\/[^">]+)"/g) : '';
+
+            var src = regex.exec(str)[1];            
+ 
+            // Takes form elements
+            var linkInput = document.querySelector('.widgets__form.video input[name="link"]');
+            var textContentInput = document.querySelector('.widgets__form.video input[name="text-content"]');
+
+            var data = response.data.response.data;
+            // Set dataset Id like response
+            linkInput.dataset.id = edit.dataset.id;
+            textContentInput.dataset.id = edit.dataset.id;
+
+            // Set content on dataset content
+            linkInput.dataset.content = encodeURIComponent(window.btoa(src));
+            textContentInput.dataset.content = data.textContent;
+            
+            //Set content like response
+            linkInput.value = src;
+            textContentInput.value = data.textContent;
+        })
+    }
+
     static hexToRGB(hex, alpha) {
         var r = parseInt(hex.slice(1, 3), 16),
             g = parseInt(hex.slice(3, 5), 16),
@@ -684,4 +811,14 @@ export default class RightSidebar {
     static checkURL(url) {
         return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
     }
+
+    static validURL(str) {
+        var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+          '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+          '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+          '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+          '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+          '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+        return !!pattern.test(str);
+      }
 }

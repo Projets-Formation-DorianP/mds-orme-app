@@ -126,6 +126,8 @@ div.form-new-password.orme input {
 }
 
 a.widget__video {
+    color: $dark-blue !important;
+    
     &::before {
         content: "";
         display: block;

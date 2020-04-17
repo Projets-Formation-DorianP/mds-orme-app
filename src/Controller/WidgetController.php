@@ -85,7 +85,7 @@ class WidgetController extends Controller{
                 
             case 'video':
                 $video = 'https://www.youtube.com/watch?v=mFbWmNgnde0&list=PL4Nzei3ISixLfnoCCW-0i60CSUvdIkYPJ&index=7';
-                $widget->setHtmlContent("<a class=\"widget__video\" href=\"{$video}\">Ma vidéo</a>");
+                $widget->setHtmlContent("<a class=\"widget__video\" href=\"{$video}\" target=\"_blank\">Ma vidéo</a>");
                 break;
 
             case 'todo':
@@ -128,7 +128,9 @@ class WidgetController extends Controller{
 
         // Set data for widget video
         if($widget->getType() == "video") {
-            $widget->setData([]);
+            $widget->setData([
+                'textContent' => "Ma vidéo"
+            ]);
         }
 
         $manager->persist($widget); 
@@ -275,14 +277,20 @@ class WidgetController extends Controller{
 
         $widget = $widgetRepo->findOneBy(['id' => $id]);
 
-        $htmlContent = WidgetController::decode($htmlContent);
-        $data = WidgetController::decode($dataJson);
+        if($widget->getType() === "video") {
+            $htmlContent = WidgetController::decode2($htmlContent);
+        }else {
+            $htmlContent = WidgetController::decode($htmlContent);
+        }
+
+        $data = (array) json_decode(WidgetController::decode($dataJson));
 
         ($widget->getType() === "text") ? $htmlContent = "<p>${htmlContent}</p>" : '';
         ($widget->getType() === "image") ? $htmlContent = "<img src=\"${htmlContent}\"></img>" : '';
+        ($widget->getType() === "video") ? $htmlContent = "<a class=\"widget__video\" href=\"{$htmlContent}\" target=\"_blank\">{$data['textContent']}</a>" : '';
 
         $widget->setHtmlContent($htmlContent);
-        $widget->setData((array) json_decode($data));
+        $widget->setData($data);
     
         $manager->flush();
 
@@ -293,5 +301,9 @@ class WidgetController extends Controller{
 
     public static function decode($str) {
         return base64_decode(urldecode($str));
+    }
+
+    public static function decode2($str) {
+        return urldecode(base64_decode($str));
     }
 }
