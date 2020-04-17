@@ -80,54 +80,6 @@ class AppFixtures extends Fixture
 
                 $manager->persist($page);
                 $pages[] = $page;
-
-                //Nous gérons les widgets
-                for ($k=0; $k < count($pages); $k++) { 
-                    $type = ['text', 'image', 'link', 'todo'];
-
-                    $widget = new Widget();
-                    
-                    $widget->setType($type[mt_rand(0, count($type) -1)]);
-
-                    switch ($widget->getType()) {
-                        case 'text':
-                            $text = $faker->text($maxNbChars = 200);
-                            $widget->setHtmlContent("<p>{$text}</p>");
-                            break;
-
-                        case 'image':
-                            $image = $faker->imageUrl($width = 640, $height = 480);
-                            $widget->setHtmlContent("<img src=\"{$image}\"></img>");
-                            break;
-                        
-                        case 'link':
-                            $link = "<a href='https://www.youtube.com/watch?v=ILaQjKLcqUQ'>Mon lien </a>";
-                            $widget->setHtmlContent("{$link}");
-                            break;
-
-                        case 'todo':
-                            $toDoContent = $faker->text($maxNbChars = 15);
-                            $toDo = "<ul>";
-                            for ($m=0; $m < mt_rand(1, 5); $m++) { 
-                                $toDo .= "<li>\"{$toDoContent}\"</li>";
-                            }
-                            $toDo .= "</ul>";
-
-                            $widget->setHtmlContent($toDo);
-                            break;
-
-                        default:
-                        $widget->setHtmlContent('other');
-                            break;
-                    }
-
-                    $widget->setPage($pages[$k]);
-                    $widget->setPositionTop(25.5 + rand(0, 5));
-                    $widget->setPositionLeft(30.5 + rand(0, 7));
-                    $widget->setData([]);
-
-                    $manager->persist($widget); 
-                }
             }
         }
 

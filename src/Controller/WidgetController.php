@@ -27,8 +27,7 @@ class WidgetController extends Controller{
 
         $widgetType = [
             'text', 
-            'image', 
-            'link', 
+            'image',
             'todo'
         ];
 
@@ -81,11 +80,6 @@ class WidgetController extends Controller{
             case 'image':
                 $image = 'http://localhost:8000/build/logo.png';
                 $widget->setHtmlContent("<img src=\"{$image}\"></img>");
-                break;
-            
-            case 'link':
-                $link = "https://www.youtube.com/watch?v=ILaQjKLcqUQ";
-                $widget->setHtmlContent("{$link}");
                 break;
 
             case 'todo':

@@ -82,8 +82,7 @@ class DiaryController extends Controller{
         $widgets = [
             'text' => "Texte",
             'image' => "Image",
-            'todo' => "todo",
-            'link' => "Lien"
+            'todo' => "todo"
         ];
 
         return $this->render('diary.html.twig', [
@@ -166,8 +165,7 @@ class DiaryController extends Controller{
         $widgets = [
             'text' => "Texte",
             'image' => "Image",
-            'todo' => "To-Do",
-            'link' => "Lien"
+            'todo' => "To-Do"
         ];
 
         return $this->render('diary.html.twig', [
