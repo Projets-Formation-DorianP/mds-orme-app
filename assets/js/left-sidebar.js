@@ -118,7 +118,7 @@ export default class LeftSidebar {
                         page.appendChild(divWidget);
     
                         $( ".diary__widget" ).draggable({ 
-                            cursor: "grabbing",
+                            cursor: "move",
                             containment: "parent", 
                             scroll: false,
                             stop: function(event) {

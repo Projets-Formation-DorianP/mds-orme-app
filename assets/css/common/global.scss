@@ -3,6 +3,11 @@ body {
     background-color: $light-grey;
 }
 
+@font-face{
+    font-family: 'Montserrat';
+    src: url(../../fonts/Montserrat-Light.ttf) format('truetype');
+}
+
 * {
     font-family: 'Montserrat', Arial, Helvetica, sans-serif;
 }
@@ -27,12 +32,15 @@ div.form-new-password.orme {
 }
 
 button.orme,
+a.orme,
 div.form-edit.orme button,
 div.form-new-password.orme button {
     width: auto;
     height: auto;
-    background-color: $dark-blue;
-    color: $light-grey;
+    background-color: $light-grey;
+    color: $dark-blue !important;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
     border: none;
     outline: 0;
     border-radius: 10px;
@@ -41,8 +49,10 @@ div.form-new-password.orme button {
     cursor: pointer;
     transition-duration: 0.4s;
     
-    &.reverse {
-        box-shadow: inset -1px -1px 20px white, inset 10px 5px 25px #D1D9E6 !important;
+    &.reverse,
+    &:hover {
+        box-shadow: inset -1px -1px 20px white, inset 5px 5px 25px #D1D9E6 !important;
+        text-decoration: none !important;
     }
 }
 

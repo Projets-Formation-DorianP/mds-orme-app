@@ -74,7 +74,7 @@ export default class ActionsPage {
                         
                         //Set draggable on widget
                         $( ".diary__widget" ).draggable({ 
-                            cursor: "grabbing",
+                            cursor: "move",
                             containment: "parent", 
                             scroll: false,
                             stop: function(event) {
