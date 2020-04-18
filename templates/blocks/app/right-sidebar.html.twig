@@ -44,6 +44,22 @@
                 </li>
             {% endfor %}
         </ul>
+        <h4>Favoris</h4>
+        <ul class="favorites__list">
+            <li class="favorites__items">
+                <div class="favorites__items-infos">
+                    <span>Favoris : Youtube</span>
+                </div>
+                <div class="favorites__items-actions">
+                    <a href="#">
+                        <div class="favorites__trash"></div>
+                    </a>
+                    <a href="#">
+                        <div class="favorites__modify"></div>
+                    </a>
+                </div>
+            </li>  
+        </ul>
     </div>
     {% include 'blocks/app/form/form-text.html.twig' %}
     {% include 'blocks/app/form/form-image.html.twig' %}

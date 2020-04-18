@@ -6,11 +6,12 @@
         position: fixed;
         top: 15%;
 
-        &.fav {
-            width: 4vw !important;
+        &.favorites {
+            width: 5vw !important;
             min-height: 10vh !important;
             height: auto !important;
             left: 79%;
+            padding: 0 !important;
         }
 
         &.left {
