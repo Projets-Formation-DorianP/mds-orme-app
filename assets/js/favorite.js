@@ -140,65 +140,89 @@ export default class Favorite {
                 break;
         }
 
-        // Create new favorite on favorites bloc
-        var img = document.createElement('img');
-        img.src = src;
-
-        var div = document.createElement('div');
-        div.classList.add('item', 'orme');
-
-        var a = document.createElement('a');
-        a.href = href;
-
-        div.appendChild(img);
-        a.appendChild(div);
-        this.favoritesBloc.insertBefore(a, this.favoritesAdd);
-
-        // Create new favorite on favorites list
-        var span = document.createElement('span');
-        span.innerHTML = this.capitalizeFirstLetter(favorite);
-
-        var div = document.createElement('div');
-        div.classList.add('favorites__items-infos');
-
-        var trash = document.createElement('div');
-        trash.classList.add('favorites__trash');
-
-        var aTrash = document.createElement('a');
-        aTrash.href = '#';
-
-        var edit = document.createElement('div');
-        edit.classList.add('favorites__modify');
-
-        var aEdit = document.createElement('a');
-        aEdit.href = '#';
-
-        var divActions = document.createElement('div');
-        divActions.classList.add('favorites__items-actions');
-
-        var li = document.createElement('li');
-        li.classList.add('favorites__items');
-
-        div.appendChild(span);
-        aTrash.appendChild(trash);
-        aEdit.appendChild(edit);
-        divActions.appendChild(aTrash);
-        divActions.appendChild(aEdit);
-        li.appendChild(div);
-        li.appendChild(divActions);
-        this.favoritesSidebarList.appendChild(li);
-
         // Create new favorite on database
         var data = {
             icon : src,
             url : href
         };
 
-        console.log(this.capitalizeFirstLetter(favorite), encodeURIComponent(window.btoa(JSON.stringify(data))));
-
         const url = `/favorite/create/${this.capitalizeFirstLetter(favorite)}/${encodeURIComponent(window.btoa(JSON.stringify(data)))}`;
         Axios.get(url).then(function(response) {
-            console.log(url);
+            var id = response.data.id;
+
+            // Create new favorite on favorites bloc
+            var img = document.createElement('img');
+            img.src = src;
+
+            var div = document.createElement('div');
+            div.classList.add('item', 'orme');
+
+            var a = document.createElement('a');
+            a.href = href;
+            a.dataset.id = id;
+
+            div.appendChild(img);
+            a.appendChild(div);
+            var favoritesBloc = document.querySelector('.diary__bloc.favorites');
+            var favoritesAdd = document.querySelector('.favorites__add');
+            favoritesBloc.insertBefore(a, favoritesAdd);
+
+            // Create new favorite on favorites list
+            var span = document.createElement('span');
+            span.innerHTML = favorite;
+
+            var div = document.createElement('div');
+            div.classList.add('favorites__items-infos');
+
+            var trash = document.createElement('div');
+            trash.classList.add('favorites__trash');
+            trash.dataset.id = id;
+
+            var aTrash = document.createElement('a');
+            aTrash.href = '#';
+
+            var edit = document.createElement('div');
+            edit.classList.add('favorites__modify');
+            edit.dataset.id = id;
+
+            var aEdit = document.createElement('a');
+            aEdit.href = '#';
+
+            var divActions = document.createElement('div');
+            divActions.classList.add('favorites__items-actions');
+
+            var li = document.createElement('li');
+            li.classList.add('favorites__items');
+            li.dataset.id = id;
+
+            div.appendChild(span);
+            aTrash.appendChild(trash);
+            aEdit.appendChild(edit);
+            divActions.appendChild(aTrash);
+            divActions.appendChild(aEdit);
+            li.appendChild(div);
+            li.appendChild(divActions);
+            var favoritesSidebarList = document.querySelector('.favorites__list');
+            favoritesSidebarList.appendChild(li);
+
+            // Set event listener for elt
+            trash.addEventListener('click', event => {
+                event.preventDefault();
+                
+                // Remove on favorites bloc
+                var favorite = document.querySelector(`.diary__bloc.favorites > a[data-id="${trash.dataset.id}"]`);
+                favorite.remove();
+
+                // Remove on favorites list
+                var liFavorite = document.querySelector(`.favorites__items[data-id="${trash.dataset.id}"]`);
+                liFavorite.remove();
+
+                // Remove favorite on database
+                const url = `/favorite/delete/${trash.dataset.id}`;
+                Axios.get(url).then(function(response) {
+                    console.log(url);
+                })
+            })
         })
     }
 
