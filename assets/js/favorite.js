@@ -50,7 +50,25 @@ export default class Favorite {
     }
 
     listenOnClickFavoritesTrash() {
+        this.favoritesTrash.map((trash) => {
+            trash.addEventListener('click', event => {
+                event.preventDefault();
+                
+                // Remove on favorites bloc
+                var favorite = document.querySelector(`.diary__bloc.favorites > a[data-id="${trash.dataset.id}"]`);
+                favorite.remove();
 
+                // Remove on favorites list
+                var liFavorite = document.querySelector(`.favorites__items[data-id="${trash.dataset.id}"]`);
+                liFavorite.remove();
+
+                // Remove favorite on database
+                const url = `/favorite/delete/${trash.dataset.id}`;
+                Axios.get(url).then(function(response) {
+                    console.log(url);
+                })
+            })
+        })
     }
 
     listenOnClickFavoritesPopupClose(close) {

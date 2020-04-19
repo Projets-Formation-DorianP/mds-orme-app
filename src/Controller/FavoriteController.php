@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Favorite;
-use App\Controller\WidgetController;
 use App\Repository\FavoriteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -80,6 +79,37 @@ class FavoriteController extends AbstractController
 
         return $this->json([
             'favorites' => $favorites
+        ], 200);
+    }
+
+    /**
+     * Delete a favorite
+     * 
+     * @Route("/favorite/delete/{id}", name="create_favorite")
+     *
+     * @param [type] $id
+     * @param EntityManagerInterface $manager
+     * @param FavoriteRepository $favoriteRepo
+     * @return Response
+     */
+    public function delete($id, EntityManagerInterface $manager, FavoriteRepository $favoriteRepo) : Response {
+        $user = $this->getUser();
+
+        /**
+         * Check if user is connected
+         */
+        if (!$user) return $this->json([
+            'code'      => 403,
+            'message'   => 'Unauthorized'
+        ], 403);
+
+        $favorite = $favoriteRepo->findOneBy(['id' => $id]);
+
+        $manager->remove($favorite);
+        $manager->flush();
+
+        return $this->json([
+            'message'   => 'Success'
         ], 200);
     }
 }
