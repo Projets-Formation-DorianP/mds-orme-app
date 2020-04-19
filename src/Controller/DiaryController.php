@@ -84,12 +84,9 @@ class DiaryController extends Controller{
         ]);
 
         $favorites = [];
-        foreach (json_decode($response->getContent()) as $favorite) {
-            array_push($favorites, [
-                'id'    => $favorite[0]->id,
-                'title' => $favorite[0]->title,
-                'data'  => $favorite[0]->data
-            ]);
+
+        foreach ((json_decode($response->getContent())) as $favorite) {
+            $favorites[] = $favorite;
         }
 
         /**
@@ -109,7 +106,7 @@ class DiaryController extends Controller{
             'currentUserWidgetOnRightPage'  => $currentUserWidgetOnRightPage,
             'diary'                         => true,
             'array_widgets'                 => $widgets,
-            'favorites'                     => $favorites
+            'favorites'                     => $favorites[0]
         ]);
     }
 

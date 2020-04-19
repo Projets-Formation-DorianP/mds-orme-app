@@ -2,13 +2,51 @@
 
 namespace App\Controller;
 
+use App\Entity\Favorite;
+use App\Controller\WidgetController;
 use App\Repository\FavoriteRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class FavoriteController extends AbstractController
 {
+    /**
+     * Create a favorite
+     * 
+     * @Route("/favorite/create/{title}/{data}", name="create_favorite")
+     *
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    public function create($title, $data, EntityManagerInterface $manager) : Response {
+        $user = $this->getUser();
+
+        /**
+         * Check if user is connected
+         */
+        if (!$user) return $this->json([
+            'code'      => 403,
+            'message'   => 'Unauthorized'
+        ], 403);
+
+        $data = json_decode(base64_decode(urldecode($data)));
+
+        $favorite = new Favorite();
+
+        $favorite->setUser($user);
+        $favorite->setTitle($title);
+        $favorite->setData((array) $data);
+
+        $manager->persist($favorite);
+        $manager->flush();
+
+        return $this->json([
+            'id'   => $favorite->getId()
+        ], 200);
+    }
+
     /**
      * Read favorites of an user
      * 
