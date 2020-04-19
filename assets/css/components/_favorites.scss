@@ -59,6 +59,66 @@
         }
     }
 
+    &__form {
+        padding: 1rem;
+        direction: ltr;
+
+        &.active {
+            display: none;
+        }
+
+        & > div {
+            margin-bottom: 1rem;
+        } 
+
+        h4 {
+            letter-spacing: 0.1rem !important;
+            font-size: 1rem !important;
+            font-weight: 600;
+            color: grey;
+            margin: 1rem 0 1rem 0;
+        }
+
+        label {
+            font-size: 0.75rem !important;
+            font-weight: 400;
+            color: grey;
+        }
+
+        textarea {
+            text-align: left;
+            width: 100%;
+        }
+
+        input[type=text],
+        input[type=number],
+        textarea {
+            font-size: 0.75rem !important;
+            outline: 0 !important;
+            border-width: 0 0 2px !important;
+            border-color: grey !important;
+            background-color: $light-grey !important;
+        }
+
+        &-actions {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+
+            a.abandon,
+            a.persist {
+                margin: 0 0.5rem 0 0.5rem;
+            }
+        }
+
+        .title, 
+        .icon,
+        .link {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
     &__trash {
         background-image: url(../../../public/build/trash.png);
         margin-left: 0.5rem;

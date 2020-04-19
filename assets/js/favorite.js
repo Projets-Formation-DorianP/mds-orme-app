@@ -1,12 +1,13 @@
 import Axios from "axios";
 
 export default class Favorite {
-    constructor(favoritesBloc, favoritesSidebarList, favoritesAdd, favoritesEdit, favoritesTrash, favoritesPopup, favoritesPopupClose, favoritesPopupChoices) {
+    constructor(favoritesBloc, favoritesSidebarList, favoritesAdd, favoritesEdit, favoritesTrash, favoritesPopup, favoritesPopupClose, favoritesPopupChoices,formFavoris, abandonFavoris, persistFavoris) {
         this.favoritesBloc = favoritesBloc;
         this.favoritesSidebarList = favoritesSidebarList;
         this.favoritesEdit = favoritesEdit;
         this.favoritesTrash = favoritesTrash;
         this.favoritesPopup = favoritesPopup;
+        this.formFavoris = formFavoris;
 
         if(this.favoritesBloc) {
             this.favoritesAdd = favoritesAdd;
@@ -36,6 +37,19 @@ export default class Favorite {
                 this.listenOnClickFavoritesPopupChoices(this.favoritesPopupChoices);
             }
         }
+
+        if(this.formFavoris) {
+            this.abandonFavoris = abandonFavoris;
+            this.persistFavoris = persistFavoris;
+
+            if(this.abandonFavoris) {
+                this.listenOnClickAbandon(this.abandonFavoris);
+            }
+
+            if(this.persistFavoris) {
+                this.listenOnClickPersist(this.persistFavoris);
+            }
+        }
     }
 
     listenOnClickFavoritesAdd(add) {
@@ -46,7 +60,43 @@ export default class Favorite {
     }
 
     listenOnClickFavoritesEdit() {
+        this.favoritesEdit.map((edit) => {
+            edit.addEventListener('click', event => {
+                event.preventDefault();
+                
+                document.querySelector('.sidebar.right > .widgets').classList.add('active');
+                document.querySelector('.sidebar.right div.favorites__form').classList.remove('active');
 
+                Favorite.listenOnChangeTitleInput();
+                Favorite.listenOnChangeIconInput();
+                Favorite.listenOnChangeUrlInput();
+
+                const url = `/favorite/read-one/${edit.dataset.id}`;
+                Axios.get(url).then(function(response) {
+                    console.log(response);
+                    // Takes form elements
+                    var titleInput = document.querySelector('.favorites__form input[name="title"]');
+                    var iconInput = document.querySelector('.favorites__form input[name="icon"]');
+                    var linkInput = document.querySelector('.favorites__form input[name="link"]');
+
+                    var data = response.data.favorite;
+                    // Set dataset Id like response
+                    titleInput.dataset.id = edit.dataset.id;
+                    iconInput.dataset.id = edit.dataset.id;
+                    linkInput.dataset.id = edit.dataset.id;
+
+                    // Set content on dataset content
+                    titleInput.dataset.content = data.title;
+                    iconInput.dataset.content = data.data.icon;
+                    linkInput.dataset.content = data.data.url;
+                    
+                    //Set content like response
+                    titleInput.value = data.title;
+                    iconInput.value = data.data.icon;
+                    linkInput.value = data.data.url;
+                })
+            })
+        })
     }
 
     listenOnClickFavoritesTrash() {
@@ -223,7 +273,115 @@ export default class Favorite {
                     console.log(url);
                 })
             })
+
+            edit.addEventListener('click', event => {
+                document.querySelector('.sidebar.right > .widgets').classList.add('active');
+                document.querySelector('.sidebar.right div.favorites__form').classList.remove('active');
+
+                Favorite.listenOnChangeTitleInput();
+                Favorite.listenOnChangeIconInput();
+                Favorite.listenOnChangeUrlInput();
+
+                const url = `/favorite/read-one/${edit.dataset.id}`;
+                Axios.get(url).then(function(response) {
+                    console.log(response);
+                    // Takes form elements
+                    var titleInput = document.querySelector('.favorites__form input[name="title"]');
+                    var iconInput = document.querySelector('.favorites__form input[name="icon"]');
+                    var linkInput = document.querySelector('.favorites__form input[name="link"]');
+
+                    var data = response.data.favorite;
+                    // Set dataset Id like response
+                    titleInput.dataset.id = edit.dataset.id;
+                    iconInput.dataset.id = edit.dataset.id;
+                    linkInput.dataset.id = edit.dataset.id;
+
+                    // Set content on dataset content
+                    titleInput.dataset.content = data.title;
+                    iconInput.dataset.content = data.data.icon;
+                    linkInput.dataset.content = data.data.url;
+                    
+                    //Set content like response
+                    titleInput.value = data.title;
+                    iconInput.value = data.data.icon;
+                    linkInput.value = data.data.url;
+                })
+            })
         })
+    }
+
+    listenOnClickAbandon(abandon) {
+        abandon.addEventListener('click', event => {
+            event.preventDefault();
+        
+            document.querySelector('.sidebar.right > .widgets').classList.remove('active');
+            document.querySelector('.sidebar.right div.favorites__form').classList.add('active');
+
+            var id = document.querySelector('.favorites__form input[name="link"]').dataset.id; 
+
+            // We reset the content of the widget to its origin (because it changed with the keypress)
+            var title = document.querySelector('.favorites__form input[name="title"]').dataset.content;
+            var icon = document.querySelector('.favorites__form input[name="icon"]').dataset.content;
+            var link = document.querySelector('.favorites__form input[name="link"]').dataset.content;
+
+            var liTitle = document.querySelector(`.favorites__items[data-id="${id}"] span`);
+            var favoriteA = document.querySelector(`.diary__bloc.favorites a[data-id="${id}"]`);
+            var favoriteImg = document.querySelector(`.diary__bloc.favorites a[data-id="${id}"] img`);
+
+            liTitle.innerHTML = title;
+            favoriteA.href = link;
+            favoriteImg.src = icon;
+        })
+    }
+
+    listenOnClickPersist(persist) {
+        persist.addEventListener('click', event => {
+            event.preventDefault();
+            
+            document.querySelector('.sidebar.right > .widgets').classList.remove('active');
+            document.querySelector('.sidebar.right div.favorites__form').classList.add('active');
+
+            var id = document.querySelector('.favorites__form input[name="link"]').dataset.id; 
+
+            // Get all elements
+            var title = document.querySelector('.favorites__form input[name="title"]').value;
+            var icon = document.querySelector('.favorites__form input[name="icon"]').value;
+            var link = document.querySelector('.favorites__form input[name="link"]').value;
+
+            // Set an array, transform to json and encode it for pass JSON in URL
+            var data = {
+                icon : icon,
+                url : link
+            };
+            
+            // Update data of current widget
+            const url = `/favorite/update/${id}/${this.capitalizeFirstLetter(title)}/${encodeURIComponent(window.btoa(JSON.stringify(data)))}`;
+            Axios.get(url).then(function() {})
+        })
+    }
+
+    static listenOnChangeTitleInput() {
+        var input = document.querySelector('.favorites__form input[name="title"]');
+        input.addEventListener('input', function () {
+            var liTitle = document.querySelector(`.favorites__items[data-id="${input.dataset.id}"] span`);
+            liTitle.innerHTML = input.value;
+        });
+    }
+
+    static listenOnChangeIconInput() {
+        var input = document.querySelector('.favorites__form input[name="icon"]');
+        input.addEventListener('input', function () {  
+            var favoriteImg = document.querySelector(`.diary__bloc.favorites a[data-id="${input.dataset.id}"] img`);
+            favoriteImg.src = input.value;
+        });
+    }
+
+    static listenOnChangeUrlInput() {
+        var input = document.querySelector('.favorites__form input[name="link"]');
+        input.addEventListener('input', function () {  
+            var favoriteA = document.querySelector(`.diary__bloc.favorites a[data-id="${input.dataset.id}"]`);
+            favoriteA.href = input.value;
+        });
     }
 
     /**
