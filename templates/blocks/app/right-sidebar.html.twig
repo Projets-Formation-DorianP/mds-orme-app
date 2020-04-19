@@ -46,19 +46,21 @@
         </ul>
         <h4>Favoris</h4>
         <ul class="favorites__list">
-            <li class="favorites__items">
+            {% for favorite in favorites %}
+            <li data-id="{{ favorite.id }}" class="favorites__items">
                 <div class="favorites__items-infos">
-                    <span>Favoris : Youtube</span>
+                    <span>{{ favorite.title }}</span>
                 </div>
                 <div class="favorites__items-actions">
                     <a href="#">
-                        <div class="favorites__trash"></div>
+                        <div class="favorites__trash" data-id="{{ favorite.id }}"></div>
                     </a>
                     <a href="#">
-                        <div class="favorites__modify"></div>
+                        <div class="favorites__modify" data-id="{{ favorite.id }}"></div>
                     </a>
                 </div>
             </li>  
+            {% endfor %}
         </ul>
     </div>
     {% include 'blocks/app/form/form-text.html.twig' %}
