@@ -85,7 +85,7 @@ class FavoriteController extends AbstractController
     /**
      * Delete a favorite
      * 
-     * @Route("/favorite/delete/{id}", name="create_favorite")
+     * @Route("/favorite/delete/{id}", name="delete_favorite")
      *
      * @param [type] $id
      * @param EntityManagerInterface $manager
