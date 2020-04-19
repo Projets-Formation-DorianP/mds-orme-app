@@ -77,6 +77,19 @@ class DiaryController extends Controller{
         }
 
         /**
+         * Call FavoriteController for read all favorites
+         */
+        $response = $this->forward('App\Controller\FavoriteController::read', [
+            'user'  => $curentUser->getId()
+        ]);
+
+        $favorites = [];
+
+        foreach ((json_decode($response->getContent())) as $favorite) {
+            $favorites[] = $favorite;
+        }
+
+        /**
          * Basic widgets
          */
         $widgets = [
@@ -88,11 +101,12 @@ class DiaryController extends Controller{
 
         return $this->render('diary.html.twig', [
             'nbPagesCurrentUser' => count($currentUserPages),
-            'coupleLastPageOfCurrentUser' => $coupleLastPageOfCurrentUser,
-            'currentUserWidgetOnLeftPage' => $currentUserWidgetOnLeftPage,
-            'currentUserWidgetOnRightPage' => $currentUserWidgetOnRightPage,
-            'diary' => true,
-            'array_widgets' => $widgets
+            'coupleLastPageOfCurrentUser'   => $coupleLastPageOfCurrentUser,
+            'currentUserWidgetOnLeftPage'   => $currentUserWidgetOnLeftPage,
+            'currentUserWidgetOnRightPage'  => $currentUserWidgetOnRightPage,
+            'diary'                         => true,
+            'array_widgets'                 => $widgets,
+            'favorites'                     => $favorites[0]
         ]);
     }
 
@@ -161,6 +175,19 @@ class DiaryController extends Controller{
         }
 
         /**
+         * Call FavoriteController for read all favorites
+         */
+        $response = $this->forward('App\Controller\FavoriteController::read', [
+            'user'  => $curentUser->getId()
+        ]);
+
+        $favorites = [];
+
+        foreach ((json_decode($response->getContent())) as $favorite) {
+            $favorites[] = $favorite;
+        }
+
+        /**
          * Basic widgets
          */
         $widgets = [
@@ -173,11 +200,12 @@ class DiaryController extends Controller{
         return $this->render('diary.html.twig', [
             'id' => $id,
             'nbPagesCurrentUser' => count($currentUserPages),
-            'coupleLastPageOfCurrentUser' => $coupleLastPageOfCurrentUser,
-            'currentUserWidgetOnLeftPage' => $currentUserWidgetOnLeftPage,
-            'currentUserWidgetOnRightPage' => $currentUserWidgetOnRightPage,
-            'diary' => true,
-            'array_widgets' => $widgets
+            'coupleLastPageOfCurrentUser'   => $coupleLastPageOfCurrentUser,
+            'currentUserWidgetOnLeftPage'   => $currentUserWidgetOnLeftPage,
+            'currentUserWidgetOnRightPage'  => $currentUserWidgetOnRightPage,
+            'diary'                         => true,
+            'array_widgets'                 => $widgets,
+            'favorites'                     => $favorites[0]
         ]);
     }
 }

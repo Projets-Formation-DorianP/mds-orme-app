@@ -13,6 +13,7 @@ global.$ = global.jQuery = $;
 import LeftSidebar from './left-sidebar';
 import RightSidebar from './right-sidebar';
 import ActionsPage from './actions-page';
+import Favorite from './favorite';
 
 /**
  * Little bit of code
@@ -89,5 +90,22 @@ $(document).ready(function() {
 
     if(rightSidebar && rightSidebarCollapse && divWidgets && arrayTrash && arrayEdit && widgetsList && formContentRightSidebar && abandon && persist && formContentImageRightSidebar && abandonImage && persistImage && formContentVideoRightSidebar && abandonVideo && persistVideo) {
         new RightSidebar(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage, formContentVideoRightSidebar, abandonVideo, persistVideo);
+    }
+
+    /* Favoris */
+    const favoritesBloc         = document.querySelector('.diary__bloc.favorites');
+    const favoritesSidebarList  = document.querySelector('.favorites__list');
+    const favoritesAdd          = document.querySelector('.favorites__add');
+    const favoritesTrash        = [].slice.call(document.querySelectorAll('.favorites__trash'));
+    const favoritesEdit         = [].slice.call(document.querySelectorAll('.favorites__modify'));
+    const favoritesPopup        = document.querySelector('.orme.popup.favorites');
+    const favoritesPopupClose   = document.querySelector('.popup__close.favorites');
+    const favoritesPopupChoices = [].slice.call(document.querySelectorAll('.popup__icon'));
+    const formFavoris           = document.querySelector('.sidebar.right div.favorites__form');
+    const abandonFavoris        = document.querySelector('.abandon.favorites');
+    const persistFavoris        = document.querySelector('.persist.favorites');
+
+    if(favoritesBloc && favoritesSidebarList && favoritesAdd && favoritesEdit && favoritesTrash && favoritesPopup && favoritesPopupClose && favoritesPopupChoices && formFavoris && abandonFavoris && persistFavoris) {
+        new Favorite(favoritesBloc, favoritesSidebarList, favoritesAdd, favoritesEdit, favoritesTrash, favoritesPopup, favoritesPopupClose, favoritesPopupChoices, formFavoris, abandonFavoris, persistFavoris);
     }
 });

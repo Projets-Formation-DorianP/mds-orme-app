@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Favorite;
 use Faker\Factory;
 use App\Entity\Page;
 use App\Entity\Role;
@@ -81,6 +82,19 @@ class AppFixtures extends Fixture
                 $manager->persist($page);
                 $pages[] = $page;
             }
+
+            // Nous gérons les favoris
+            $favorite = new Favorite();
+
+            $favorite->setUser($user);
+            $favorite->setTitle("MyDigitalSchool");
+
+            $favorite->setData([
+                'icon'  => "https://www.lacuisineduweb.com/wp-content/uploads/2020/01/logo-grand-detoure.png",
+                'url'   => "https://www.mydigitalschool.com/"
+            ]);
+
+            $manager->persist($favorite);
         }
 
         $manager->flush();
