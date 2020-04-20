@@ -89,7 +89,16 @@ class WidgetController extends Controller{
                 break;
 
             case 'todo':
-                $toDo = "<ul><li>Tâche 1</li><li>Tâche 2</li></ul>";
+                $toDo = "
+                <h4 class=\"todo__title\">Liste de choses à faire</h4>
+                <ul class=\"todo__list\">
+                    <li class=\"todo__items\">
+                        <span class=\"todo__custom-checkbox\"></span>
+                        <input type=\"checkbox\" class=\"todo__checkbox\">
+                        <label class=\"todo__label\">Remplir ma Todo List</label>
+                    </li>
+                </ul>
+                ";
                 $widget->setHtmlContent($toDo);
                 break;
 
@@ -133,6 +142,16 @@ class WidgetController extends Controller{
             ]);
         }
 
+        if($widget->getType() == "todo") {
+            $widget->setData([
+                'title' => 'Todo List',
+                'nbTodo' => 1,
+                'contentTodo' => [
+                    0 => 'Remplir ma Todo List'
+                ]
+            ]);
+        }
+
         $manager->persist($widget); 
         $manager->flush();
 
@@ -144,7 +163,8 @@ class WidgetController extends Controller{
             'widgetType'    => $widget->getType(),
             'widgetContent' => $widget->getHtmlContent(),
             'widgetPositionTop' => $widget->getPositionTop(),
-            'widgetPositionLeft' => $widget->getPositionLeft()
+            'widgetPositionLeft' => $widget->getPositionLeft(),
+            'widgetData' => $widget->getData()
         ], 200);
     }
 

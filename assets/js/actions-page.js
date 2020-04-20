@@ -41,53 +41,52 @@ export default class ActionsPage {
             var widgets = Object.values(response.data.widgets);
             widgets.forEach(page => {
                 page.forEach(widget => {
-                    if(widget.type === "text" || widget.type === "image" ||widget.type === "video") {
-                        var divWidget = document.createElement('div');
-                        divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
-                        divWidget.style.position = 'relative';
-                        divWidget.style.top = widget.top + "px";
-                        divWidget.style.left = widget.left + "px";
-                        divWidget.dataset.id = widget.id;
-                        divWidget.dataset.type = widget.type;
-                        divWidget.dataset.lastLeftPosition = widget.left;
+                    var divWidget = document.createElement('div');
+                    divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
+                    divWidget.style.position = 'relative';
+                    divWidget.style.top = widget.top + "px";
+                    divWidget.style.left = widget.left + "px";
+                    divWidget.dataset.id = widget.id;
+                    divWidget.dataset.type = widget.type;
+                    divWidget.dataset.lastLeftPosition = widget.left;
 
-                        // Set data and child
-                        (widget.type === "text") ? ActionsPage.setDataWidgetText(divWidget, widget) : '';
-                        (widget.type === "image") ? ActionsPage.setDataWidgetImage(divWidget, widget) : '';
-                        (widget.type === "video") ? ActionsPage.setDataWidgetVideo(divWidget, widget) : '';
+                    // Set data and child
+                    (widget.type === "text") ? ActionsPage.setDataWidgetText(divWidget, widget) : '';
+                    (widget.type === "image") ? ActionsPage.setDataWidgetImage(divWidget, widget) : '';
+                    (widget.type === "video") ? ActionsPage.setDataWidgetVideo(divWidget, widget) : '';
+                    (widget.type === "todo") ? ActionsPage.setDataWidgetTodo(divWidget, widget) : '';
 
-                        // Add event listener mouseenter and mouseleave
-                        divWidget.addEventListener('mouseenter', event => {                
-                            var li = document.querySelector(`.widgets__items[data-id="${divWidget.dataset.id}"]`);
-                
-                            li.style.textDecoration = 'underline';
-                            divWidget.style.border = '1px solid red';
-                        }),
-                        divWidget.addEventListener('mouseleave', event => {
-                            var li = document.querySelector(`.widgets__items[data-id="${divWidget.dataset.id}"]`);
-                
-                            li.style.textDecoration = 'none';
-                            divWidget.style.border = '1px solid #F1F3F7';
-                        })
+                    // Add event listener mouseenter and mouseleave
+                    divWidget.addEventListener('mouseenter', event => {                
+                        var li = document.querySelector(`.widgets__items[data-id="${divWidget.dataset.id}"]`);
+            
+                        li.style.textDecoration = 'underline';
+                        divWidget.style.border = '1px solid red';
+                    }),
+                    divWidget.addEventListener('mouseleave', event => {
+                        var li = document.querySelector(`.widgets__items[data-id="${divWidget.dataset.id}"]`);
+            
+                        li.style.textDecoration = 'none';
+                        divWidget.style.border = '1px solid #F1F3F7';
+                    })
 
-                        // Add widget to the good page
-                        widget.pageNumber === parseInt(leftPage.dataset.pageNumber) ? leftPage.appendChild(divWidget) : rightPage.appendChild(divWidget);    
-                        
-                        //Set draggable on widget
-                        $( ".diary__widget" ).draggable({ 
-                            cursor: "move",
-                            containment: "parent", 
-                            scroll: false,
-                            stop: function(event) {
-                                var id = this.dataset.id;
-                                var top = this.style.top.replace('px','');
-                                var left = this.style.left.replace('px','');
+                    // Add widget to the good page
+                    widget.pageNumber === parseInt(leftPage.dataset.pageNumber) ? leftPage.appendChild(divWidget) : rightPage.appendChild(divWidget);    
+                    
+                    //Set draggable on widget
+                    $( ".diary__widget" ).draggable({ 
+                        cursor: "move",
+                        containment: "parent", 
+                        scroll: false,
+                        stop: function(event) {
+                            var id = this.dataset.id;
+                            var top = this.style.top.replace('px','');
+                            var left = this.style.left.replace('px','');
 
-                                const url = `/diary/widget/positions/${id}/${top}/${left}`;
-                                Axios.get(url).then(function() {})
-                            }
-                        });
-                    }  
+                            const url = `/diary/widget/positions/${id}/${top}/${left}`;
+                            Axios.get(url).then(function() {})
+                        }
+                    });
                 })
             })
         })
@@ -139,6 +138,46 @@ export default class ActionsPage {
         // Creates an HTML element according to the string contained in the database
         let widgetHtmlContent = document.createRange().createContextualFragment(widget.htmlContent);
         divWidget.appendChild(widgetHtmlContent);
+    }
+
+    static setDataWidgetTodo(divWidget, widget) {
+        var nbTodo = widget.data.nbTodo;
+
+        var ul = document.createElement('ul');
+        ul.classList.add('todo__list');
+        var h4 = document.createElement('h4');
+        h4.classList.add('todo__title');
+        h4.innerHTML = widget.data.title;
+        
+        for (let index = 0; index < nbTodo; index++) {
+            // Construct widget
+            var label = document.createElement('label');
+            label.classList.add('todo__label');
+            label.innerHTML = widget.data.contentTodo[index];
+            var input = document.createElement('input');
+            input.type = "checkbox";
+            input.classList.add('todo__checkbox');
+            var span = document.createElement('span');
+            span.classList.add('todo__custom-checkbox');
+            var li = document.createElement('li');
+            li.classList.add('todo__items');
+
+            li.appendChild(span);
+            li.appendChild(input);
+            li.appendChild(label);
+
+            ul.appendChild(li);
+
+            // Set event listener
+            input.addEventListener('change', event => {
+                var span = input.previousSibling;
+                input.checked ? span.classList.add('active') : span.classList.remove('active');
+            })
+        }
+
+        divWidget.appendChild(h4);
+        divWidget.appendChild(ul);
+        divWidget.style.maxWidth = 'none';
     }
 
     /**
