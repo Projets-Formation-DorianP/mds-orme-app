@@ -69,7 +69,7 @@ nav.sidebar.left {
 		}
 
 		&__div {
-			background-image: url(../../../public/build/plus.png);
+			background-image: url(https://image.flaticon.com/icons/svg/992/992651.svg);
 			width: 25px !important;
 			height: 25px !important;
 			background-size: contain;
@@ -165,7 +165,7 @@ nav.sidebar.left {
 			}
 
 			span.texte::before {
-				background-image: url(../../../public/build/edit.png);
+				background-image: url(https://image.flaticon.com/icons/svg/2824/2824222.svg);
 			}
 
 			span.video::before {
@@ -173,15 +173,15 @@ nav.sidebar.left {
 			}
 
 			span.image::before {
-				background-image: url(../../../public/build/photo.png);
+				background-image: url(https://image.flaticon.com/icons/svg/1829/1829552.svg);
 			}
 
 			span.todo::before {
-				background-image: url(../../../public/build/list.png);
+				background-image: url(https://image.flaticon.com/icons/svg/839/839986.svg);
 			}
 
 			span.lien::before {
-				background-image: url(../../../public/build/link.png);
+				background-image: url(https://image.flaticon.com/icons/svg/2089/2089782.svg);
 			}
 		}
 	}
@@ -256,12 +256,12 @@ nav.sidebar.right {
 					background-repeat: no-repeat;
 
 					&.trash {
-						background-image: url(../../../public/build/trash.png);
+						background-image: url(https://image.flaticon.com/icons/svg/216/216658.svg);
 						margin-left: 0.5rem;
 					}
 
 					&.modify {
-						background-image: url(../../../public/build/form.png)
+						background-image: url(https://image.flaticon.com/icons/svg/1242/1242392.svg);
 					}
 				}
 			}
