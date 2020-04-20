@@ -2,20 +2,23 @@
 
 namespace App\Controller;
 
+use App\Entity\Favorite;
+use App\Entity\Page;
 use App\Entity\User;
-use App\Entity\PasswordUpdate;
+use App\Entity\Widget;
 use App\Form\LoginType;
-use App\Form\PasswordUpdateType;
 use App\Form\ProfileType;
+use App\Entity\PasswordUpdate;
 use App\Form\RegistrationType;
-use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\PasswordUpdateType;
 use Symfony\Component\Form\FormError;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AccountController extends AbstractController
 {
@@ -64,6 +67,64 @@ class AccountController extends AbstractController
             $user->setHash($hash);
 
             $manager->persist($user);
+
+            $pages = [];
+            // Set 2 pages for new users
+            for ($j=0; $j < 2; $j++) { 
+                $page = new Page();
+            
+                $page->setPageNumber(($j+1));
+                $page->setUser($user);
+
+                $manager->persist($page);
+                $pages[] = $page;
+            }
+
+            // Set 2 widgets on the first page
+            $widgetText = new Widget();
+            $widgetText->setType("text");
+            $widgetText->setHtmlContent("<p>Bienvenue sur ORME, l'application d'organisation personnalisable !</p>");
+            $widgetText->setPage($pages[0]);
+            $widgetText->setPositionTop(39);
+            $widgetText->setPositionLeft(0);
+            $widgetText->setData([
+                'fullWidth' => 'checked',
+                'size' => '20',
+                'color' => '#000000',
+                'bold' => 'checked',
+                'italic' => NULL,
+                'underline' => 'checked',
+                'highlight' => NULL,
+                'highlightColor' => '#ffff00',
+                'textAlign' => 'center',
+            ]);
+
+            $manager->persist($widgetText);
+
+            $widgetImage = new Widget();
+            $widgetImage->setType("image");
+            $widgetImage->setHtmlContent("<img src=\"https://www.mydigitalschool.com/sites/default/files/settings/logo-mydigitalschool_0.jpg\"></img>");
+            $widgetImage->setPage($pages[0]);
+            $widgetImage->setPositionTop(98);
+            $widgetImage->setPositionLeft(93);
+            $widgetImage->setData([
+                'width' => 350,
+                'rotate' => 0,
+            ]);
+            
+            $manager->persist($widgetImage);
+
+            // Set one favorite
+            $favorite = new Favorite();
+            $favorite->setUser($user);
+            $favorite->setTitle("MyDigitalSchool");
+            $favorite->setData([
+                'icon' => "https://image.flaticon.com/icons/svg/2235/2235669.svg",
+                'url' => "https://www.mydigitalschool.com/"
+            ]);
+
+            $manager->persist($favorite);
+
             $manager->flush();
 
             return $this->redirectToRoute("account_login");
