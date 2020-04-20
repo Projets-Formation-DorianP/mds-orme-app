@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Favorite;
 use App\Entity\Page;
+use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\Widget;
 use App\Form\LoginType;
+use App\Entity\Favorite;
 use App\Form\ProfileType;
 use App\Entity\PasswordUpdate;
 use App\Form\RegistrationType;
@@ -63,8 +64,13 @@ class AccountController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $userRole = new Role();
+            $userRole->setTitle('ROLE_USER');
+            $manager->persist($userRole);
+
             $hash = $encoder->encodePassword($user, $user->getHash());
             $user->setHash($hash);
+            $user->addUserRole($userRole);
 
             $manager->persist($user);
 
