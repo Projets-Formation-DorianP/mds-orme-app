@@ -121,6 +121,7 @@ export default class LeftSidebar {
                             span.classList.add('todo__custom-checkbox');
                             var li = document.createElement('li');
                             li.classList.add('todo__items');
+                            li.dataset.task = (index+1);
 
                             li.appendChild(span);
                             li.appendChild(input);

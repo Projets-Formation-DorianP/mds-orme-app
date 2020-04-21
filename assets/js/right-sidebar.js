@@ -620,6 +620,12 @@ export default class RightSidebar {
 
             // We reset the content of the widget to its origin (because it changed with the keypress)
             var title = document.querySelector('.widgets__form.todo input[name="title"]').dataset.content;
+            var todoListItem = document.querySelector('.todo__list').getElementsByTagName("li");
+
+            for (let index = 0; index < todoListItem.length; index++) {
+                var associatedWidget = document.querySelector(`.diary__widget[data-id="${id}"] li[data-task="${(index+1)}"] label`);
+                associatedWidget.innerHTML = todoListItem[index].firstChild.dataset.content;                
+            }
 
             var diaryWidgetTitle = document.querySelector(`.diary__widget[data-id="${id}"] h4`);
 
@@ -640,8 +646,7 @@ export default class RightSidebar {
         var todoListE = document.querySelector('.widgets__form.todo ol[name="todo__list"]');
 
         // Encode the html content to make it "transportable" in the url
-        var associatedWidgetList = document.querySelector(`.diary__widget[data-id="${id}"] ul.todo__list`);
-        var dataHtmlContent = window.btoa(encodeURIComponent(associatedWidgetList.outerHTML));
+        var dataHtmlContent = window.btoa(encodeURIComponent("none"));
 
         // Set an array, transform to json and encode it for pass JSON in URL
         var contentTodo = {};
@@ -908,14 +913,26 @@ export default class RightSidebar {
                 var input = document.createElement('input');
                 input.type = "text";
                 input.value = data.contentTodo[index];
+                input.dataset.task = (index+1);
+                input.dataset.content = data.contentTodo[index];
 
                 var li = document.createElement('li');
                 li.dataset.task = (index+1);
-                li.dataset.content = data.contentTodo[index];
 
                 li.appendChild(input);
                 listOl.appendChild(li);
             }
+
+            for (let index = 0; index < data.nbTodo; index++) {
+                let input = document.querySelector(`.todo__list input[data-task="${index+1}"]`);
+                console.log(input);
+                input.addEventListener('input', function () {
+                    var associatedWidget = document.querySelector(`.diary__widget[data-id="${edit.dataset.id}"] li[data-task="${this.dataset.task}"] label`);
+
+                    associatedWidget.innerHTML = input.value;
+                });
+            }
+            
         })
     }
 
