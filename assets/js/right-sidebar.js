@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 export default class RightSidebar {
-    constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage, formContentVideoRightSidebar, abandonVideo, persistVideo) {
+    constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage, formContentVideoRightSidebar, abandonVideo, persistVideo, formContentTodoRightSidebar, abandonTodo, persistTodo) {
         this.rightSidebar = rightSidebar;
 
         if(this.rightSidebar) {
@@ -25,6 +25,11 @@ export default class RightSidebar {
             this.formContentVideoRightSidebar = formContentVideoRightSidebar;
             this.abandonVideo = abandonVideo;
             this.persistVideo = persistVideo;
+
+            // Widget Todo
+            this.formContentTodoRightSidebar = formContentTodoRightSidebar;
+            this.abandonTodo = abandonTodo;
+            this.persistTodo = persistTodo;
 
             if(this.rightSidebarCollapse && this.divWidgets) {
                 this.listenOnClickCollapse();
@@ -96,6 +101,8 @@ export default class RightSidebar {
         this.listenOnFocusBlurLinkVideo();
         this.listenOnChangeTextContentVideo();
 
+        this.listenOnChangeTitleTodo();
+
         // Set event listener on buttons
         this.abandon ? this.listenOnClickAbandon() : '';
         this.persist ? this.listenOnClickPersist() : '';    
@@ -105,6 +112,9 @@ export default class RightSidebar {
 
         this.abandonVideo ? this.listenOnClickAbandonVideo() : '';
         this.persistVideo ? this.listenOnClickPersistVideo() : '';   
+
+        this.abandonTodo ? this.listenOnClickAbandonTodo() : '';
+        this.persistTodo ? this.listenOnClickPersistTodo() : ''; 
     }
 
     /**
@@ -572,7 +582,7 @@ export default class RightSidebar {
             textContent   : textContentE
         };
 
-        var dataJson = encodeURIComponent(window.btoa(JSON.stringify(arrayData)));
+        var dataJson = encodeURIComponent(window.btoa(JSON.stringify(arrayData).normalize("NFD").replace(/[\u0300-\u036f]/g, "")));
         
         // Update data of current widget
         console.log(dataJson, arrayData);
@@ -582,6 +592,79 @@ export default class RightSidebar {
         // Return to the list of widgets
         this.divWidgets.classList.remove('active');
         this.formContentVideoRightSidebar.classList.add('active');
+    }
+
+    /**
+     * 
+     * Widget TODO
+     * 
+     */
+
+    listenOnChangeTitleTodo() {
+        var input = document.querySelector('.widgets__form.todo input[name="title"]');
+        input.addEventListener('input', function () {
+            var associatedWidgetTitle = document.querySelector(`.diary__widget[data-id="${input.dataset.id}"] h4`);
+            associatedWidgetTitle.innerHTML = input.value;
+        });
+    }
+
+    listenOnClickAbandonTodo() {
+        this.abandonTodo.addEventListener('click', event => {
+            // Check if we click on collapse, display good active class on good elements
+            this.formContentTodoRightSidebar.classList.add('active');
+            if(this.divWidgets.classList.contains('active')) {
+                this.divWidgets.classList.remove('active');
+            }
+
+            var id = document.querySelector('.widgets__form.todo input[name="title"]').dataset.id; 
+
+            // We reset the content of the widget to its origin (because it changed with the keypress)
+            var title = document.querySelector('.widgets__form.todo input[name="title"]').dataset.content;
+
+            var diaryWidgetTitle = document.querySelector(`.diary__widget[data-id="${id}"] h4`);
+
+            diaryWidgetTitle.innerHTML = title;
+        })
+    }
+
+    listenOnClickPersistTodo() {
+        this.persistTodo.addEventListener('click', event => {
+            var id = document.querySelector('.widgets__form.todo input[name="title"]').dataset.id;
+            this.persistFormDataWidgetTodo(id);            
+        })
+    }
+
+    persistFormDataWidgetTodo(id) {
+        // Get all elements
+        var titleE = document.querySelector('.widgets__form.todo input[name="title"]').value;
+        var todoListE = document.querySelector('.widgets__form.todo ol[name="todo__list"]');
+
+        // Encode the html content to make it "transportable" in the url
+        var associatedWidgetList = document.querySelector(`.diary__widget[data-id="${id}"] ul.todo__list`);
+        var dataHtmlContent = window.btoa(encodeURIComponent(associatedWidgetList.outerHTML));
+
+        // Set an array, transform to json and encode it for pass JSON in URL
+        var contentTodo = {};
+        for (let index = 0; index < todoListE.getElementsByTagName('li').length; index++) {
+            contentTodo[index] = todoListE.getElementsByTagName('input')[index].value;
+        }
+
+        var arrayData = {
+            'title' : titleE,
+            'nbTodo' : todoListE.getElementsByTagName('li').length,
+            'contentTodo' : contentTodo
+        };
+
+        var dataJson = encodeURIComponent(window.btoa(JSON.stringify(arrayData).normalize("NFD").replace(/[\u0300-\u036f]/g, "")));
+        
+        // Update data of current widget
+        var url = `/diary/widget/update/${id}/${dataHtmlContent}/${dataJson}`;
+        console.log(url, id, dataJson, arrayData);
+        Axios.get(url).then(function() {})
+
+        // Return to the list of widgets
+        this.divWidgets.classList.remove('active');
+        this.formContentTodoRightSidebar.classList.add('active');
     }
 
     /**
@@ -643,6 +726,7 @@ export default class RightSidebar {
         (edit.dataset.type === "text") ? RightSidebar.clickEditWidgetText(edit) : '';
         (edit.dataset.type === "image") ? RightSidebar.clickEditWidgetImage(edit) : '';
         (edit.dataset.type === "video") ? RightSidebar.clickEditWidgetVideo(edit) : '';
+        (edit.dataset.type === "todo") ? RightSidebar.clickEditWidgetTodo(edit) : '';
     }
 
     static clickEditWidgetText(edit) {
@@ -793,6 +877,45 @@ export default class RightSidebar {
             //Set content like response
             linkInput.value = src;
             textContentInput.value = data.textContent;
+        })
+    }
+
+    static clickEditWidgetTodo(edit) {
+        document.querySelector('.sidebar.right div.widgets__form.todo').classList.remove('active');
+
+        const url = `/diary/widget/read/${edit.dataset.id}`;
+        Axios.get(url).then(function(response) {
+ 
+            // Takes form elements
+            var titleInput = document.querySelector('.widgets__form.todo input[name="title"]');
+            var listOl = document.querySelector('.widgets__form.todo ol[name="todo__list"]');
+            console.log(titleInput, listOl)
+
+            var data = response.data.response.data;
+            // Set dataset Id like response
+            titleInput.dataset.id = edit.dataset.id;
+            listOl.dataset.id = edit.dataset.id;
+
+            // Set content on dataset content
+            titleInput.dataset.content = data.title;
+
+            //Set content like response
+            titleInput.value = data.title;
+
+            // Create list of current Todo List, set dataset content and set content like repsonse
+            listOl.innerHTML = "";
+            for (let index = 0; index < data.nbTodo; index++) {
+                var input = document.createElement('input');
+                input.type = "text";
+                input.value = data.contentTodo[index];
+
+                var li = document.createElement('li');
+                li.dataset.task = (index+1);
+                li.dataset.content = data.contentTodo[index];
+
+                li.appendChild(input);
+                listOl.appendChild(li);
+            }
         })
     }
 
