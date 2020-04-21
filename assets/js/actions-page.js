@@ -149,6 +149,7 @@ export default class ActionsPage {
         h4.classList.add('todo__title');
         h4.innerHTML = widget.data.title;
         
+        let inputs = [];
         for (let index = 0; index < nbTodo; index++) {
             // Construct widget
             var label = document.createElement('label');
@@ -169,12 +170,17 @@ export default class ActionsPage {
 
             ul.appendChild(li);
 
-            // Set event listener
-            input.addEventListener('change', event => {
-                var span = input.previousSibling;
-                input.checked ? span.classList.add('active') : span.classList.remove('active');
-            })
+            inputs.push(input);
         }
+
+        inputs.map((elt) => {
+            var span = elt.previousSibling;
+            var label = elt.nextSibling;
+            elt.addEventListener('change', event => {
+                elt.checked ? span.classList.add('active') : span.classList.remove('active');
+                elt.checked ? label.style.textDecoration = "line-through" : label.style.textDecoration = "none";
+            })
+        })
 
         divWidget.appendChild(h4);
         divWidget.appendChild(ul);

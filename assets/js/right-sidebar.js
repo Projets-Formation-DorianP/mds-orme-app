@@ -925,8 +925,8 @@ export default class RightSidebar {
 
             for (let index = 0; index < data.nbTodo; index++) {
                 let input = document.querySelector(`.todo__list input[data-task="${index+1}"]`);
-                console.log(input);
                 input.addEventListener('input', function () {
+                    console.log(this);
                     var associatedWidget = document.querySelector(`.diary__widget[data-id="${edit.dataset.id}"] li[data-task="${this.dataset.task}"] label`);
 
                     associatedWidget.innerHTML = input.value;
