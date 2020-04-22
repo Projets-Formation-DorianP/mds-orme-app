@@ -30,6 +30,7 @@ Composer
 * ```composer require <dependency>``` - Install a new dependency
 
 Yarn
+<<<<<<< HEAD
 * ```yarn install``` - Install dependencies of the project
 * ```yarn upgrade``` - Upgrades packages to their latest version
 * ```yarn build``` - Build all files
@@ -49,12 +50,21 @@ User Profile
 
 <kbd><img width="840" height="401" src="assets/img/account.png" /></kbd>
 
+=======
+* ```yarn build``` - Build all files
+* ```yarn watch``` - Refresh instantly all modifications
+
+>>>>>>> 73c6a08ecbe4186a2955adb990b89658caca7040
 ## Miscellaneous
 
 ### Trello
 [Trello](https://trello.com/) is a project management tool allowing us to schedule all of our tasks during the development.
 
+<<<<<<< HEAD
 <a href="https://trello.com/b/noJXXiYo/mdproject-dev" target="_blank"><img width="180" height="89" src="assets/img/trello-thumb.png" /></a>
+=======
+<a href="https://trello.com/b/noJXXiYo/mdproject-dev" target="_blank"><img width="180" height="89" src="assets/mds-orme-thumb.png" /></a>
+>>>>>>> 73c6a08ecbe4186a2955adb990b89658caca7040
 
 ### Licence
 This project is licensed under the GPLv3 License. See the [LICENSE.md](LICENSE.md) file for details.
