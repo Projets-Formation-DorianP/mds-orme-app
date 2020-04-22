@@ -89,11 +89,10 @@ $(document).ready(function() {
     const persistVideo                  = document.querySelector('.persist.video');
     // Widget Todo
     const formContentTodoRightSidebar   = document.querySelector('.sidebar.right div.widgets__form.todo');
-    const abandonTodo                   = document.querySelector('.abandon.todo');
     const persistTodo                   = document.querySelector('.persist.todo');
 
-    if(rightSidebar && rightSidebarCollapse && divWidgets && arrayTrash && arrayEdit && widgetsList && formContentRightSidebar && abandon && persist && formContentImageRightSidebar && abandonImage && persistImage && formContentVideoRightSidebar && abandonVideo && persistVideo && formContentTodoRightSidebar && abandonTodo && persistTodo) {
-        new RightSidebar(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage, formContentVideoRightSidebar, abandonVideo, persistVideo, formContentTodoRightSidebar, abandonTodo, persistTodo);
+    if(rightSidebar && rightSidebarCollapse && divWidgets && arrayTrash && arrayEdit && widgetsList && formContentRightSidebar && abandon && persist && formContentImageRightSidebar && abandonImage && persistImage && formContentVideoRightSidebar && abandonVideo && persistVideo && formContentTodoRightSidebar && persistTodo) {
+        new RightSidebar(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage, formContentVideoRightSidebar, abandonVideo, persistVideo, formContentTodoRightSidebar, persistTodo);
     }
 
     /* Favoris */

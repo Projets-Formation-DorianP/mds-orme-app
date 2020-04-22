@@ -56,4 +56,36 @@
         color: $dark-blue;
         margin-bottom: 0 !important;
     }
+
+    &__actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    &__actions {
+        & a:first-of-type {
+            margin-right: 1rem;
+        }
+
+        & div {
+            width: 25px !important;
+            height: 25px !important;
+            background-size: contain;
+            background-repeat: no-repeat;
+            transition: transform .2s;
+
+            &:hover {
+                transform: scale(1.5);
+            }
+        }
+    }
+
+    &__create-div {
+        background-image: url(https://image.flaticon.com/icons/svg/992/992651.svg);
+    }
+
+    &__remove-div {
+        background-image: url(https://image.flaticon.com/icons/svg/659/659892.svg);
+    }
 }

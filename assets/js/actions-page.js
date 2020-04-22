@@ -155,14 +155,24 @@ export default class ActionsPage {
             var label = document.createElement('label');
             label.classList.add('todo__label');
             label.innerHTML = widget.data.contentTodo[index];
+
             var input = document.createElement('input');
             input.type = "checkbox";
             input.classList.add('todo__checkbox');
+
             var span = document.createElement('span');
             span.classList.add('todo__custom-checkbox');
+
             var li = document.createElement('li');
             li.classList.add('todo__items');
             li.dataset.task = (index+1);
+            console.log(widget.data.checked[index])
+
+            if(widget.data.checked[index]) {
+                input.checked = true;
+                span.classList.add('active');
+                label.style.textDecoration = "line-through";
+            }
 
             li.appendChild(span);
             li.appendChild(input);
@@ -179,6 +189,7 @@ export default class ActionsPage {
             elt.addEventListener('change', event => {
                 elt.checked ? span.classList.add('active') : span.classList.remove('active');
                 elt.checked ? label.style.textDecoration = "line-through" : label.style.textDecoration = "none";
+                RightSidebar.persistOnClickCheckbox(divWidget.dataset.id);
             })
         })
 

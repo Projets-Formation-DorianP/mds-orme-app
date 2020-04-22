@@ -133,6 +133,8 @@ export default class LeftSidebar {
                             input.addEventListener('change', event => {
                                 var span = input.previousSibling;
                                 input.checked ? span.classList.add('active') : span.classList.remove('active');
+                                input.checked ? label.style.textDecoration = "line-through" : label.style.textDecoration = "none";
+                                RightSidebar.persistOnClickCheckbox(response.data.widgetId);
                             })
                         }
 

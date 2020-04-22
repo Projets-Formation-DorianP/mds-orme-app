@@ -148,6 +148,9 @@ class WidgetController extends Controller{
                 'nbTodo' => 1,
                 'contentTodo' => [
                     0 => 'Remplir ma Todo List'
+                ],
+                'checked' => [
+                    0 => false
                 ]
             ]);
         }
