@@ -1,0 +1,108 @@
+.popup {
+    align-items: center;
+    background-color: rgba(0,0,0,.8);
+    bottom: 0;
+    display: flex !important;
+    justify-content: center;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 100;
+
+    &.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    &__box {
+        max-width: 45rem;
+        min-width: 550px;
+        width: 60%;
+        height: 35%;
+        display: flex;
+        border-radius: 4px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        position: relative;
+    }
+
+    &__buttons {
+        margin-top: 2rem;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    &__button {
+        width: auto;
+        height: auto;
+        background-color: $dark-blue;
+        color: $light-grey;
+        border: none;
+        outline: 0;
+        border-radius: 10px;
+        box-shadow: -5px -5px 20px white, 10px 5px 25px #D1D9E6;
+        padding: 5px 30px 5px 30px;
+        cursor: pointer;
+        transition-duration: 0.4s;
+
+        &:hover {
+            color: $light-grey !important;
+        }
+    }
+
+    &__close {
+        position: absolute;
+        right: 5px;
+        top: 10px;
+        width: 32px;
+        height: 32px;
+        opacity: 1;
+
+        &:before,
+        &:after {
+            position: absolute;
+            left: 15px;
+            content: " ";
+            height: 20px;
+            width: 2px;
+            background-color: $primary;
+        }
+
+        &:before {
+            transform: rotate(45deg);
+        }
+
+        &:after {
+            transform: rotate(-45deg);
+        }
+    }
+
+    &__icons {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    &__icon {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 1.5rem;
+        cursor: pointer;
+
+        & > img {
+            width: 50px;
+        }
+
+        & > span {
+            font-size: 0.75rem;
+        }
+    }
+}

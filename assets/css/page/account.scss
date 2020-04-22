@@ -1,0 +1,42 @@
+body.account {
+
+    & .account {
+        box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.075);
+        border-radius: 10px;
+        width: auto;
+        height: auto;
+    }
+
+    & > .list-group {
+        border: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    form {
+
+        & > div {
+
+            & > div {
+            margin-bottom: 1rem;
+
+                & > input {
+                    display: block;
+                    width: 100%;
+                    padding: .375rem .75rem;
+                    font-size: 1rem;
+                    line-height: 1.5;
+                    color: #495057;
+                    background-color: #fff;
+                    background-clip: padding-box;
+                    border: 1px solid #ced4da;
+                    border-radius: .25rem;
+                    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                }
+            }
+        }
+    }
+
+    #avatar-preview {
+        width: 128px;
+        height: 128px;
+    }
+}

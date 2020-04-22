@@ -1,3 +1,141 @@
-.center {
-    text-align: center;
+body {
+    min-height: 100vh;
+    background-color: $light-grey;
+}
+
+@font-face{
+    font-family: 'Montserrat';
+    src: url(../../fonts/Montserrat-Light.ttf) format('truetype');
+}
+
+* {
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+}
+
+/* Base style */
+
+div.orme,
+div.form-edit.orme,
+div.form-new-password.orme {
+    width: auto;
+    height: auto;
+    background-color: $light-grey;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-radius: 30px;
+    box-shadow: 8px 8px 10px #D1D9E6;
+    padding: 2rem;
+
+    &.reverse {
+        box-shadow: inset 5px 5px 10px #D1D9E6 !important;
+    }
+}
+
+button.orme,
+a.orme,
+div.form-edit.orme button,
+div.form-new-password.orme button {
+    width: auto;
+    height: auto;
+    background-color: $light-grey;
+    color: $dark-blue !important;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border: none;
+    outline: 0;
+    border-radius: 10px;
+    box-shadow: -5px -5px 20px white, 10px 5px 25px #D1D9E6;
+    padding: 5px 30px 5px 30px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    
+    &.reverse,
+    &:hover {
+        box-shadow: inset -1px -1px 20px white, inset 5px 5px 25px #D1D9E6 !important;
+        text-decoration: none !important;
+    }
+}
+
+input.orme,
+div.form-edit.orme input,
+div.form-new-password.orme input {
+    height: auto;
+    color: $dark-blue;
+    background-color: $light-grey;
+    border: none;
+    border-radius: 10px;
+    box-shadow: inset -2px -2px 10px white, inset 2px 2px 10px #D1D9E6;
+    transition-duration: 0.4s;
+
+    &:hover {
+        box-shadow: inset 0px 0px 12px #E7E9EC;
+    }
+
+    &.reverse {
+        background-color: -2px -2px 10px white, 2px 2px 10px #D1D9E6 !important;
+    }
+}
+
+label.orme,
+div.form-edit.orme label,
+div.form-new-password.orme label {
+    margin-bottom: 0.25rem;
+    color: #A8A8A9;
+    font-size: 1.05rem;
+    font-weight: 500;
+    text-align: left;
+}
+
+input.orme {
+    width: auto;
+}
+
+div.form-edit.orme input,
+div.form-new-password.orme input {
+    width: 100%;
+}
+
+.container, 
+.container-fluid {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+}
+
+/* Text */
+
+.text-primary {
+    color: $dark-blue !important;
+}
+
+.text-secondary {
+    color: $light-grey !important;
+}
+
+/* Background */
+
+.bg-primary {
+    background-color: $dark-blue !important;
+}
+
+.bg-secondary {
+    background-color: $light-grey !important;
+}
+
+.bg-white {
+    background-color: white !important;
+}
+
+a.widget__video {
+    color: $dark-blue !important;
+    
+    &::before {
+        content: "";
+        display: block;
+        background-image: url(https://image.flaticon.com/icons/svg/483/483054.svg);
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 20px;
+        float: left;
+        margin: 0 6px 0 0;
+    }
 }

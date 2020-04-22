@@ -1,0 +1,47 @@
+body.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & > div {
+        width: 470px;
+    }
+
+    & .alert {
+        align-self: flex-start;
+        top: 20px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        position: absolute;
+        width: 50%;
+    }
+
+    & form {
+        width: 100%;
+
+        & div {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            margin: .5rem 0 .5rem 0 !important;
+
+            & > div {
+
+                & > label {
+                    margin-bottom: 0.25rem;
+                    color: #A8A8A9;
+                    font-size: 1.25rem;
+                    font-weight: 500;
+                    text-align: left;
+                }
+
+                & > input {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

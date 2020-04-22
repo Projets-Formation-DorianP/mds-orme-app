@@ -1,0 +1,18 @@
+{% extends 'layouts/form.html.twig' %}
+
+{% block title %}ORME - S'inscrire{% endblock %}
+
+{% block body %}
+    <div class="container orme d-flex flex-column align-items-center p-5">
+        <div class="logo mb-4">
+            <a href="/homepage"><img src="{{ asset('build/logo.png') }}" width="200" alt=""></a>
+        </div>
+        {{ form_start(form, {'attr' : {'class': 'd-flex flex-column align-items-center'}}) }}
+        {{ form_widget(form, {'attr' : {'class': 'd-flex flex-column text-center w-100 mb-4'} }) }}
+        <button class="orme h5 mt-3 mb-3" type="submit">S'inscrire</button>
+        <div class="redirect">
+            <span>Vous avez déjà un compte ? <a href="/login">Cliquez ici</a></span>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

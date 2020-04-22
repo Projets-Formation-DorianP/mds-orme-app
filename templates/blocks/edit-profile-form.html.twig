@@ -1,0 +1,10 @@
+<div class="form-edit orme">
+    <h4 class="mb-4">Éditer le profil</h4>
+
+    {{ form_start(form, {'attr': {'class': 'orme'}}) }}
+    {{ form_widget(form) }}
+    <img id="avatar-preview" {% if app.user.picture %} src="{{ app.user.picture }}" {% else %} src="{{ asset('build/user.png') }}" {% endif %}>
+    <br>
+    <button class="btn btn-primary mt-3" type="submit">Enregister</button>
+    {{ form_end(form) }}
+</div>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}ORME - Mon journal digital{% endblock %}</title>
+        {{ encore_entry_link_tags('css/main') }}
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body class="{% block body_class %}default{% endblock %}">
+        {% block header %}
+            <!-- Add secondary navbar ? -->
+            {% include 'blocks/primary-navbar.html.twig' %}
+        {% endblock %}
+        {% block body %}
+        {% endblock %}
+        {% block footer %}
+            <!-- Add footer blocks -->
+        {% endblock %}
+        {{ encore_entry_script_tags('js/main') }}
+        {% block javascripts %}
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        {% endblock %}
+    </body>
+</html>

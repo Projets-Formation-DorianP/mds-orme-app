@@ -1,0 +1,71 @@
+<nav class="orme sidebar right active">
+    <div class="custom-menu rightSidebarCollapse">
+    </div>
+    <div class="widgets active">
+        <h4>Page de gauche</h4>
+        <ul class="widgets__list left">
+            {% for currentWidget in currentUserWidgetOnLeftPage %}
+                <li class="widgets__items"
+                    data-id="{{ currentWidget.id }}"
+                    data-type="{{ currentWidget.type }}"
+                >
+                    <div class="widgets__items-infos">
+                        <span>Widget: {{ currentWidget.type }}</span>
+                    </div>
+                    <div class="widgets__items-actions">
+                        <a href="#">
+                            <div class="trash" data-id="{{ currentWidget.id }}"></div>
+                        </a>
+                        <a href="#">
+                            <div class="modify" data-id="{{ currentWidget.id }}" data-type="{{ currentWidget.type }}"></div>
+                        </a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <h4>Page de droite</h4>
+        <ul class="widgets__list right">
+            {% for currentWidget in currentUserWidgetOnRightPage %}
+                <li class="widgets__items"
+                    data-id="{{ currentWidget.id }}"
+                    data-type="{{ currentWidget.type }}"
+                >
+                    <div class="widgets__items-infos">
+                        <span>Widget: {{ currentWidget.type }}</span>
+                    </div>
+                    <div class="widgets__items-actions">
+                        <a href="#">
+                            <div class="trash" data-id="{{ currentWidget.id }}"></div>
+                        </a>
+                        <a href="#">
+                            <div class="modify" data-id="{{ currentWidget.id }}" data-type="{{ currentWidget.type }}"></div>
+                        </a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <h4>Favoris</h4>
+        <ul class="favorites__list">
+            {% for favorite in favorites %}
+            <li data-id="{{ favorite.id }}" class="favorites__items">
+                <div class="favorites__items-infos">
+                    <span>{{ favorite.title }}</span>
+                </div>
+                <div class="favorites__items-actions">
+                    <a href="#">
+                        <div class="favorites__trash" data-id="{{ favorite.id }}"></div>
+                    </a>
+                    <a href="#">
+                        <div class="favorites__modify" data-id="{{ favorite.id }}"></div>
+                    </a>
+                </div>
+            </li>  
+            {% endfor %}
+        </ul>
+    </div>
+    {% include 'blocks/app/form/form-text.html.twig' %}
+    {% include 'blocks/app/form/form-image.html.twig' %}
+    {% include 'blocks/app/form/form-video.html.twig' %}
+    {% include 'blocks/app/form/form-todo.html.twig' %}
+    {% include 'blocks/app/form/form-favorites.html.twig' %}
+</nav>

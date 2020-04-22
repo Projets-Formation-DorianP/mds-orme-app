@@ -1,11 +1,11 @@
 # OrganizeMe! (ORME!)
 
 ## Introduction
-*ORME!* is a Bullet Journal web application realized at MyDigitalSchool.
+*ORME!* is a bullet journaling web application realized at MyDigitalSchool.
 
 This repository contains the application part of the project.
 
-The website part can be accessed [here](https://github.com/Natsu235/mds-orme-wp).
+To access the Website (WordPress) part ➤ [mds-orme-wp](https://github.com/Natsu235/mds-orme-wp)
 
 ## Getting started
 
@@ -25,9 +25,36 @@ Git
 * ```git push origin master``` - Push your commit to the master branch
 
 Composer
+* ```composer install``` - Retrieve all required components of the project
+* ```composer update``` - Update all required components of the project
 * ```composer require <dependency>``` - Install a new dependency
+
+Yarn
+* ```yarn install``` - Install dependencies of the project
+* ```yarn upgrade``` - Upgrades packages to their latest version
+* ```yarn build``` - Build all files
+* ```yarn watch``` - Refresh instantly all modifications
+
+## Preview
+
+Login Screen
+
+<kbd><img width="840" height="401" src="assets/img/login.png" /></kbd>
+
+Homepage
+
+<kbd><img width="840" height="401" src="assets/img/homepage.png" /></kbd>
+
+User Profile
+
+<kbd><img width="840" height="401" src="assets/img/account.png" /></kbd>
 
 ## Miscellaneous
 
 ### Trello
-[*Trello*](http://trello.com/b/noJXXiYo/mdproject-dev) is a project management tool allowing us to schedule all of our tasks during the development.
+[Trello](https://trello.com/) is a project management tool allowing us to schedule all of our tasks during the development.
+
+<a href="https://trello.com/b/noJXXiYo/mdproject-dev" target="_blank"><img width="180" height="89" src="assets/img/trello-thumb.png" /></a>
+
+### Licence
+This project is licensed under the GPLv3 License. See the [LICENSE.md](LICENSE.md) file for details.
