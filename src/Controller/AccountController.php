@@ -107,19 +107,6 @@ class AccountController extends AbstractController
 
             $manager->persist($widgetText);
 
-            $widgetImage = new Widget();
-            $widgetImage->setType("image");
-            $widgetImage->setHtmlContent("<img src=\"https://www.mydigitalschool.com/sites/default/files/settings/logo-mydigitalschool_0.jpg\"></img>");
-            $widgetImage->setPage($pages[0]);
-            $widgetImage->setPositionTop(98);
-            $widgetImage->setPositionLeft(93);
-            $widgetImage->setData([
-                'width' => 350,
-                'rotate' => 0,
-            ]);
-            
-            $manager->persist($widgetImage);
-
             // Set one favorite
             $favorite = new Favorite();
             $favorite->setUser($user);
