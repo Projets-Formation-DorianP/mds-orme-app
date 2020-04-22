@@ -86,54 +86,96 @@ export default class LeftSidebar {
                 var url = `/diary/${button.dataset.pageNumber}/widget/create/${this.currentWidget.dataset.type}`;
                 Axios.get(url).then(function(response) {  
                     // Create widget on page
-                    if(response.data.widgetType === "text" || response.data.widgetType === "image" || response.data.widgetType === "video") {
-                        var divWidget = document.createElement('div');
-                        divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
-                        divWidget.style.position = 'relative';
-                        divWidget.style.top = response.data.widgetPositionTop + "px";
-                        divWidget.style.left = response.data.widgetPositionLeft + "px";
-                        (response.data.widgetType === "image") ? divWidget.style.maxWidth = "none" : '';
-                        divWidget.dataset.id = response.data.widgetId;
-                        divWidget.dataset.type = response.data.widgetType;
-                        
-                        // Creates an HTML element according to the string contained in the database
+                    var divWidget = document.createElement('div');
+                    divWidget.classList.add('diary__widget', 'ui-widget-content', 'ui-draggable' , 'ui-draggable-handle');
+                    divWidget.style.position = 'relative';
+                    divWidget.style.top = response.data.widgetPositionTop + "px";
+                    divWidget.style.left = response.data.widgetPositionLeft + "px";
+                    (response.data.widgetType === "image" || response.data.widgetType === "todo") ? divWidget.style.maxWidth = "none" : '';
+                    divWidget.dataset.id = response.data.widgetId;
+                    divWidget.dataset.type = response.data.widgetType;
+                    
+                    // Creates an HTML element according to the string contained in the database
+                    if(response.data.widgetType !== "todo") {
                         let widgetHtmlContent = document.createRange().createContextualFragment(response.data.widgetContent);
-    
                         divWidget.appendChild(widgetHtmlContent);
+                    }else {
+                        var data = response.data.widgetData;
+                        var nbTodo = data.nbTodo;
 
-                        // Add width on widget image
-                        (response.data.widgetType === "image") ? divWidget.firstChild.style.width = "350px" : '';
+                        var ul = document.createElement('ul');
+                        ul.classList.add('todo__list');
+                        var h4 = document.createElement('h4');
+                        h4.classList.add('todo__title');
+                        h4.innerHTML = data.title;
                         
-                        // Add event listener mouseenter and mouseleave
-                        divWidget.addEventListener('mouseenter', event => {                
-                            var li = document.querySelector(`.widgets__items[data-id="${divWidget.dataset.id}"]`);
-                
-                            li.style.textDecoration = 'underline';
-                            divWidget.style.border = '1px solid red';
-                        }),
-                        divWidget.addEventListener('mouseleave', event => {
-                            var li = document.querySelector(`.widgets__items[data-id="${divWidget.dataset.id}"]`);
-                
-                            li.style.textDecoration = 'none';
-                            divWidget.style.border = '1px solid #F1F3F7';
-                        })
+                        for (let index = 0; index < nbTodo; index++) {
+                            // Construct widget
+                            var label = document.createElement('label');
+                            label.classList.add('todo__label');
+                            label.innerHTML = data.contentTodo[index];
+                            var input = document.createElement('input');
+                            input.type = "checkbox";
+                            input.classList.add('todo__checkbox');
+                            var span = document.createElement('span');
+                            span.classList.add('todo__custom-checkbox');
+                            var li = document.createElement('li');
+                            li.classList.add('todo__items');
+                            li.dataset.task = (index+1);
 
-                        page.appendChild(divWidget);
-    
-                        $( ".diary__widget" ).draggable({ 
-                            cursor: "move",
-                            containment: "parent", 
-                            scroll: false,
-                            stop: function(event) {
-                                var id = this.dataset.id;
-                                var top = this.style.top.replace('px','');
-                                var left = this.style.left.replace('px','');
-                            
-                                const url = `/diary/widget/positions/${id}/${top}/${left}`;
-                                Axios.get(url).then(function() {})
-                            }
-                        });
-                    }  
+                            li.appendChild(span);
+                            li.appendChild(input);
+                            li.appendChild(label);
+
+                            ul.appendChild(li);
+
+                            // Set event listener
+                            input.addEventListener('change', event => {
+                                var span = input.previousSibling;
+                                input.checked ? span.classList.add('active') : span.classList.remove('active');
+                                input.checked ? label.style.textDecoration = "line-through" : label.style.textDecoration = "none";
+                                RightSidebar.persistOnClickCheckbox(response.data.widgetId);
+                            })
+                        }
+
+                        divWidget.appendChild(h4);
+                        divWidget.appendChild(ul);
+                        divWidget.style.maxWidth = 'none';
+                        console.log(divWidget);
+                    }
+
+                    // Add width on widget image
+                    (response.data.widgetType === "image") ? divWidget.firstChild.style.width = "350px" : '';
+                    
+                    // Add event listener mouseenter and mouseleave
+                    divWidget.addEventListener('mouseenter', event => {                
+                        var li = document.querySelector(`.widgets__items[data-id="${divWidget.dataset.id}"]`);
+            
+                        li.style.textDecoration = 'underline';
+                        divWidget.style.border = '1px solid red';
+                    }),
+                    divWidget.addEventListener('mouseleave', event => {
+                        var li = document.querySelector(`.widgets__items[data-id="${divWidget.dataset.id}"]`);
+            
+                        li.style.textDecoration = 'none';
+                        divWidget.style.border = '1px solid #F1F3F7';
+                    })
+
+                    page.appendChild(divWidget);
+
+                    $( ".diary__widget" ).draggable({ 
+                        cursor: "move",
+                        containment: "parent", 
+                        scroll: false,
+                        stop: function(event) {
+                            var id = this.dataset.id;
+                            var top = this.style.top.replace('px','');
+                            var left = this.style.left.replace('px','');
+                        
+                            const url = `/diary/widget/positions/${id}/${top}/${left}`;
+                            Axios.get(url).then(function() {})
+                        }
+                    });
 
                     // Create element on list
                     var span = document.createElement("span");

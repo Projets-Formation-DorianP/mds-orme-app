@@ -101,4 +101,24 @@
             flex-direction: column;
         }
     }
+
+    &.todo {
+        .title,
+        .todo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .todo__list {
+            list-style:  decimal !important;
+
+            & > li {
+                margin-bottom: 0.5rem;
+
+                & > input {
+                    width: 100% !important;
+                }
+            }
+        }
+    }
 }

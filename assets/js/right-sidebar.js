@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 export default class RightSidebar {
-    constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage, formContentVideoRightSidebar, abandonVideo, persistVideo) {
+    constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage, formContentVideoRightSidebar, abandonVideo, persistVideo, formContentTodoRightSidebar, persistTodo) {
         this.rightSidebar = rightSidebar;
 
         if(this.rightSidebar) {
@@ -25,6 +25,10 @@ export default class RightSidebar {
             this.formContentVideoRightSidebar = formContentVideoRightSidebar;
             this.abandonVideo = abandonVideo;
             this.persistVideo = persistVideo;
+
+            // Widget Todo
+            this.formContentTodoRightSidebar = formContentTodoRightSidebar;
+            this.persistTodo = persistTodo;
 
             if(this.rightSidebarCollapse && this.divWidgets) {
                 this.listenOnClickCollapse();
@@ -96,6 +100,8 @@ export default class RightSidebar {
         this.listenOnFocusBlurLinkVideo();
         this.listenOnChangeTextContentVideo();
 
+        this.listenOnChangeTitleTodo();
+
         // Set event listener on buttons
         this.abandon ? this.listenOnClickAbandon() : '';
         this.persist ? this.listenOnClickPersist() : '';    
@@ -105,6 +111,8 @@ export default class RightSidebar {
 
         this.abandonVideo ? this.listenOnClickAbandonVideo() : '';
         this.persistVideo ? this.listenOnClickPersistVideo() : '';   
+
+        this.persistTodo ? this.listenOnClickPersistTodo() : ''; 
     }
 
     /**
@@ -572,7 +580,7 @@ export default class RightSidebar {
             textContent   : textContentE
         };
 
-        var dataJson = encodeURIComponent(window.btoa(JSON.stringify(arrayData)));
+        var dataJson = encodeURIComponent(window.btoa(JSON.stringify(arrayData).normalize("NFD").replace(/[\u0300-\u036f]/g, "")));
         
         // Update data of current widget
         console.log(dataJson, arrayData);
@@ -582,6 +590,179 @@ export default class RightSidebar {
         // Return to the list of widgets
         this.divWidgets.classList.remove('active');
         this.formContentVideoRightSidebar.classList.add('active');
+    }
+
+    /**
+     * 
+     * Widget TODO
+     * 
+     */
+
+    listenOnChangeTitleTodo() {
+        var input = document.querySelector('.widgets__form.todo input[name="title"]');
+        input.addEventListener('input', function () {
+            var associatedWidgetTitle = document.querySelector(`.diary__widget[data-id="${input.dataset.id}"] h4`);
+            associatedWidgetTitle.innerHTML = input.value;
+        });
+    }
+
+    static listenOnClickAddTodo(id) {
+        const addTodo = document.querySelector('.todo__create');
+        addTodo.addEventListener('click', event => {
+            var widgetList = document.querySelector(`.diary__widget[data-id="${id}"] ul`);
+            var formList = document.querySelector(`.widgets__form.todo ol`);
+
+            // Récupérer le dataset task le plus élevé
+            var lastChild = document.querySelector('.widgets__form.todo ol').lastChild;
+            var lastTask = lastChild.dataset.task;
+
+            // Créer item dans le widget
+            var label = document.createElement('label');
+            label.classList.add('todo__label');
+            label.innerHTML = "Remplir cette tâche";
+
+            var input = document.createElement('input');
+            input.type = "checkbox";
+            input.classList.add('todo__checkbox');
+
+            var span = document.createElement('span');
+            span.classList.add('todo__custom-checkbox');
+
+            var li = document.createElement('li');
+            li.classList.add('todo__items');
+            li.dataset.task = (lastTask+1);
+
+            li.appendChild(span);
+            li.appendChild(input);
+            li.appendChild(label);
+
+            widgetList.appendChild(li);
+
+            // Ajouter listener sur le fait de coché ou non la checkbox
+            input.addEventListener('change', event => {
+                var span = input.previousSibling;
+                input.checked ? span.classList.add('active') : span.classList.remove('active');
+                input.checked ? label.style.textDecoration = "line-through" : label.style.textDecoration = "none";
+                RightSidebar.persistOnClickCheckbox(id);
+            })
+
+            // Créer item dans la liste du formulaire
+            var input2 = document.createElement('input');
+            input2.type = "text";
+            input2.dataset.task = lastChild.dataset.task;
+            input2.value = "Remplir cette tâche";
+
+            var li = document.createElement('li');
+            li.dataset.task = (lastTask+1);
+
+            li.appendChild(input2);
+            formList.appendChild(li);
+
+            // Ajouter listener sur l'input
+            input2.addEventListener('input', function () {
+                var associatedWidget = document.querySelector(`.diary__widget[data-id="${id}"] li[data-task="${(lastTask+1)}"] label`);
+                associatedWidget.innerHTML = input2.value;
+                console.log(input);
+            });
+
+        })
+    }
+
+    static listenOnClickRemoveTodo(id) {
+        const removeTodo = document.querySelector('.todo__remove');
+        removeTodo.addEventListener('click', event => {
+            var lenght = document.querySelector('.widgets__form.todo ol').getElementsByTagName("li").length;
+            if(lenght == 1) {
+                confirm("Vous devez avoir au moins une tâche");
+            }else {
+                let lastChild = document.querySelector(`.widgets__form.todo ol.todo__list[data-id="${id}"]`).lastChild;
+                lastChild.remove();
+                let lastChildWidget = document.querySelector(`.diary__widget[data-id="${id}"] .todo__list`).lastChild;
+                lastChildWidget.remove();
+            }
+        })
+    }
+
+    listenOnClickPersistTodo() {
+        this.persistTodo.addEventListener('click', event => {
+            var id = document.querySelector('.widgets__form.todo input[name="title"]').dataset.id;
+            this.persistFormDataWidgetTodo(id);            
+        })
+    }
+
+    static persistOnClickCheckbox(id) {
+        // Get all elements
+        var titleE = document.querySelector(`.diary__widget[data-id="${id}"] h4`).innerHTML;
+        var todoListWidgetE = document.querySelector(`.diary__widget[data-id="${id}"] ul`);
+
+        // Encode the html content to make it "transportable" in the url
+        var dataHtmlContent = window.btoa(encodeURIComponent("none"));
+
+        // Set an array, transform to json and encode it for pass JSON in URL
+        var contentTodo = {};
+        for (let index = 0; index < todoListWidgetE.getElementsByTagName('li').length; index++) {
+            contentTodo[index] = todoListWidgetE.getElementsByTagName('label')[index].innerHTML;
+        }
+
+        var checked = {};
+        for (let index = 0; index < todoListWidgetE.getElementsByTagName('li').length; index++) {
+            checked[index] = todoListWidgetE.getElementsByTagName('input')[index].checked;
+        }
+
+        var arrayData = {
+            'title' : titleE,
+            'nbTodo' : todoListWidgetE.getElementsByTagName('li').length,
+            'contentTodo' : contentTodo,
+            'checked' : checked
+        };
+
+        console.log(arrayData)
+
+        var dataJson = encodeURIComponent(window.btoa(JSON.stringify(arrayData).normalize("NFD").replace(/[\u0300-\u036f]/g, "")));
+        
+        // Update data of current widget
+        var url = `/diary/widget/update/${id}/${dataHtmlContent}/${dataJson}`;
+        console.log(url, id, dataJson, arrayData);
+        Axios.get(url).then(function() {})
+    }
+
+    persistFormDataWidgetTodo(id) {
+        // Get all elements
+        var titleE = document.querySelector('.widgets__form.todo input[name="title"]').value;
+        var todoListE = document.querySelector('.widgets__form.todo ol[name="todo__list"]');
+        var todoListWidgetE = document.querySelector(`.diary__widget[data-id="${id}"] ul`);
+
+        // Encode the html content to make it "transportable" in the url
+        var dataHtmlContent = window.btoa(encodeURIComponent("none"));
+
+        // Set an array, transform to json and encode it for pass JSON in URL
+        var contentTodo = {};
+        for (let index = 0; index < todoListE.getElementsByTagName('li').length; index++) {
+            contentTodo[index] = todoListE.getElementsByTagName('input')[index].value;
+        }
+
+        var checked = {};
+        for (let index = 0; index < todoListWidgetE.getElementsByTagName('li').length; index++) {
+            checked[index] = todoListWidgetE.getElementsByTagName('input')[index].checked;
+        }
+
+        var arrayData = {
+            'title' : titleE,
+            'nbTodo' : todoListE.getElementsByTagName('li').length,
+            'contentTodo' : contentTodo,
+            'checked' : checked
+        };
+
+        var dataJson = encodeURIComponent(window.btoa(JSON.stringify(arrayData).normalize("NFD").replace(/[\u0300-\u036f]/g, "")));
+        
+        // Update data of current widget
+        var url = `/diary/widget/update/${id}/${dataHtmlContent}/${dataJson}`;
+        console.log(url, id, dataJson, arrayData);
+        Axios.get(url).then(function() {})
+
+        // Return to the list of widgets
+        this.divWidgets.classList.remove('active');
+        this.formContentTodoRightSidebar.classList.add('active');
     }
 
     /**
@@ -643,6 +824,7 @@ export default class RightSidebar {
         (edit.dataset.type === "text") ? RightSidebar.clickEditWidgetText(edit) : '';
         (edit.dataset.type === "image") ? RightSidebar.clickEditWidgetImage(edit) : '';
         (edit.dataset.type === "video") ? RightSidebar.clickEditWidgetVideo(edit) : '';
+        (edit.dataset.type === "todo") ? RightSidebar.clickEditWidgetTodo(edit) : '';
     }
 
     static clickEditWidgetText(edit) {
@@ -793,6 +975,60 @@ export default class RightSidebar {
             //Set content like response
             linkInput.value = src;
             textContentInput.value = data.textContent;
+        })
+    }
+
+    static clickEditWidgetTodo(edit) {
+        document.querySelector('.sidebar.right div.widgets__form.todo').classList.remove('active');
+
+        const url = `/diary/widget/read/${edit.dataset.id}`;
+        Axios.get(url).then(function(response) {
+ 
+            // Takes form elements
+            var titleInput = document.querySelector('.widgets__form.todo input[name="title"]');
+            var listOl = document.querySelector('.widgets__form.todo ol[name="todo__list"]');
+            console.log(titleInput, listOl)
+
+            var data = response.data.response.data;
+            // Set dataset Id like response
+            titleInput.dataset.id = edit.dataset.id;
+            listOl.dataset.id = edit.dataset.id;
+
+            // Set content on dataset content
+            titleInput.dataset.content = data.title;
+
+            //Set content like response
+            titleInput.value = data.title;
+
+            // Create list of current Todo List, set dataset content and set content like repsonse
+            listOl.innerHTML = "";
+            for (let index = 0; index < data.nbTodo; index++) {
+                var input = document.createElement('input');
+                input.type = "text";
+                input.value = data.contentTodo[index];
+                input.dataset.task = (index+1);
+                input.dataset.content = data.contentTodo[index];
+
+                var li = document.createElement('li');
+                li.dataset.task = (index+1);
+
+                li.appendChild(input);
+                listOl.appendChild(li);
+            }
+
+            for (let index = 0; index < data.nbTodo; index++) {
+                let input = document.querySelector(`.todo__list input[data-task="${index+1}"]`);
+                input.addEventListener('input', function () {
+                    console.log(this);
+                    var associatedWidget = document.querySelector(`.diary__widget[data-id="${edit.dataset.id}"] li[data-task="${this.dataset.task}"] label`);
+
+                    associatedWidget.innerHTML = input.value;
+                });
+            }
+
+            RightSidebar.listenOnClickAddTodo(edit.dataset.id);
+            RightSidebar.listenOnClickRemoveTodo(edit.dataset.id);
+            
         })
     }
 

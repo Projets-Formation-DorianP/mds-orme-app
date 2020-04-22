@@ -1,0 +1,91 @@
+.todo {
+    &__title {
+        font-size: 1.25rem;
+        color: $dark-blue;
+        font-weight: 600 !important;
+    }
+
+    &__list {
+        list-style: none !important;
+        padding-left: 1rem !important;
+    }
+
+    &__items {
+        position: relative;
+        margin: 0.75rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    &__checkbox {
+        margin: 0px;
+        height: 16px;
+        width: 19px;
+        opacity:0;
+        cursor: pointer;
+    }
+
+    &__custom-checkbox {
+        line-height: 1.5em;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin-top: 0px;
+        margin-right: -18px;
+        border: 1px solid silver;
+        background: #e0e0e0;
+        box-sizing: border-box;
+        margin-bottom: 0.25rem;
+        border-radius: 30px;
+        cursor: pointer;
+    }
+
+    &__custom-checkbox.active {
+        width: 20px;
+        height: 20px;
+        border: 1px solid green;
+        background:url("https://image.flaticon.com/icons/svg/463/463574.svg") no-repeat;
+        background-size : 100%;
+        box-sizing:border-box;
+        cursor: pointer;
+    }
+
+    &__label {
+        margin-left: 1.25rem;
+        color: $dark-blue;
+        margin-bottom: 0 !important;
+    }
+
+    &__actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    &__actions {
+        & a:first-of-type {
+            margin-right: 1rem;
+        }
+
+        & div {
+            width: 25px !important;
+            height: 25px !important;
+            background-size: contain;
+            background-repeat: no-repeat;
+            transition: transform .2s;
+
+            &:hover {
+                transform: scale(1.5);
+            }
+        }
+    }
+
+    &__create-div {
+        background-image: url(https://image.flaticon.com/icons/svg/992/992651.svg);
+    }
+
+    &__remove-div {
+        background-image: url(https://image.flaticon.com/icons/svg/659/659892.svg);
+    }
+}
