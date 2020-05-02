@@ -438,9 +438,26 @@ export default class RightSidebar {
 
     listenOnChangeWidthInputImage() {
         var widthInput = document.querySelector('.widgets__form.image input[name="width"]');
-        widthInput.addEventListener('input', function () {
+        widthInput.addEventListener('input', function (event) {
             var associatedWidgetImage = document.querySelector(`.diary__widget[data-id="${widthInput.dataset.id}"] img`);
-            associatedWidgetImage.style.width = widthInput.value + "px";
+            console.log(event);
+
+            if(event.inputType === "deleteContentBackward") {
+                associatedWidgetImage.style.width = widthInput.value + "px";
+            }else if(event.inputType === "insertText") {
+                var actualWidth = widthInput.value;
+                var keyData = event.data;
+                var newWidth = parseInt(actualWidth + keyData);
+
+                if(newWidth <= actualWidth) {
+                    associatedWidgetImage.style.width = newWidth + "px";
+                }else {
+                    associatedWidgetImage.style.width = "350px";
+                    widthInput.value = 350;
+                }
+            }else {
+                associatedWidgetImage.style.width = widthInput.value + "px";
+            }
         });
     }
 
