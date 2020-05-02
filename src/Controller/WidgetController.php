@@ -79,7 +79,7 @@ class WidgetController extends Controller{
                 break;
 
             case 'image':
-                $image = 'http://localhost:8000/build/logo.png';
+                $image = '/build/logo.png';
                 $widget->setHtmlContent("<img src=\"{$image}\"></img>");
                 break;
                 
