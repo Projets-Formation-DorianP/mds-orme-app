@@ -143,15 +143,15 @@ export default class Favorite {
         switch (favorite) {
             case 'facebook':
                 var href    = "https://www.facebook.com/";
-                var src     = "https://image.flaticon.com/icons/svg/1384/1384005.svg"
+                var src     = "https://image.flaticon.com/icons/svg/1077/1077041.svg"
                 break;
             case 'instagram':
                 var href    = "https://www.instagram.com/";
-                var src     = "https://image.flaticon.com/icons/svg/1384/1384031.svg"
+                var src     = "https://image.flaticon.com/icons/svg/1077/1077042.svg"
                 break;
             case 'twitter':
                 var href    = "https://twitter.com/twitter";
-                var src     = "https://image.flaticon.com/icons/svg/1384/1384017.svg"
+                var src     = "https://image.flaticon.com/icons/svg/1051/1051382.svg"
                 break;
             case 'reddit':
                 var href    = "https://www.reddit.com/";
@@ -159,23 +159,23 @@ export default class Favorite {
                 break;
             case 'youtube':
                 var href    = "https://www.youtube.com/";
-                var src     = "https://image.flaticon.com/icons/svg/1384/1384028.svg"
+                var src     = "https://image.flaticon.com/icons/svg/1077/1077046.svg"
                 break;
             case 'spotify':
                 var href    = "https://www.spotify.com/fr/";
-                var src     = "https://image.flaticon.com/icons/svg/2111/2111685.svg"
+                var src     = "https://image.flaticon.com/icons/svg/2111/2111805.svg"
                 break;  
             case 'deezer':
                 var href    = "https://www.deezer.com/fr/";
-                var src     = "https://image.flaticon.com/icons/svg/49/49383.svg"
+                var src     = "https://image.flaticon.com/icons/svg/49/49080.svg"
                 break;   
             case 'gmail':
                 var href    = "https://mail.google.com/";
-                var src     = "https://image.flaticon.com/icons/svg/60/60543.svg"
+                var src     = "https://image.flaticon.com/icons/svg/2150/2150313.svg"
                 break;   
             case 'airbnb':
                 var href    = "https://www.airbnb.fr/";
-                var src     = "https://image.flaticon.com/icons/svg/2111/2111307.svg"
+                var src     = "https://image.flaticon.com/icons/svg/888/888886.svg"
                 break;   
             case 'trello':
                 var href    = "http://trello.com/";

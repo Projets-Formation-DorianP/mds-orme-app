@@ -69,7 +69,7 @@ nav.sidebar.left {
 		}
 
 		&__div {
-			background-image: url(https://image.flaticon.com/icons/svg/992/992651.svg);
+			background-image: url(../../images/plus-circle.svg);
 			width: 25px !important;
 			height: 25px !important;
 			background-size: contain;
@@ -77,7 +77,7 @@ nav.sidebar.left {
 			transition: transform .2s;
 
 			&:hover {
-				transform: scale(1.5);
+				transform: rotate(90deg)
 			}
 		}
 	}
@@ -96,18 +96,19 @@ nav.sidebar.left {
 
 		&__left {
 			margin: 5px 10px 0px 0px;
-			background: url("https://image.flaticon.com/icons/svg/271/271218.svg") no-repeat 0 0;
+			background: url("https://image.flaticon.com/icons/svg/142/142053.svg") no-repeat 0 0;
 		}
 
 		&__input{
-			width: 30%;
+			width: 20%;
 			height: 97%;
 			padding: 0.33rem;
+			text-align: center;
 		}
 
 		&__right {
 			margin: 5px 0px 0px 10px;
-			background: url("https://image.flaticon.com/icons/svg/271/271226.svg") no-repeat 0 0;
+			background: url("https://image.flaticon.com/icons/svg/120/120893.svg") no-repeat 0 0;
 		}
 	}
 
@@ -165,23 +166,19 @@ nav.sidebar.left {
 			}
 
 			span.texte::before {
-				background-image: url(https://image.flaticon.com/icons/svg/2824/2824222.svg);
-			}
-
-			span.video::before {
-				background-image: url(https://image.flaticon.com/icons/svg/483/483054.svg);
+				background-image: url(../../images/edit-2.svg);
 			}
 
 			span.image::before {
-				background-image: url(https://image.flaticon.com/icons/svg/1829/1829552.svg);
+				background-image: url(../../images/image.svg);
 			}
 
 			span.todo::before {
-				background-image: url(https://image.flaticon.com/icons/svg/839/839986.svg);
+				background-image: url(../../images/check-square.svg);
 			}
 
-			span.lien::before {
-				background-image: url(https://image.flaticon.com/icons/svg/2089/2089782.svg);
+			span.video::before {
+				background-image: url(../../images/video.svg);
 			}
 		}
 	}

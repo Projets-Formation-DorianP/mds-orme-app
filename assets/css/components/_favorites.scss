@@ -4,13 +4,13 @@
         justify-content: center;
 
         .item {
-                padding: 0.15rem !important;
-                padding-left: 1rem !important;
-                padding-right: 1rem !important;
-                width: 85%;
-                margin: 0.33rem 0 0.5rem 0;
-                display: flex;
-                justify-content: center;
+            padding: 0.15rem !important;
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+            width: 85%;
+            margin: 0.33rem 0 0.5rem 0;
+            display: flex;
+            justify-content: center;
 
             & > img {
                 width: 50px;
@@ -24,6 +24,14 @@
                 border-right: 1px solid white;
                 border-top: none;
                 border-left: none;
+            }
+        }
+
+        &.favorites__add .item > img{
+            transition: transform .2s;
+
+            &:hover {
+                transform: rotate(90deg)
             }
         }
     }
@@ -122,11 +130,11 @@
     }
 
     &__trash {
-        background-image: url(https://image.flaticon.com/icons/svg/216/216658.svg);
+        background-image: url(../../images/trash-2.svg);
         margin-left: 0.5rem;
     }
 
     &__modify {
-        background-image: url(https://image.flaticon.com/icons/svg/1242/1242392.svg);
+        background-image: url(../../images/settings.svg);
     }
 }

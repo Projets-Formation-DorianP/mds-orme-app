@@ -11,7 +11,6 @@ class HomeController extends Controller{
 
     /**
      * @Route("/", name="home")
-     * @isGranted("ROLE_USER")
      */
     public function home() {
         return $this->render('home.html.twig', [

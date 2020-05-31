@@ -24,12 +24,11 @@
                 {% endif %}
             {% endif %}
         </ul>
-        {% include 'Blocks/app/diary-fav.html.twig' %}
         <ul class="navbar-nav flex-row ml-md-auto d-none d-lg-flex collapse">
             {% if logged %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-primary" href="#" role="button" id="dropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img class="avatar mr-2" 
+                        <img style="border: solid #F1F3F7; box-shadow: 8px 8px 10px #D1D9E6;" class="avatar mr-2" 
                             {% if app.user.picture %}
                                 src="{{ app.user.picture }}" 
                             {% else %}
