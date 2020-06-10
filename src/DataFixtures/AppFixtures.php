@@ -33,24 +33,33 @@ class AppFixtures extends Fixture
         $userRole->setTitle('ROLE_USER');
         $manager->persist($userRole);
 
-        //Admin
+        // Utlisateur admin
         $adminUser = new User();
         $adminUser->setFirstName("Emilien");
         $adminUser->setLastName("GANTOIS");
-        $adminUser->setEmail("emilien@ymfony.com");
+        $adminUser->setEmail("emilien.gantois@symfony.com");
         $adminUser->setHash($this->encoder->encodePassword($adminUser, 'password'));
         $adminUser->setPicture("https://cdn.pixabay.com/photo/2012/04/26/19/43/profile-42914_960_720.png");
         $adminUser->addUserRole($adminRole);
+        $manager->persist($userUser);
 
-        $manager->persist($adminUser);
+        // Utilisateur par défaut
+        $defaultUser = new User();
+        $defaultUser->setFirstName("Dorian");
+        $defaultUser->setLastName("PILORGE");
+        $defaultUser->setEmail("dorian.pilorge@symfony.com");
+        $defaultUser->setHash($this->encoder->encodePassword($defaultUser, 'password'));
+        $defaultUser->setPicture("https://cdn.pixabay.com/photo/2012/04/26/19/43/profile-42914_960_720.png");
+        $defaultUser->addUserRole($userRole);
+        $manager->persist($userUser);
 
-        //Nous gérons les utilisateurs
+        // Gestion des utilisateurs
         $users = [];
         $genres = ['male', 'female'];
 
         for ($i=0; $i < 10; $i++) { 
             $user = new User();
-            
+
             $genre = $faker->randomElement($genres);
             $picture = "https://randomuser.me/api/portraits/";
             $picture_id = $faker->numberBetween(1, 99) . '.jpg';
@@ -69,13 +78,13 @@ class AppFixtures extends Fixture
             $manager->persist($user);
             $users[] = $user;
 
-            //Nous gérons les pages
+            // Gestion des pages
             $pages = [];
 
             for ($j=0; $j < 10; $j++) { 
                 $page = new Page();
                 $user = $users[$i];
-            
+
                 $page->setPageNumber(($j+1));
                 $page->setUser($user);
 
@@ -83,7 +92,7 @@ class AppFixtures extends Fixture
                 $pages[] = $page;
             }
 
-            // Nous gérons les favoris
+            // Gestion des favoris
             $favorite = new Favorite();
 
             $favorite->setUser($user);
