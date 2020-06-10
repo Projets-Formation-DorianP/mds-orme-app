@@ -1,6 +1,6 @@
 # OrganizeMe! (ORME!)
 
-<img width="364" height="210" src="assets/images/logo.png" />
+<img width="280" height="160" src="assets/images/logo.PNG" />
 
 ## Introduction
 *ORME!* is a bullet journaling web application realized at MyDigitalSchool.
@@ -34,6 +34,12 @@ Yarn
 * ```yarn watch``` - Refresh instantly all modifications
 
 ## Preview
+
+### Web Hosting
+
+A live preview of this application is available right [here](organize-me.ovh).
+
+### Screenshots
 
 #### Login Screen
 
