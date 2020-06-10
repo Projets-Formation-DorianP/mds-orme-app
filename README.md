@@ -1,11 +1,9 @@
 # OrganizeMe! (ORME!)
 
+<img width="364" height="210" src="assets/images/logo.png" />
+
 ## Introduction
 *ORME!* is a bullet journaling web application realized at MyDigitalSchool.
-
-This repository contains the application part of the project.
-
-To access the Website (WordPress) part ➤ [mds-orme-wp](https://github.com/Natsu235/mds-orme-wp)
 
 ## Getting started
 
@@ -30,7 +28,6 @@ Composer
 * ```composer require <dependency>``` - Install a new dependency
 
 Yarn
-<<<<<<< HEAD
 * ```yarn install``` - Install dependencies of the project
 * ```yarn upgrade``` - Upgrades packages to their latest version
 * ```yarn build``` - Build all files
@@ -38,33 +35,28 @@ Yarn
 
 ## Preview
 
-Login Screen
+#### Login Screen
 
-<kbd><img width="840" height="401" src="assets/img/login.png" /></kbd>
+<kbd><img width="840" height="400" src="assets/login.png" /></kbd>
 
-Homepage
+#### Homepage
 
-<kbd><img width="840" height="401" src="assets/img/homepage.png" /></kbd>
+<kbd><img width="840" height="400" src="assets/homepage.png" /></kbd>
 
-User Profile
+#### User Profile
 
-<kbd><img width="840" height="401" src="assets/img/account.png" /></kbd>
+<kbd><img width="840" height="400" src="assets/account.png" /></kbd>
 
-=======
-* ```yarn build``` - Build all files
-* ```yarn watch``` - Refresh instantly all modifications
+#### Bullet Journal
 
->>>>>>> 73c6a08ecbe4186a2955adb990b89658caca7040
+<kbd><img width="840" height="400" src="assets/book.png" /></kbd>
+
 ## Miscellaneous
 
 ### Trello
 [Trello](https://trello.com/) is a project management tool allowing us to schedule all of our tasks during the development.
 
-<<<<<<< HEAD
-<a href="https://trello.com/b/noJXXiYo/mdproject-dev" target="_blank"><img width="180" height="89" src="assets/img/trello-thumb.png" /></a>
-=======
-<a href="https://trello.com/b/noJXXiYo/mdproject-dev" target="_blank"><img width="180" height="89" src="assets/mds-orme-thumb.png" /></a>
->>>>>>> 73c6a08ecbe4186a2955adb990b89658caca7040
+<a href="https://trello.com/b/noJXXiYo/mdproject-dev" target="_blank"><img width="180" height="89" src="assets/trello-thumb.png" /></a>
 
 ### Licence
 This project is licensed under the GPLv3 License. See the [LICENSE.md](LICENSE.md) file for details.
