@@ -1,0 +1,239 @@
+body.landing {
+    .row {
+        margin-bottom: 5em;
+    }
+
+    a {
+        margin-top: 2em;
+        color: black;
+        font: 23px/38px Montserrat;
+    }
+
+    a::after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 2px;
+        background: #263563;
+        transition: width .3s;
+    }
+
+    a:hover {
+        color: #263563;
+    }
+
+    a:hover::after {
+        width: 100%;
+    }
+
+    .orme-logo {
+        width: 308px;
+        height: 177px;
+    }
+
+    .btn-primary:not(:disabled):not(.disabled).active {
+        background-color: white;
+        border-color: #263563;
+        color: #263563;
+        margin-left: 10%;
+        font: 23px/38px Montserrat;
+        margin-bottom: 2em;
+    }
+
+    .btn-primary:not(:disabled):not(.disabled).active:hover {
+        background-color: #263563;
+        border-color: #263563;
+        color: white;
+    }
+
+    #appli {
+        width: 100%;
+        height: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 30px;
+        border: 3px solid #263563;
+        margin-top: 2em;
+    }
+
+    h1 {
+        margin-top: 2em;
+        font: Bold 50px/97px Montserrat;
+    }
+
+    h2 {
+        font: Bold 40px/97px Montserrat;
+        
+    }
+
+    h3 {
+        font: Bold 35px/97px Montserrat;
+    }
+    
+    h5.card-title {
+        font: Bold 26px/68px Montserrat;
+        text-align: center;
+        color: #263563;
+        margin:0;
+    }
+
+    p {
+        margin-bottom: 0;
+        color: #263563;
+        font: 20px/43px Object Sans;
+        line-height: normal;
+    }
+
+    p#prix {
+        margin-bottom: 0;
+        margin-top: 1em;
+        color: #263563;
+        font: 28px/34px Montserrat;
+        font-weight: bold;
+    }
+    p span#prix {
+        font: 28px/34px Montserrat;
+    }
+    img#x {
+        width:20px;
+        height:20px;
+    }
+    img#check {
+        width:20px;
+        height:20px;
+    }
+
+    .card {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 30px;
+        border: 3px solid #263563;
+        margin-top: 2em;
+        margin-bottom: 3em;
+    }
+
+    select {
+        margin-top: 2em;
+        border-radius: 30px;
+        border: 3px solid #263563;
+        color: #263563;
+        padding-left: 10px;
+    }
+
+    p#x {
+        text-align: left;
+        color: #DA3131;
+        font: 16px/23px Montserrat;
+        margin-left: 1em;
+    }
+
+    p#check {
+        text-align: left;
+        color: #13E062;
+        font: 16px/23px Montserrat;
+        margin-left: 1em;
+    }
+
+    .btn-primary {
+        background-color: #263563;
+        border-radius: 30px;
+        border: 3px solid #263563;
+        color: white;
+        padding-left: 2em;
+        padding-right: 2em;
+    }
+
+    .btn-primary:hover {
+        background-color: white;
+        border-color: #263563;
+        color: #263563;
+    }
+
+    img#apropos{
+        width : 68px;
+        height: 68px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 2em;
+        margin-top: 2em;
+    }
+
+    p#apropos{
+        font: 15px/30px Montserrat;
+        color: black;
+        line-height: normal;
+    }
+
+    ul{
+        list-style: none;
+        font:15px/30px Montserrat;
+        padding: 0;
+        color: #263563;
+    }
+
+    input {
+        border-radius: 30px;
+        border: 2px solid #263563;
+    }
+
+    footer {
+        background-color: #263563;
+
+        & > .container {
+            margin-bottom: 0em;
+
+            & > .row {
+                margin-bottom: 0em;
+            }
+        }
+    }
+
+    a#footer {
+        margin-top: 2em;
+        color: white;
+        font: 15px/38px Montserrat;
+    }
+
+    a#footer::after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 2px;
+        background: white;
+        transition: width .3s;
+    }
+
+    a#footer:hover::after {
+        width: 100%;
+    }
+
+    img#footer {
+        width: 30px;
+        height: 30px;
+        margin-left: 2em;
+    }
+
+    img#footer1 {
+        width: 30px;
+        height: 30px;
+    }
+
+    h2#footer {
+        color: white;
+        font: Bold 20px/97px Montserrat;
+    }
+
+    p#footer {
+        color: white;
+        font: 15px/30px Montserrat;
+    }
+
+    @media screen and (max-width: 640px) {
+        .container.desktop {
+            display: none;
+        }
+    }
+}

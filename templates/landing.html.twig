@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {{ encore_entry_link_tags('css/main') }}
+    {% block stylesheets %}{% endblock %}
+
+    <title>Organize Me</title>
+</head>
+
+<body class="landing">
+    <!-- Navbar -->
+    <div class="container">
+        <div class="d-flex justify-content-between">
+            <img class="orme-logo" src="{{ asset('build/logo.PNG') }}" alt="Logo ORME">
+            <nav class="navbar navbar-light navbar-expand-lg">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#tarifs">Tarifs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#apropos">À propos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- First Block -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Allégez-vous!</h1>
+                <p>Orme est une application en <br />
+                    ligne permettant d'organiser ses <br />
+                    journées à la façon d'un bullet <br />
+                    journal sur des pages personnalisables. </p>
+                <a href="/login" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Adoptez Orme !</a>
+            </div>
+            <div class="col-md-6">
+                <img id="appli" src="{{ asset('build/presentation-appli.png') }}" alt="">
+            </div>
+        </div>
+
+        <!-- Second Block -->
+        <h2 id="tarifs">Tarifs</h2>
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Starter</h5>
+                        <p class="card-text">Abonnement 6 mois <br /> <span>(1 mois offert)</span></p>
+                        <form>
+                            <select name="nom" size="1">
+                                <option>Paiement semestrielle</option>
+                                <option>Paiement mensuelle</option>
+                            </select>
+                        </form>
+                        <p id="prix">4.99 € <span id="prix">/mois</span></p>
+                        <div class="d-flex py-3">
+                            <img id="x" src="{{ asset('build/cross.png') }}" alt="">
+                            <p id="x">Pack template au
+                                choix parmi la sélection</p>
+                        </div>
+                        <a href="#" class="btn btn-primary">Acheter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Pro</h5>
+                        <p class="card-text">Abonnement 1 an <br /> <span>(1 mois offert)</span></p>
+                        <form>
+                            <select name="nom" size="1">
+                                <option>Paiement annuelle</option>
+                                <option>Paiement mensuelle</option>
+                            </select>
+                        </form>
+                        <p id="prix">6.99 € <span id="prix">/mois</span></p>
+                        <div class="d-flex py-3">
+                            <img id="check" src="{{ asset('build/check.png') }}" alt="">
+                            <p id="check">Pack template au
+                                choix parmi la sélection</p>
+                        </div>
+                        <a href="#" class="btn btn-primary">Acheter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Third Block -->
+    <img src="{{ asset('build/mockup-appli.jpg') }}" class="img-fluid w-100" alt="Responsive Banner">
+
+    <!-- Fourth Block -->
+    <div class="container">
+        <h2 id="apropos">À propos</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <img id="apropos" src="{{ asset('build/edit-2.svg') }}" alt="Bloc 1">
+                <p id="apropos">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod nisi mollis erat
+                    ornare
+                    pellentesque. Suspendisse vulputate luctus dolor a ultricies. Phasellus molestie nibh metus, nec
+                    aliquet felis rutrum id.</p>
+            </div>
+            <div class="col-md-4">
+                <img id="apropos" src="{{ asset('build/check-square.svg') }}" alt="Bloc 2">
+                <p id="apropos">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod nisi mollis erat
+                    ornare
+                    pellentesque. Suspendisse vulputate luctus dolor a ultricies. Phasellus molestie nibh metus, nec
+                    aliquet felis rutrum id.</p>
+            </div>
+            <div class="col-md-4">
+                <img id="apropos" src="{{ asset('build/inscription.svg') }}" alt="Bloc 3">
+                <p id="apropos">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod nisi mollis erat
+                    ornare
+                    pellentesque. Suspendisse vulputate luctus dolor a ultricies. Phasellus molestie nibh metus, nec
+                    aliquet felis rutrum id.</p>
+            </div>
+        </div>
+
+        <!-- Fifth Block -->
+        <div class="row py-3">
+            <div class="col-md-6">
+                <h2 id="contact">Contact</h2>
+                <ul>
+                    <li>Organize Me</li>
+                    <li>1 Allée Pierre de Maupertuis</li>
+                    <li>35170 Bruz</li>
+                    <li>02 57 24 04 15</li>
+                    <li>contact@organizeme.ovh</li>
+                </ul>
+            </div>
+            <!--
+            <div class="col-md-6">
+                <h3>Par Email</h3>
+                <div class="form-row">
+                    <div class="col-6 form-group">
+                        <label for="first-name">Prénom</label>
+                        <input type="text" class="form-control" id="first-name" placeholder="Bob">
+                    </div>
+                    <div class="col-6 form-group">
+                        <label for="last-name">Nom</label>
+                        <input type="text" class="form-control" id="last-name" placeholder="Sponge">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Votre email</label>
+                    <input type="email" class="form-control" id="email" placeholder="bob@gmail.com">
+                </div>
+                <div class="form-group">
+                    <label for="message">Votre message</label>
+                    <input type="msg" class="form-control" id="message" placeholder="Votre message">
+                </div>
+                <input type="submit" value="Envoyer" class="btn btn-primary btn-lg w-100">
+            </div>
+            -->
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+    </script>
+</body>
+
+<footer>
+    <div class="container">
+        <div class="row py-3">
+            <div class="col-md-4 ">
+                <ul class="nav justify-content-start">
+                    <li class="nav-item">
+                        <a id="footer" class="nav-link" href="#">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="footer" class="nav-link" href="#tarifs">Tarifs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="footer" class="nav-link" href="#apropos">À propos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="footer" class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4 text-center">
+                <h2 id="footer">Suivez-nous !</h2>
+                <img id="footer1" src="{{ asset('build/facebook-2.svg') }}" alt="Facebook">
+                <img id="footer" src="{{ asset('build/instagram-2.svg') }}" alt="Instagram">
+                <img id="footer" src="{{ asset('build/twitter-2.svg') }}" alt="Twitter">
+            </div>
+        </div>
+    </div>
+</footer>
+
+</html>

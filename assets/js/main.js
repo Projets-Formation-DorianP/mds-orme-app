@@ -27,7 +27,7 @@ $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 
     // Alert Box Fade-Out
-    $('.alert').delay(14000).fadeOut(800);
+    $('.alert').delay(8000).fadeOut(800);
 
     // Navbar Toggler Icon
     $('.collapse').on('shown.bs.collapse', function(e) {

@@ -32,10 +32,17 @@ class AccountController extends AbstractController
         $error = $utils->getLastAuthenticationError();
         $username = $utils->getLastUsername();
 
-        return $this->render('account/login.html.twig', [
-            'username' => $username,
-            'error' => $error
-        ]);
+        if ($this->isGranted('ROLE_USER') == true) {
+            $action = $this->redirectToRoute('homepage');
+        }
+        else {
+            $action = $this->render('account/login.html.twig', [
+                'username' => $username,
+                'error' => $error
+            ]);
+        }
+
+        return $action;
     }
 
     /**

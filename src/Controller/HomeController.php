@@ -13,9 +13,13 @@ class HomeController extends Controller{
      * @Route("/", name="home")
      */
     public function home() {
-        return $this->render('home.html.twig', [
-            'diary' => false
-        ]);
+        if ($this->isGranted('ROLE_USER') == true) {
+            $action = 'homepage';
+        }
+        else {
+            $action = 'landing';
+        }
+        return $this->redirectToRoute($action);
     }
 
     /**
@@ -23,6 +27,17 @@ class HomeController extends Controller{
      * @isGranted("ROLE_USER")
      */
     public function homepage() {
-        return $this->redirectToRoute('home');
+        return $this->render('home.html.twig', [
+            'diary' => false
+        ]);
+    }
+
+    /**
+     * @Route("/landing", name="landing")
+     */
+    public function landing() {
+        return $this->render('landing.html.twig', [
+            'diary' => false
+        ]);
     }
 }

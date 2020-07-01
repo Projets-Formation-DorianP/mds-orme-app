@@ -17,7 +17,7 @@ security:
             anonymous: true
 
             provider: in_database
-            
+
             form_login:
                 login_path: account_login
                 check_path: account_login

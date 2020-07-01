@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 export default class RightSidebar {
-    constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage, formContentVideoRightSidebar, abandonVideo, persistVideo, formContentTodoRightSidebar, persistTodo) {
+    constructor(rightSidebar, rightSidebarCollapse, divWidgets, arrayTrash, arrayEdit, widgetsList, formContentRightSidebar, abandon, persist, formContentImageRightSidebar, abandonImage, persistImage, formContentVideoRightSidebar, abandonVideo, persistVideo, formContentTodoRightSidebar, abandonTodo, persistTodo) {
         this.rightSidebar = rightSidebar;
 
         if(this.rightSidebar) {
@@ -28,6 +28,7 @@ export default class RightSidebar {
 
             // Widget Todo
             this.formContentTodoRightSidebar = formContentTodoRightSidebar;
+            this.abandonTodo = abandonTodo;
             this.persistTodo = persistTodo;
 
             if(this.rightSidebarCollapse && this.divWidgets) {
@@ -80,7 +81,7 @@ export default class RightSidebar {
     listenOnClickEdit() {
         this.arrayEdit.map((edit) => {
             edit.addEventListener('click', event => {
-                RightSidebar.clickEdit(edit, event);  
+                RightSidebar.clickEdit(edit, event);
             })  
         })
 
@@ -104,15 +105,16 @@ export default class RightSidebar {
 
         // Set event listener on buttons
         this.abandon ? this.listenOnClickAbandon() : '';
-        this.persist ? this.listenOnClickPersist() : '';    
-        
+        this.persist ? this.listenOnClickPersist() : '';
+
         this.abandonImage ? this.listenOnClickAbandonImage() : '';
-        this.persistImage ? this.listenOnClickPersistImage() : '';   
+        this.persistImage ? this.listenOnClickPersistImage() : '';
 
         this.abandonVideo ? this.listenOnClickAbandonVideo() : '';
-        this.persistVideo ? this.listenOnClickPersistVideo() : '';   
+        this.persistVideo ? this.listenOnClickPersistVideo() : '';
 
-        this.persistTodo ? this.listenOnClickPersistTodo() : ''; 
+        this.abandonTodo ? this.listenOnClickAbandonTodo() : '';
+        this.persistTodo ? this.listenOnClickPersistTodo() : '';
     }
 
     /**
@@ -385,7 +387,7 @@ export default class RightSidebar {
         };
 
         var dataJson = encodeURIComponent(window.btoa(JSON.stringify(arrayData)));
-        
+
         // Update data of current widget
         var url = `/diary/widget/update/${id}/${dataHtmlContent}/${dataJson}`;
         Axios.get(url).then(function() {})
@@ -403,13 +405,13 @@ export default class RightSidebar {
             // Add event listener mouseenter and mouseleave
             li.addEventListener('mouseenter', event => {                
                 var divWidget = document.querySelector(`.diary__widget[data-id="${li.dataset.id}"]`);
-    
+
                 li.style.textDecoration = 'underline';
                 divWidget.style.border = '1px solid red';
             }),
             li.addEventListener('mouseleave', event => {
                 var divWidget = document.querySelector(`.diary__widget[data-id="${li.dataset.id}"]`);
-    
+
                 li.style.textDecoration = 'none';
                 divWidget.style.border = '1px solid #F1F3F7';
             })
@@ -468,7 +470,7 @@ export default class RightSidebar {
             associatedWidgetImage.style.transform = `rotate(${rotateInput.value}deg)`;
         });
     }
-    
+
     listenOnClickAbandonImage() {
         this.abandonImage.addEventListener('click', event => {
             // Check if we click on collapse, display good active class on good elements
@@ -517,7 +519,7 @@ export default class RightSidebar {
         };
 
         var dataJson = encodeURIComponent(window.btoa(JSON.stringify(arrayData)));
-        
+
         console.log(id, dataHtmlContent, dataJson);
         // Update data of current widget
         var url = `/diary/widget/update/${id}/${dataHtmlContent}/${dataJson}`;
@@ -598,7 +600,7 @@ export default class RightSidebar {
         };
 
         var dataJson = encodeURIComponent(window.btoa(JSON.stringify(arrayData).normalize("NFD").replace(/[\u0300-\u036f]/g, "")));
-        
+
         // Update data of current widget
         console.log(dataJson, arrayData);
         var url = `/diary/widget/update/${id}/${dataHtmlContent}/${dataJson}`;
@@ -697,6 +699,18 @@ export default class RightSidebar {
                 let lastChildWidget = document.querySelector(`.diary__widget[data-id="${id}"] .todo__list`).lastChild;
                 lastChildWidget.remove();
             }
+        })
+    }
+
+    listenOnClickAbandonTodo() {
+        this.abandonTodo.addEventListener('click', event => {
+            // Check if we click on collapse, display good active class on good elements
+            this.formContentTodoRightSidebar.classList.add('active');
+            if(this.divWidgets.classList.contains('active')) {
+                this.divWidgets.classList.remove('active');
+            }
+
+            var id = document.querySelector('.widgets__form.todo input[name="link"]').dataset.id; 
         })
     }
 
@@ -835,7 +849,7 @@ export default class RightSidebar {
      */
     static clickEdit(edit, event) {
         event.preventDefault();
-        
+
         document.querySelector('.sidebar.right > .widgets').classList.add('active'); 
 
         (edit.dataset.type === "text") ? RightSidebar.clickEditWidgetText(edit) : '';
@@ -851,7 +865,7 @@ export default class RightSidebar {
         Axios.get(url).then(function(response) {
             // Takes content without HTML tags from response
             var content = response.data.response.htmlContent.replace('<p>', '').replace('</p>', '');     
-             
+ 
             // Takes form elements
             var htmlContentTextarea = document.querySelector('.widgets__form.text textarea');  
             var fullWidthCheckbox = document.querySelector('.widgets__form.text input[type="checkbox"][name="full-width"]');
@@ -893,7 +907,7 @@ export default class RightSidebar {
             underlineCheckbox.dataset.content = data.underline;
             highlightCheckbox.dataset.content = data.highlight;
             highlightColorInput.dataset.content = data.highlightColor;
-            
+
             //Set content like response
             htmlContentTextarea.value = content; 
             data.fullWidth === "checked" ? fullWidthCheckbox.checked = true : fullWidthCheckbox.checked = false;
@@ -935,8 +949,8 @@ export default class RightSidebar {
             (str.includes("http")) ? ((str.includes("https")) ? regex = /<img[^>]+src="(https:\/\/[^">]+)"/g : regex = /<img[^>]+src="(http:\/\/[^">]+)"/g) : '';
 
             var src = regex.exec(str)[1];
-            
- 
+
+
             // Takes form elements
             var linkInput = document.querySelector('.widgets__form.image input[name="link"]');  
             var widthInput = document.querySelector('.widgets__form.image input[name="width"]');  
@@ -952,7 +966,7 @@ export default class RightSidebar {
             linkInput.dataset.content = encodeURIComponent(window.btoa(src));
             widthInput.dataset.content = data.width;
             rotateInput.dataset.content = data.rotate;
-            
+
             //Set content like response
             linkInput.value = src;
             widthInput.value = data.width;
@@ -988,7 +1002,7 @@ export default class RightSidebar {
             // Set content on dataset content
             linkInput.dataset.content = encodeURIComponent(window.btoa(src));
             textContentInput.dataset.content = data.textContent;
-            
+
             //Set content like response
             linkInput.value = src;
             textContentInput.value = data.textContent;
@@ -1053,7 +1067,7 @@ export default class RightSidebar {
         var r = parseInt(hex.slice(1, 3), 16),
             g = parseInt(hex.slice(3, 5), 16),
             b = parseInt(hex.slice(5, 7), 16);
-    
+
         if (alpha) {
             return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
         } else {
