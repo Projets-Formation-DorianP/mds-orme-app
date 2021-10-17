@@ -20,7 +20,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "axios": "^0.19.2",
+        "axios": "^0.21.2",
         "flexboxgrid": "^6.3.1"
     }
 }
